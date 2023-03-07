@@ -7,6 +7,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 export default function Movies() {
     return (
         <>
+            <p>Movies</p>
             <SearchForm/>
             <Preloader/>
             <MoviesCardList/>

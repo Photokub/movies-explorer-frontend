@@ -5,6 +5,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 export default function SavedMovies() {
     return (
       <>
+          <p>Saved Movies</p>
           <MoviesCardList/>
           <MoviesCard/>
       </>
