@@ -13,7 +13,7 @@ import './App.css';
 
 function App() {
     return (
-            <div className="page">
+            <div className="App">
                 <Header/>
                 <Navigation/>
                 <Main/>
