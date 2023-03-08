@@ -1,0 +1,22 @@
+.promo{
+    width: 100%;
+    background-color: #073042;
+    background-image: url("../../images/pic__COLOR_landing-logo.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 184px 0 224px;
+    box-sizing: border-box;
+}
+
+.promo__header{
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #FFF;
+
+    width:730px;
+
+    margin:0 auto;
+}
