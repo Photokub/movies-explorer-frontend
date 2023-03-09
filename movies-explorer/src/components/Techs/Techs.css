@@ -1,0 +1,37 @@
+.techs {
+    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.techs__title {
+    align-self: stretch;
+}
+
+.techs__text{
+    max-width: 460px;
+    text-align: center;
+}
+
+.techs__container {
+    display: grid;
+    height: 60px;
+    grid-template-columns: repeat(7, 90px);
+    column-gap: 10px;
+}
+
+.techs__skill-text{
+    background: #E8E8E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0 auto;
+}
