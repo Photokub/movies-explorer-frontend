@@ -8,7 +8,7 @@ export default function Header() {
         <header className="header">
             <img className="header__logo" src={logo} alt="логотип movies explorer"/>
             <div className='header__container'>
-                <Link className="header__link">Регистрация</Link>
+                <Link className="header__link" to="#">Регистрация</Link>
                 <button className='header__button' type='button'>Войти</button>
             </div>
         </header>

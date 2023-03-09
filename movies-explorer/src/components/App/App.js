@@ -15,10 +15,11 @@ function App() {
     return (
             <div className="App">
                 <Header/>
-                <Main/>
+                <Main>
+                    <Route path="/" element={<AboutProject/>} />
+                </Main>
                 <Navigation/>
                 <Routes>
-                    <Route path="/" element={<AboutProject/>} />
                     <Route path="/movies" element={<Movies/>} />
                     <Route path="/saved-movies" element={<SavedMovies/>} />
                     <Route path="/profile" element={<Profile/>} />
