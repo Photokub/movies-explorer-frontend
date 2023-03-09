@@ -3,6 +3,7 @@
     background-color: #073042;
     background-image: url("../../images/pic__COLOR_landing-logo.svg");
     background-position: center;
+    background-position-y: 80px;
     background-repeat: no-repeat;
     padding: 184px 0 224px;
     box-sizing: border-box;
