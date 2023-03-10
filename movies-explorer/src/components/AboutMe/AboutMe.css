@@ -1,8 +1,30 @@
+.about-me{
+    padding-bottom: 101px !important;
+}
+
+.about-me__container{
+    margin-top: 66px;
+    display: grid;
+    grid-template-columns: minmax(min-content, 1fr) 1fr;
+}
+
+.about-me__subtitle {
+    margin: 0 0 18px 0;
+}
 .about-me__caption{
+    margin: 0 0 26px 0;
+    grid-column: 1/2;
+
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
     line-height: 20px;
+}
+
+.about-me__text{
+    margin: 0 0 100px 0;
+
+    grid-row: 3/4;
 }
 
 .about-me__github-link{
@@ -12,4 +34,15 @@
     line-height: 17px;
     color: #000;
     text-decoration: none;
+
+    grid-row: 4/5;
+}
+
+.about-me__photo{
+    grid-column: 2/3;
+    grid-row: 1/5;
+    height: 100%;
+
+    justify-self: end;
+
 }
