@@ -44,3 +44,17 @@
 .portfolio__list__string:last-child{
     border-bottom: none;
 }
+
+@media screen and (max-width: 984px){
+    .portfolio{
+        padding: 0 50px 90px 50px;
+    }
+
+    .portfolio__list__string{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 50px;
+        letter-spacing: -0.04em;
+    }
+}
