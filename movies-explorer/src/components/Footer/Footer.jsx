@@ -9,8 +9,8 @@ export default function Footer() {
             <div className="footer__container">
                 <p className="footer__copyright">&copy; {new Date().getFullYear()}</p>
                 <ul className='footer__list'>
-                    <li><Link className='footer__link' to='#'>Яндекс.Практикум</Link></li>
-                    <li><Link className='footer__link' to='#'>Github</Link></li>
+                    <li className='footer__list__cell'><Link className='footer__link' to='#'>Яндекс.Практикум</Link></li>
+                    <li className='footer__list__cell'><Link className='footer__link' to='#'>Github</Link></li>
                 </ul>
             </div>
         </footer>

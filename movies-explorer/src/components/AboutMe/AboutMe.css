@@ -71,7 +71,7 @@
     }
 
     .about-me__container{
-        grid-template-columns: 284px;
+        grid-template-columns: minmax(248px, 550px);
         justify-content: center;
         margin-top: 60px;
     }

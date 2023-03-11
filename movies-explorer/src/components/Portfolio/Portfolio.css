@@ -62,6 +62,15 @@
 @media screen and (max-width: 568px){
     .portfolio {
         padding: 0 18px;
-        /*padding: 70px 18px;*/
+    }
+
+    .portfolio__title{
+        margin: 0 0 40px 0;
+        font-size: 14px;
+    }
+
+    .portfolio__list__string{
+        font-size: 18px;
+        line-height: 28px;
     }
 }
