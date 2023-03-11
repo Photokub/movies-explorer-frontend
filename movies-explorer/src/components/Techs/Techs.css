@@ -23,9 +23,8 @@
 
 .techs__container {
     display: grid;
-    height: 60px;
     grid-template-columns: repeat(7, 90px);
-    column-gap: 10px;
+    gap: 10px;
     margin-top: 100px;
 }
 
@@ -45,10 +44,6 @@
 }
 
 @media screen and (max-width: 984px){
-    .techs{
-        padding: 90px 50px !important;
-    }
-
     .techs__subtitle {
         margin: 80px 0 22px 0;
     }
@@ -68,5 +63,23 @@
         font-size: 12px;
         line-height: 15px;
         letter-spacing: -0.04em;
+    }
+}
+
+@media screen and (max-width: 568px){
+    .techs{
+        background-color: #FFFFFF;
+        padding: 70px 18px;
+    }
+
+    .techs__container{
+        grid-template-columns: repeat(2, 84px);
+        grid-template-rows: repeat(4, 57px);
+        margin-top: 60px;
+    }
+
+    .techs__subtitle{
+        font-size: 30px !important;
+        line-height: 36px !important;
     }
 }

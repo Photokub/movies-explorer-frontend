@@ -80,3 +80,34 @@
         line-height: 17px !important;
     }
 }
+
+@media screen and (max-width: 568px){
+    .about-project__table-container{
+        flex-direction: column;
+        height: 272px;
+        justify-content: space-between;
+        margin-top: 60px;
+    }
+
+    .about-project__subtitle {
+        margin-bottom: 16px;
+    }
+
+    .about-project__graph {
+        margin-top: 60px;
+        grid-template-columns: 100px auto;
+    }
+
+    .about-project__text_graph {
+        font-size: 11px !important;
+        line-height: 13px !important;
+    }
+
+    .about-project__caption_graph {
+        font-size: 11px !important;
+        line-height: 13px !important;
+        padding-top: 10px !important;
+    }
+
+
+}

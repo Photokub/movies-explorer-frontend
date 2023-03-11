@@ -59,3 +59,31 @@
         line-height: 18px;
     }
 }
+
+@media screen and (max-width: 568px){
+    .main__section{
+        padding: 70px 18px;
+    }
+
+    .main__text{
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .main__title{
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: -0.04em;
+    }
+
+    .main__subtitle{
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: -0.04em;
+    }
+
+    .main__subhead{
+        font-size: 30px;
+        line-height: 36px;
+    }
+}
