@@ -22,6 +22,7 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+    letter-spacing: -0.04em;
 }
 
 .main__subhead{
@@ -37,7 +38,6 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: -0.04em;
 }
 
 .main__caption{
@@ -46,4 +46,16 @@
     font-size: 14px;
     line-height: 17px;
     color: #A0A0A0;
+}
+
+@media screen and (max-width: 984px){
+    .main__section{
+        padding: 88px 50px;
+    }
+
+    .main__text{
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+    }
 }

@@ -31,3 +31,9 @@
     border: none;
     border-radius: 3px;
 }
+
+@media screen and (max-width: 984px){
+    .header{
+        padding: 18px 30px;
+    }
+}

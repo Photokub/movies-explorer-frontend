@@ -9,7 +9,7 @@
     box-sizing: border-box;
 }
 
-.promo__header{
+.promo__title{
     font-weight: 400;
     font-size: 50px;
     line-height: 58px;
@@ -18,6 +18,12 @@
     color: #FFF;
 
     width:730px;
-
     margin:0 auto;
+}
+
+@media screen and (max-width: 984px){
+    .promo{
+        padding: 326px 0 342px;
+        background-position-y: 220px;
+    }
 }

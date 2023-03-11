@@ -54,3 +54,29 @@
 .about-project__graph .about-project__text_graph-cell:nth-child(2){
     background-color: #F2F2F2;
 }
+
+@media screen and (max-width: 984px){
+    .about-project__subtitle {
+        margin-bottom: 20px;
+    }
+
+    .about-project__cell{
+        max-width: 320px;
+    }
+
+    .about-project__graph{
+        margin-top: 94px;
+    }
+
+    .about-project__text_graph{
+        font-weight: 400 !important;
+        font-size: 14px !important;
+        line-height: 17px !important;
+    }
+
+    .about-project__caption{
+        font-weight: 400 !important;
+        font-size: 14px !important;
+        line-height: 17px !important;
+    }
+}
