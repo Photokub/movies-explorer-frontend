@@ -3,15 +3,15 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import './Movies.css'
 
 export default function Movies() {
     return (
-        <>
-            <p>Movies</p>
+        <section className='movies'>
             <SearchForm/>
             <Preloader/>
             <MoviesCardList/>
             <MoviesCard/>
-        </>
+        </section>
     )
 }
