@@ -1,13 +1,13 @@
 .search-form-container{
-    border: 1px dashed greenyellow;
     box-sizing: border-box;
     padding: 70px 70px 100px 70px;
     height: 242px;
 }
 
 .search-form{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto minmax(80px, 100px);
+    grid-gap: 25px;
     width: 100%;
     border: 1.5px solid #AAAAAA;
     border-radius: 8px;
@@ -19,8 +19,6 @@
 .search-form__input{
     border-radius: 8px;
     border: none;
-    /*width: 100%;*/
-    /*width: calc(100% - 120px);*/
     height: 100%;
     padding: 0;
 
@@ -37,12 +35,10 @@
 .search-form__button{
     width: 100px;
     height: 52px;
-    /*box-sizing: border-box;*/
     padding: 0;
     background-color: #3456F3;
     border: none;
     border-radius: 5px;
-    /*margin-left: 20px;*/
 
     font-style: normal;
     font-weight: 500;

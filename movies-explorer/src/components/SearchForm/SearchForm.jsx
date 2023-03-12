@@ -6,10 +6,10 @@ export default function SearchForm() {
     return (
         <div className='search-form-container'>
             <form className='search-form'>
-                <input className='search-form__input'/>
+                <input className='search-form__input' type='text' placeholder='Фильм'/>
                 <button className='search-form__button'>Поиск</button>
+                <FilterCheckbox/>
             </form>
-            <FilterCheckbox/>
         </div>
     )
 }
