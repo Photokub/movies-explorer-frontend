@@ -65,7 +65,7 @@
     }
 }
 
-@media screen and (max-width: 568px){
+@media screen and (max-width: 744px){
     .about-me{
         padding-bottom: 70px !important;
     }

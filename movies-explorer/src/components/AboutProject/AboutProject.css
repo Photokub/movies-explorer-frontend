@@ -10,6 +10,12 @@
     display: grid;
 }
 
+.about-project__cell:first-child{
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+
+
 .about-project__subtitle {
     margin-top: 0;
     margin-bottom: 26px;

@@ -66,16 +66,18 @@
     }
 }
 
-@media screen and (max-width: 568px){
-    .techs{
-        background-color: #FFFFFF;
-        padding-bottom: 70px !important;
-    }
-
+@media screen and (max-width: 744px){
     .techs__container{
         grid-template-columns: repeat(2, 84px);
         grid-template-rows: repeat(4, 57px);
         margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 568px){
+    .techs{
+        background-color: #FFFFFF;
+        padding-bottom: 70px !important;
     }
 
     .techs__subtitle{
