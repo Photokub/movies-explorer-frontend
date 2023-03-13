@@ -10,6 +10,7 @@ export default function SearchForm() {
                 <button className='search-form__button'>Поиск</button>
                 <FilterCheckbox/>
             </form>
+            <hr className='search-form-container__border'></hr>
         </div>
     )
 }

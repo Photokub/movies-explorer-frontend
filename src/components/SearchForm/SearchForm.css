@@ -2,18 +2,19 @@
     box-sizing: border-box;
     padding: 70px 70px 100px 70px;
     height: 242px;
+    /*border-bottom: 1px solid #AAA;*/
 }
 
 .search-form{
     display: grid;
     grid-template-columns: auto minmax(80px, 100px);
-    grid-gap: 25px;
+    grid-gap: calc(10px + 26px);
     width: 100%;
     border: 1.5px solid #AAAAAA;
     border-radius: 8px;
     height: 72px;
     box-sizing: border-box;
-    padding: 10px 25px 10px 10px;
+    padding: 10px 10px 10px 25px;
 }
 
 .search-form__input{
@@ -45,4 +46,11 @@
     font-size: 14px;
     line-height: 18px;
     color: #FFFFFF;
+}
+
+.search-form-container__border{
+    position: relative;
+    top: 80px;
+    background: #AAAAAA;
+    height: 1px;
 }

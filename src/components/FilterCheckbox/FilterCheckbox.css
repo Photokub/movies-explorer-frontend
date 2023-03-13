@@ -1,8 +1,67 @@
 .filter{
     display: flex;
     flex-direction: row;
+    position: relative;
+    right: 25px;
+    width: 36px;
+    height: 20px;
 }
 
 .filter__title{
-    margin: 0 0 0 14px
+    margin: 0;
+    margin-left: calc(36px + 14px);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.filter__switcher {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.filter__switcher__point {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #EBEBEB;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.filter__switcher__point:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #EBEBEB;
+    outline: 1px solid #FFF;
+    outline-offset: -1px;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.filter__switcher:checked + .filter__switcher__point:before {
+    background-color: #2BE080;
+}
+
+.filter__switcher:checked + .filter__switcher__point:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+
+.filter__switcher__point {
+    border-radius: 34px;
+}
+
+.filter__switcher__point:before {
+    border-radius: 50%;
 }
