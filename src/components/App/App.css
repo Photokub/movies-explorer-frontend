@@ -1,0 +1,8 @@
+.App {
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
