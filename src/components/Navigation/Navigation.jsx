@@ -11,7 +11,7 @@ export default function Navigation() {
             </Link>
             <div className='navigation__container'>
                 <Link className="navigation__link" to="#">Регистрация</Link>
-                <button className='navigation__button' type='button'>Войти</button>
+                <button className='navigation__button' type='submit'>Войти</button>
             </div>
         </nav>
     )

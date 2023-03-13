@@ -7,7 +7,7 @@ export default function SearchForm() {
         <div className='search-form-container'>
             <form className='search-form'>
                 <input className='search-form__input' type='text' placeholder='Фильм'/>
-                <button className='search-form__button'>Поиск</button>
+                <button className='search-form__button' type='submit'>Поиск</button>
                 <FilterCheckbox/>
             </form>
             <hr className='search-form-container__border'></hr>
