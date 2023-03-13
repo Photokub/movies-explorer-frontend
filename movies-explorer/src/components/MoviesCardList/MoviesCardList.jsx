@@ -1,9 +1,0 @@
-import React from "react";
-
-export default function MoviesCardList() {
-    return (
-        <section>
-
-        </section>
-    )
-}
