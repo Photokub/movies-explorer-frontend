@@ -1,5 +1,5 @@
 .movies-card-list{
-    padding: 70px;
+    padding: 70px 70px 30px 70px;
     display: grid;
     grid-column-gap: 24px;
     grid-row-gap: 30px;
