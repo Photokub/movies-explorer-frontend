@@ -1,19 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {useRef} from 'react';
 import {Link, NavLink, useLocation} from "react-router-dom";
+import useWindowDimensions from '../../hooks/useWindowDimensions/useWindowDimensions'
 import logo from "../../images/logo.svg";
 import './Navigation.css'
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 export default function Navigation() {
-
     const location = useLocation()
-    console.log(location)
-
+    const [windowSize, setWindowSize] = useState(getWindowSize());
     const navContainer =
         <div className='navigation__container'>
             <Link className="navigation__link" to="#">Регистрация</Link>
             <button className='navigation__button' type='submit'>Войти</button>
         </div>
-
     const navContainerAuth =
         <div className='navigation__auth-warp'>
             <div className='navigation__film-nav-container'>
@@ -24,15 +24,29 @@ export default function Navigation() {
                 <button className='navigation__account-btn' type='button'>Аккаунт</button>
             </div>
         </div>
+    const menu = location.pathname !== '/' ? navContainerAuth : navContainer
 
+    useEffect(() => {
+        function handleWindowResize() {
+            setWindowSize(getWindowSize());
+        }
+        window.addEventListener('resize', handleWindowResize);
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        }
+    });
 
+    function getWindowSize() {
+        const {innerWidth, innerHeight} = window;
+        return {innerWidth, innerHeight};
+    }
 
     return (
         <nav className={location.pathname !== '/' ? 'navigation_authorized' : 'navigation'}>
             <Link className="navigation__logo-link" to="/">
                 <img className="navigation__logo" src={logo} alt="логотип movies explorer"/>
             </Link>
-            {location.pathname !== '/' ? navContainerAuth : navContainer}
+            {windowSize.innerWidth <= 768 && location.pathname !== '/' ? <BurgerMenu/> : menu}
         </nav>
     )
 }
