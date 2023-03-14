@@ -45,7 +45,6 @@
     justify-content: flex-end;
     grid-row: 1/3;
     grid-column: 2 / 3;
-
 }
 
 .save-checkbox__switcher {
@@ -63,9 +62,10 @@
     justify-self: end;
     margin-left: 14px;
     border: none;
-    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50%;
     background-image: url('../../images/save9d.svg');
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .save-checkbox__switcher:checked + .save-checkbox__point {
