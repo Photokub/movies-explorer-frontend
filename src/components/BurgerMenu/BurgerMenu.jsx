@@ -13,18 +13,22 @@ export default function BurgerMenu() {
                 <ul className='burger_menu'>
                     <li>
                         <Link to='/' className='navigation__movies-navlink'>Главная</Link>
+                    {/*<div className='navigation__film-nav-container_burger'>*/}
+                    {/*    <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='movies'>Фильмы</NavLink>*/}
+                    {/*    <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>*/}
+                    {/*</div>*/}
                     </li>
                     <li>
-                    <div className='navigation__film-nav-container_burger'>
                         <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='movies'>Фильмы</NavLink>
-                        <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
-                    </div>
                     </li>
                     <li>
-                    <div className='navigation__container_auth'>
+                        <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
+                    </li>
+                    {/*<li>*/}
+                    {/*</li>*/}
+                    <div className='navigation__container_auth navigation__container_auth_burger'>
                         <button className='navigation__account-btn' type='button'>Аккаунт</button>
                     </div>
-                    </li>
                 </ul>
             </div>
         </nav>

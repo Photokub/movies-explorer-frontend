@@ -105,6 +105,10 @@
     line-height: 16px;
 }
 
+navigation__container_auth_burger{
+    justify-self: end;
+}
+
 @media screen and (max-width: 984px){
     .navigation{
         padding: 14px 30px;
