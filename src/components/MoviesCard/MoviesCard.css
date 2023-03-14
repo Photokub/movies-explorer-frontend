@@ -1,4 +1,4 @@
-.movies-card-element{
+.movies-card-element {
     display: grid;
     grid-template-rows: repeat(2, auto);
     width: 364px;
@@ -7,7 +7,7 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
 }
 
-.movies-card-element__label{
+.movies-card-element__label {
     display: grid;
     grid-template-columns: repeat(2, auto);
     align-self: start;
@@ -15,7 +15,7 @@
     margin: 14px 0;
 }
 
-.movies-card-element__label__title{
+.movies-card-element__label__title {
     margin: 0;
     font-style: normal;
     font-weight: 500;
@@ -26,7 +26,7 @@
     overflow: hidden;
 }
 
-.movies-card-element__label__subtitle{
+.movies-card-element__label__subtitle {
     margin: 9px 0 0 0;
     grid-row: 2/3;
     font-style: normal;
@@ -39,25 +39,40 @@
     overflow: hidden;
 }
 
-.movies-card-element__label__disabled{
+.save-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    grid-row: 1/3;
+    grid-column: 2 / 3;
+
+}
+
+.save-checkbox__switcher {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.save-checkbox__point {
     height: 30px;
+    width: 30px;
     grid-row: 1/3;
     grid-column: 2/3;
     align-self: center;
     justify-self: end;
     margin-left: 14px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('../../images/save9d.svg');
+    background-repeat: no-repeat;
 }
 
-.movies-card-element__label__enabled{
-    height: 30px;
-    grid-row: 1/3;
-    grid-column: 2/3;
-    align-self: center;
-    justify-self: end;
-    margin-left: 14px;
+.save-checkbox__switcher:checked + .save-checkbox__point {
+    background-image: url('../../images/save9.svg');
 }
 
-.movies-card-element__image{
+.movies-card-element__image {
     width: 100%;
     height: 203px;
     object-fit: cover;
