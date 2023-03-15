@@ -105,7 +105,7 @@
     line-height: 16px;
 }
 
-navigation__container_auth_burger{
+.navigation__container_auth_burger{
     justify-self: end;
 }
 

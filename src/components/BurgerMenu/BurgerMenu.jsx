@@ -10,24 +10,24 @@ export default function BurgerMenu() {
                 <span className='burger__container__stripe'></span>
                 <span className='burger__container__stripe'></span>
                 <span className='burger__container__stripe'></span>
-                <ul className='burger_menu'>
-                    <li>
-                        <Link to='/' className='navigation__movies-navlink'>Главная</Link>
+                <ul className='burger-menu-list'>
+                    <li className='burger-menu-list__string'>
+                        <Link to='/' className='burger-menu__list-navlink'>Главная</Link>
                     {/*<div className='navigation__film-nav-container_burger'>*/}
                     {/*    <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='movies'>Фильмы</NavLink>*/}
                     {/*    <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>*/}
                     {/*</div>*/}
                     </li>
-                    <li>
-                        <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='movies'>Фильмы</NavLink>
+                    <li className='burger-menu-list__string'>
+                        <NavLink className={({isActive}) => `${isActive ? "burger-menu__list-navlink_active" : "burger-menu__list-navlink"}`} to='movies'>Фильмы</NavLink>
                     </li>
-                    <li>
-                        <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
+                    <li className='burger-menu-list__string'>
+                        <NavLink className={({isActive}) => `${isActive ? "burger-menu__list-navlink_active" : "burger-menu__list-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
                     </li>
                     {/*<li>*/}
                     {/*</li>*/}
                     <div className='navigation__container_auth navigation__container_auth_burger'>
-                        <button className='navigation__account-btn' type='button'>Аккаунт</button>
+                        <button className='burger-menu-list__btn' type='button'>Аккаунт</button>
                     </div>
                 </ul>
             </div>
