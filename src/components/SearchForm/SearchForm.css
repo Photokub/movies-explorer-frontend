@@ -53,3 +53,31 @@
     background: #AAAAAA;
     height: 1px;
 }
+
+@media screen and (max-width: 984px){
+
+    .search-form-container{
+        padding: 70px 30px 108px 30px;
+        height: 250px;
+    }
+}
+
+@media screen and (max-width: 568px){
+    .search-form-container{
+        padding: 70px 14px 108px 14px;
+        height: 250px;
+    }
+
+    .search-form{
+        grid-template-columns: minmax(50px, auto) 80px;
+        padding: 6px 6px 6px 12px;
+        height: 56px;
+        grid-row-gap: calc(6px + 30px);
+        grid-column-gap: 10px ;
+    }
+
+    .search-form__button{
+        width: 80px;
+        height: 44px;
+    }
+}

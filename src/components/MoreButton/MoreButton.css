@@ -14,3 +14,15 @@
     font-size: 12px;
     line-height: 15px;
 }
+
+@media screen and (max-width: 984px){
+    .more-btn{
+        margin: 50px 30px 80px 30px;
+    }
+}
+
+@media screen and (max-width: 568px){
+    .more-btn{
+        margin: 50px 10px 80px 10px;
+    }
+}

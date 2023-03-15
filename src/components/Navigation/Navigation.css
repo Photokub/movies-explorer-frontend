@@ -109,6 +109,10 @@
     .navigation{
         padding: 14px 30px;
     }
+
+    .navigation_authorized {
+        padding: 18px 30px;
+    }
 }
 
 @media screen and (max-width: 568px) {
@@ -125,5 +129,8 @@
     .navigation__button{
         width: 54px;
         height: 26px;
+    }
+    .navigation_authorized {
+        padding: 18px 14px;
     }
 }

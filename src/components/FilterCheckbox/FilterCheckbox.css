@@ -65,3 +65,13 @@
 .filter__switcher__point:before {
     border-radius: 50%;
 }
+
+@media screen and (max-width: 568px){
+    .filter{
+        right: 12px;
+    }
+
+    .filter__title{
+        font-size: 11px;
+    }
+}

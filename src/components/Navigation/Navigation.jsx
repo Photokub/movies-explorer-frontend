@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useRef} from 'react';
 import {Link, NavLink, useLocation} from "react-router-dom";
-import useWindowDimensions from '../../hooks/useWindowDimensions/useWindowDimensions'
 import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
