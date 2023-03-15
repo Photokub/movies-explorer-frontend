@@ -1,24 +1,6 @@
-/*a*/
-/*{*/
-/*    text-decoration: none;*/
-/*    color: #232323;*/
-
-/*    transition: color 0.3s ease;*/
-/*}*/
-
-/*a:hover*/
-/*{*/
-/*    color: tomato;*/
-/*}*/
-
-.burger {
-    /*display: flex;*/
-}
-
 .burger__container {
     display: flex;
     flex-direction: column;
-    /*position: absolute;*/
 
     z-index: 1;
 
@@ -31,20 +13,15 @@
     width: 33px;
     height: 27px;
     position: absolute;
-    /*top: -7px;*/
-    /*left: -5px;*/
 
     cursor: pointer;
 
-    opacity: 0; /* hide this */
-    z-index: 3; /* and place it over the hamburger */
+    opacity: 0;
+    z-index: 3;
 
     -webkit-touch-callout: none;
 }
 
-/*
- * Just a quick hamburger
- */
 .burger__container .burger__container__stripe {
     display: block;
     width: 33px;
@@ -56,7 +33,7 @@
 
     z-index: 2;
 
-    transform-origin: 4px 0px;
+    transform-origin: 4px 0;
 
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
     background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
@@ -64,44 +41,29 @@
 }
 
 .burger__container .burger__container__stripe:first-child {
-    transform-origin: 0% 0%;
+    transform-origin: 0 0;
 }
 
 .burger__container .burger__container__stripe:nth-last-child(2) {
-    transform-origin: 0% 100%;
+    transform-origin: 0 100%;
     margin: 0;
 }
 
-/*
- * Transform all the slices of hamburger
- * into a crossmark.
- */
 .burger__container__input:checked ~ .burger__container__stripe {
     opacity: 1;
     transform: rotate(45deg) translate(-2px, -1px);
-    background: #232323;
 }
 
-/*
- * But let's hide the middle one.
- */
-.burger__container__input:checked ~ .burger__container__stripe:nth-last-child(3) {
+.burger__container__input:checked ~ .burger__container__stripe:nth-last-child(4) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
 }
 
-/*
- * Ohyeah and the last one should go the other direction
- */
-.burger__container__input:checked ~ .burger__container__stripe:nth-last-child(2) {
+.burger__container__input:checked ~ .burger__container__stripe:nth-last-child(3) {
     opacity: 1;
-    transform: rotate(-45deg) translate(0, -1px);
+    transform: rotate(-45deg) translate(0, -4px);
 }
 
-/*
- * Make this absolute positioned
- * at the top left of the screen
- */
 .burger-menu-list {
     display: flex;
     flex-direction: column;
@@ -123,26 +85,25 @@
     border: 1px dashed green;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
-    /* to stop flickering of text in safari */
 
-    transform-origin: 0% 0%;
+    transform-origin: 0 0;
     transform: translate(100%, 0);
 
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
+.burger-menu-list__string:last-of-type {
+    padding: 0;
+}
+
 .burger-menu-list__string {
     padding: 0 0 28px 0;
-    /*font-weight: 500;*/
-    /*font-size: 18px;*/
-    /*line-height: 22px;*/
 }
 
 .burger-menu-list__btn {
     border: none;
     background-color: rgba(0, 0, 0, 0);
 
-    /*padding: 0 0 28px 0;*/
     margin: 0 0 28px 0;
     font-weight: 500;
     font-size: 18px;
@@ -171,15 +132,34 @@
     color: #000;
 }
 
+.burger-menu__container_auth{
+    justify-self: end;
+    margin-top: 621px;
+}
 
-/*
- * And let's fade it in from the left
- */
-.burger__container__input:checked ~ ul {
+.burger__substrate{
+    position: absolute;
+    top:0;
+    right: 0;
+    z-index: 0;
+    width: 100vh;
+    height: 100vh;
+    background-color: #000000;
+    opacity: 0.3;
+    visibility: hidden;
+    transition: transform 1s ease-in;
+}
+
+.burger__container__input:checked ~ .burger-menu-list {
     transform: none;
     visibility: visible;
     opacity: 1;
 }
+
+.burger__container__input:checked ~ .burger__substrate{
+    visibility: visible;
+}
+
 
 @media screen and (max-width: 768px) {
     .burger-menu-list {

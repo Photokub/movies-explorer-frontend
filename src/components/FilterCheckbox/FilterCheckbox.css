@@ -29,6 +29,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: -1;
     background-color: #EBEBEB;
     -webkit-transition: 0.4s;
     transition: 0.4s;
@@ -53,7 +54,6 @@
 }
 
 .filter__switcher:checked + .filter__switcher__point:before {
-    -webkit-transform: translateX(16px);
     -ms-transform: translateX(16px);
     transform: translateX(16px);
 }
