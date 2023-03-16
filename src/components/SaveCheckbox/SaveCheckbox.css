@@ -43,5 +43,5 @@
 }
 
 .save-checkbox__switcher:checked + .save-checkbox__point {
-    background-image: url('../../images/d9.svg');
+    background-image: url('../../images/save9.svg');
 }

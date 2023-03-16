@@ -12,11 +12,12 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 
 function App() {
 
-    const shouldHide = useResolvedPath('/signin' || '/signup' || '/*');
+    const shouldHide = useResolvedPath('signin' || 'signup' || '*');
 
     return (
         <div className="App">
             {!shouldHide && <Header/>}
+            {/*<Header/>*/}
             <Routes>
                 <Route path='/' element={<Main/>}/>
                 <Route path="/movies" element={<Movies/>}/>
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/signup" element={<Register/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
+            {/*<Footer/>*/}
             {!shouldHide && <Footer/>}
             <Routes>
 

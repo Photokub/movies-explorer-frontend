@@ -8,7 +8,7 @@ export default function SaveCheckbox() {
     return(
         <label className='save-checkbox'>
             <input className='save-checkbox__switcher' type='checkbox'/>
-            <span className={ location.pathname='/saved-movies' ?  'save-checkbox__delete-point' : 'save-checkbox__point' } />
+            <span className={ location.pathname !=='/saved-movies' ?  'save-checkbox__point' : 'save-checkbox__delete-point' } />
         </label>
     )
 }
