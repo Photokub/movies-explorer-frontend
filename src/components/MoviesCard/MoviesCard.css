@@ -1,7 +1,7 @@
 .movies-card-element {
     display: grid;
     grid-template-rows: repeat(2, auto);
-    width: 364px;
+    max-width: 364px;
     height: 271px;
     background: #FDFDFD;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);

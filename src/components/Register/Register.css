@@ -1,0 +1,42 @@
+.register {
+    display: flex;
+    flex-direction: column;
+}
+
+.register__warp {
+    box-sizing: border-box;
+    padding: 70px 0;
+}
+
+.register__logo {
+    height: 34px;
+    width: 34px;
+    margin: 0 0 40px 0;
+}
+
+.register__title {
+    margin: 0 0 40px 0;
+
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+.register__subtitle {
+    margin: 16px 0 0 0;
+    align-self: center;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #A0A0A0;
+}
+
+.register__sublink {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3456F3;
+}
