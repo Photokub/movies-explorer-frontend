@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useResolvedPath} from 'react-router-dom';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
@@ -11,9 +11,12 @@ import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
 
 function App() {
+
+    const shouldHide = useResolvedPath('/signin' || '/signup' || '/*');
+
     return (
         <div className="App">
-            <Header/>
+            {!shouldHide && <Header/>}
             <Routes>
                 <Route path='/' element={<Main/>}/>
                 <Route path="/movies" element={<Movies/>}/>
@@ -23,7 +26,7 @@ function App() {
                 <Route path="/signup" element={<Register/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
-            <Footer/>
+            {!shouldHide && <Footer/>}
             <Routes>
 
             </Routes>
