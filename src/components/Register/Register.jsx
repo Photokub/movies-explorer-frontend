@@ -8,8 +8,7 @@ export default function Register() {
             title='Добро пожаловать!'
             subtitle='Уже зарегистрированы? '
             sublink='Войти'
-        >
-        </WelcomeScreen>
+        />
     )
 }
 

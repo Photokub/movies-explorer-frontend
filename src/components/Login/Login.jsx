@@ -1,9 +1,12 @@
+import WelcomeScreen from "../WelcomeScreen/WelcomeScreen";
 import React from "react";
 
 export default function Login() {
     return (
-        <section>
-            <p>Login</p>
-        </section>
+        <WelcomeScreen
+            title='Рады видеть!'
+            subtitle='Ещё не зарегистрированы? '
+            sublink='Регистрация'
+        />
     )
 }

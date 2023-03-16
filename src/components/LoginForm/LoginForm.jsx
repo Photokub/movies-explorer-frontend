@@ -1,22 +1,13 @@
 import React from "react";
 import Form from "../Form/Form";
 
-export default function RegisterForm(){
+export default function LoginForm(){
     return(
         <Form
             name='register'
             method='post'
-            btnText='Зарегистрироваться'
+            btnText='Войти'
         >
-            <label className='form__field'>
-                <span className='form__input__title'>Имя</span>
-                <input className='form__input'
-                       name='name_field'
-                       defaultValue=""
-                       required
-                />
-                <span className='form__input__err' id='name_field-err'></span>
-            </label>
             <label className='form__field'>
                 <span className='form__input__title'>E-mail</span>
                 <input className='form__input'
@@ -34,7 +25,7 @@ export default function RegisterForm(){
                        defaultValue=""
                        required
                 />
-                <span className='form__input__err' id='name_field-err'>Что-то пошло не так...</span>
+                <span className='form__input__err' id='name_field-err'></span>
             </label>
         </Form>
     )
