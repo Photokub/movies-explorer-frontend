@@ -1,13 +1,12 @@
 import React from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import MoviesCard from "../MoviesCard/MoviesCard";
+import SearchForm from "../SearchForm/SearchForm";
 
 export default function SavedMovies() {
     return (
-      <>
-          <p>Saved Movies</p>
+      <section className='saved-movies movies'>
+          <SearchForm/>
           <MoviesCardList/>
-          <MoviesCard/>
-      </>
+      </section>
     )
 }
