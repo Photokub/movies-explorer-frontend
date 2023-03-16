@@ -7,6 +7,7 @@ export default function Register() {
             title='Добро пожаловать!'
             subtitle='Уже зарегистрированы? '
             sublink='Войти'
+            to='/signin'
         />
     )
 }

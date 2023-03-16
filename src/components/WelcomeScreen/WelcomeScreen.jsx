@@ -7,7 +7,7 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import LoginForm from "../LoginForm/LoginForm";
 
 
-export default function WelcomeScreen({title, subtitle, sublink}) {
+export default function WelcomeScreen({title, subtitle, sublink, to}) {
     const location = useLocation()
 
     let component
@@ -23,7 +23,7 @@ export default function WelcomeScreen({title, subtitle, sublink}) {
                 <img className='welcome__logo' src={logo} alt='логотип'/>
                 <p className='welcome__title'>{title}</p>
                 {component}
-                <p className='welcome__subtitle'>{subtitle}<Link className='welcome__sublink' to='/signin'>{sublink}</Link></p>
+                <p className='welcome__subtitle'>{subtitle}<Link className='welcome__sublink' to={to}>{sublink}</Link></p>
             </section>
         </div>
     )

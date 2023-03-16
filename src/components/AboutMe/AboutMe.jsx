@@ -13,10 +13,10 @@ export default function AboutMe() {
                 <p className='about-me__text main__text'>Родился и живу в Москве, где и учился в колледже на факультете
                     «ЭВМ, комплексы и сети», а затем получил образование в институте и аспирантуре на факультете
                     дизайна. Работаю дизайнером на протяжении 11 лет, 6 из которых занимаюсь веб-дизайном. На курсах
-                    веб-разработки прочакачал свои скилы и теперь выполняю заказы «под ключь» – от макета до разработки.
+                    веб-разработки прочакачал свои скилы и теперь выполняю заказы «под ключ» – от макета до разработки.
                     Увлекаюсь рыбалкой, горными лыжами, резьбой по дереву. Женат на красивой жене.</p>
                 <img className='about-me__photo' src={photo} alt='фото Александра'/>
-                <Link className='about-me__github-link' to='https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow'>Github</Link>
+                <Link className='about-me__github-link' target="_blank" to='https://github.com/Photokub'>Github</Link>
             </div>
         </section>
     )

@@ -7,6 +7,7 @@ export default function Login() {
             title='Рады видеть!'
             subtitle='Ещё не зарегистрированы? '
             sublink='Регистрация'
+            to='/signup'
         />
     )
 }
