@@ -4,7 +4,9 @@ import './Form.css'
 export default function Form({name, title, method, btnText, children}){
     return(
         <form className='form' name={`${name}`} method={`${method}`} title={`${title}`} noValidate={false}>
+            <div className='form__container'>
             {children}
+            </div>
             <button className='form__submit-btn' type='submit'>{btnText}</button>
         </form>
     )

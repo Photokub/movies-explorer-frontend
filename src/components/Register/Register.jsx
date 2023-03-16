@@ -38,6 +38,7 @@ export default function Register() {
                         <span className='form__input__title'>Пароль</span>
                         <input className='form__input'
                                name='email_field'
+                               type='password'
                                defaultValue=""
                                required
                         />
