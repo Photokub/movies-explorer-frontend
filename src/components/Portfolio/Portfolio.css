@@ -33,8 +33,13 @@
     justify-content: space-between;
 }
 
-.portfolio__list__string::after{
-    content: '↗';
+.portfolio__list__link{
+    text-decoration: none;
+    color: #000000;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 60px;
+    letter-spacing: -0.04em;
 }
 
 .portfolio__list__string:first-child{

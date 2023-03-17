@@ -1,11 +1,10 @@
 import React from "react";
 import photo from '../../images/255x307.png'
 import './AboutMe.css'
-import {Link} from "react-router-dom";
 
 export default function AboutMe() {
     return (
-        <section className='about-me main__section'>
+        <section className='about-me main__section' id='about-me'>
             <h2 className='about-me__title main__title'>Студент</h2>
             <div className='about-me__container'>
                 <h4 className='about-me__subtitle main__subhead'>Александр</h4>
@@ -16,7 +15,7 @@ export default function AboutMe() {
                     веб-разработки прочакачал свои скилы и теперь выполняю заказы «под ключ» – от макета до разработки.
                     Увлекаюсь рыбалкой, горными лыжами, резьбой по дереву. Женат на красивой жене.</p>
                 <img className='about-me__photo' src={photo} alt='фото Александра'/>
-                <Link className='about-me__github-link' target="_blank" to='https://github.com/Photokub'>Github</Link>
+                <a className='about-me__github-link' target="_blank" href='https://github.com/Photokub'>Github</a>
             </div>
         </section>
     )

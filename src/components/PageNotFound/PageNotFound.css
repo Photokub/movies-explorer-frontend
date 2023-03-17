@@ -28,6 +28,7 @@
     background-color: rgba(0, 0, 0, 0);
     display: block;
     margin: 0 auto;
+    cursor: pointer;
 
     font-style: normal;
     font-weight: 400;

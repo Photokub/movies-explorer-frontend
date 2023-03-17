@@ -13,6 +13,8 @@
     font-weight: 500;
     font-size: 13px;
     margin-right: 40px;
+    border-bottom: 1px solid #FFFFFF;
+    cursor: pointer;
 }
 
 .nav-tab__link:last-child{

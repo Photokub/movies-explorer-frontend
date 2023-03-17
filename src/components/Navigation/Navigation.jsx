@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {Link, NavLink, useLocation} from "react-router-dom";
+import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 export default function Navigation() {
+    const navigate = useNavigate();
+    const handleClick = () => navigate('/signin');
     const location = useLocation()
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const navContainer =
         <div className='navigation__container'>
-            <Link className="navigation__link" to="#">Регистрация</Link>
-            <button className='navigation__button' type='submit'>Войти</button>
+            <Link className="navigation__link" to="/signup">Регистрация</Link>
+            <button className='navigation__button' type='submit' onClick={handleClick}>Войти</button>
         </div>
     const navContainerAuth =
         <div className='navigation__auth-warp'>
