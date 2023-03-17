@@ -6,13 +6,14 @@ import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 export default function Navigation() {
     const navigate = useNavigate();
-    const handleClick = () => navigate('/signin');
+    const signinRoute = () => navigate('/signin');
+    const profileRoute = () => navigate('/profile');
     const location = useLocation()
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const navContainer =
         <div className='navigation__container'>
             <Link className="navigation__link" to="/signup">Регистрация</Link>
-            <button className='navigation__button' type='submit' onClick={handleClick}>Войти</button>
+            <button className='navigation__button' type='submit' onClick={signinRoute}>Войти</button>
         </div>
     const navContainerAuth =
         <div className='navigation__auth-warp'>
@@ -21,7 +22,7 @@ export default function Navigation() {
                 <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
             </div>
             <div className='navigation__container_auth'>
-                <button className='navigation__account-btn' type='button'>Аккаунт</button>
+                <button className='navigation__account-btn' type='button' onClick={profileRoute}>Аккаунт</button>
             </div>
         </div>
     const menu = location.pathname !== '/' ? navContainerAuth : navContainer

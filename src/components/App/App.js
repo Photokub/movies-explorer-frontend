@@ -8,6 +8,7 @@ import Main from "../Main/Main";
 import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
 import {Layout} from "../Layout/Layout";
+import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
                     <Route path='/' element={<Main/>}/>
                     <Route path="/movies" element={<Movies/>}/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>
+                </Route>
+                <Route element={<LayoutProfile/>}>
                     <Route path="/profile" element={<Profile/>}/>
                 </Route>
                 <Route path="/signin" element={<Login/>}/>
