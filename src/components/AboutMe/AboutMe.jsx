@@ -15,7 +15,7 @@ export default function AboutMe() {
                     веб-разработки прочакачал свои скилы и теперь качественно выполняю заказы «под ключ» – от макета до разработки.
                     Увлекаюсь рыбалкой, горными лыжами, резьбой по дереву. Женат на красивой жене.</p>
                 <img className='about-me__photo' src={photo} alt='фото Александра'/>
-                <a className='about-me__github-link' target="_blank" href='https://github.com/Photokub'>Github</a>
+                <a className='about-me__github-link' target="_blank" href='https://github.com/Photokub' rel="noreferrer">Github</a>
             </div>
         </section>
     )
