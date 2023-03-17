@@ -187,4 +187,12 @@
     .burger__container__stripe{
         width:20px;
     }
+    .burger__container__input:checked ~ .burger__container__stripe {
+        opacity: 1;
+        transform: rotate(45deg) translate(-2px, 3.6px);
+    }
+    .burger__container__input:checked ~ .burger__container__stripe:nth-last-child(3) {
+        opacity: 1;
+        transform: rotate(-45deg) translate(0, -8.5px);
+    }
 }

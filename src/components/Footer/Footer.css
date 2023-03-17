@@ -97,13 +97,16 @@
         margin: 0;
     }
 
-    .footer__link{
+    .footer__link {
         font-size: 12px;
         line-height: 15px;
         margin:0 0 12px 0;
-        color: #000000;
+        color: #000;
     }
 
+    .footer__link:visited{
+        color: #000000;
+    }
 
     .footer__copyright{
         font-size: 12px;
