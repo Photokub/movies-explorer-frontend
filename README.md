@@ -1,7 +1,6 @@
 # movies-explorer-frontend
-### IP:
-51.250.10.154
-#### Frontend:
-https://photokub.nomoredomains.work
+#### Макет:
+https://disk.yandex.ru/d/yqEVA_NqQxSM7A
+
 #### Ссылка на репозиторий:
 https://github.com/Photokub/movies-explorer-frontend.git
