@@ -25,6 +25,7 @@
     padding: 14px 0;
     border-bottom: #E8E8E8 1px solid;
 
+
     font-weight: 400;
     font-size: 30px;
     line-height: 50px;
@@ -34,12 +35,19 @@
 }
 
 .portfolio__list__link {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     text-decoration: none;
     color: #000000;
     font-weight: 400;
     font-size: 28px;
     line-height: 60px;
     letter-spacing: -0.04em;
+}
+
+.portfolio__list__link::after {
+    content: '↗';
 }
 
 .portfolio__list__string:first-child {
