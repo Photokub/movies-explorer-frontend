@@ -5,6 +5,7 @@ import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
+document.documentElement.lang = 'ru'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
