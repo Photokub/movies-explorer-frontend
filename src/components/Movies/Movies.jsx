@@ -8,7 +8,6 @@ export default function Movies() {
     return (
         <section className='movies'>
             <SearchForm/>
-            {/*<Preloader/>*/}
             <MoviesCardList/>
             <MoreButton/>
         </section>

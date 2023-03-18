@@ -50,14 +50,14 @@
     margin-top: 110px;
 }
 
-.about-project__text_graph-cell{
+.about-project__graph-cell{
     background-color: #2BE080;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.about-project__graph .about-project__text_graph-cell:nth-child(2){
+.about-project__graph .about-project__graph-cell:nth-child(2){
     background-color: #F2F2F2;
 }
 

@@ -89,11 +89,11 @@
         margin: 26px 0;
     }
 
-    .footer__list__cell{
+    .footer__cell{
         margin-bottom: 12px;
     }
 
-    .footer__list__cell:last-child{
+    .footer__cell:last-child{
         margin: 0;
     }
 

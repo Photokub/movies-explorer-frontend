@@ -20,7 +20,7 @@
     padding: 0;
 }
 
-.portfolio__list__string {
+.portfolio__string {
     display: flex;
     padding: 20px 0;
     border-bottom: #E8E8E8 1px solid;
@@ -28,7 +28,7 @@
     justify-content: space-between;
 }
 
-.portfolio__list__link {
+.portfolio__link {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -41,15 +41,15 @@
     letter-spacing: -0.04em;
 }
 
-.portfolio__list__link::after {
+.portfolio__link::after {
     content: '↗';
 }
 
-.portfolio__list__string:first-child {
+.portfolio__string:first-child {
     padding-top: 0 !important;
 }
 
-.portfolio__list__string:last-child {
+.portfolio__string:last-child {
     border-bottom: none;
 }
 
@@ -61,11 +61,11 @@
         margin: 18px 0 50px 0;
     }
 
-    .portfolio__list__string {
+    .portfolio__string {
         padding: 19px 0;
     }
 
-    .portfolio__list__link{
+    .portfolio__link{
         font-style: normal;
         font-weight: 400;
         font-size: 28px;
@@ -84,13 +84,13 @@
         font-size: 14px;
     }
 
-    .portfolio__list__string {
+    .portfolio__string {
         padding: 20px 0;
         font-size: 18px;
         line-height: 28px;
     }
 
-    .portfolio__list__link {
+    .portfolio__link {
         font-size: 18px;
         line-height: 28px;
         letter-spacing: -0.04em;

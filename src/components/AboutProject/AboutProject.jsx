@@ -20,10 +20,10 @@ export default function AboutProject() {
                 </article>
             </div>
             <div className='about-project__graph'>
-                <div className='about-project__text_graph-cell'>
+                <div className='about-project__graph-cell'>
                     <p className='about-project__text main__text about-project__text_graph'>1 неделя</p>
                 </div>
-                <div className='about-project__text_graph-cell'>
+                <div className='about-project__graph-cell'>
                     <p className='about-project__text main__text about-project__text_graph'>4 недели</p>
                 </div>
                 <p className='about-project__caption about-project__caption_graph main__caption'>Back-end</p>
