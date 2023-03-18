@@ -39,12 +39,18 @@
     background-color: #3456F3;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: .2s;
 
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 18px;
     color: #FFFFFF;
+}
+
+.search-form__button:hover{
+    opacity: 0.8;
 }
 
 .search-form-container__border {
