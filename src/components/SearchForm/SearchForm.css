@@ -9,7 +9,7 @@
     grid-template-columns: auto minmax(80px, 100px);
     grid-gap: calc(10px + 26px);
     width: 100%;
-    border: 1.5px solid #AAAAAA;
+    border: 1.5px solid rgba(100, 100, 100, .2);
     border-radius: 8px;
     height: 72px;
     box-sizing: border-box;
@@ -50,7 +50,8 @@
 .search-form-container__border {
     position: relative;
     top: 80px;
-    background: #AAAAAA;
+    background: rgba(100, 100, 100, .2);
+    border: none;
     height: 1px;
     z-index: -1;
 }
