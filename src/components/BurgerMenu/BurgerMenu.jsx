@@ -1,12 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import './BurgerMenu.css'
 import {Link, NavLink} from "react-router-dom";
 
 export default function BurgerMenu() {
+
+    const page = document.body
+    const [isSubscribed, setIsSubscribed] = useState(false);
+
+    const handleChange = (event) => {
+        if (event.target.checked) {
+            page.style.overflowY = 'hidden'
+        } else {
+            page.style.overflowY = 'scroll'
+        }
+        setIsSubscribed(current => !current);
+    };
+
     return (
         <nav className='burger' role='navigation'>
             <div className='burger__container'>
-                <input className='burger__container__input' type="checkbox"/>
+                <input
+                    className='burger__container__input'
+                    type="checkbox"
+                    value={isSubscribed}
+                    onChange={handleChange}
+                />
                 <span className='burger__container__stripe'></span>
                 <span className='burger__container__stripe'></span>
                 <span className='burger__container__stripe'></span>
