@@ -25,6 +25,7 @@ export default function SearchForm() {
         <div className='search-form-container'>
             <form className='search-form' ref={searchFormBorder} style={formBorder}>
                 <input
+                    required="required"
                     className='search-form__input'
                     type='text' placeholder='Фильм'
                     ref={searchFormInput}
