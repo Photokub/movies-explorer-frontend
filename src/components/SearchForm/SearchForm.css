@@ -16,6 +16,10 @@
     padding: 10px 10px 10px 25px;
 }
 
+.search-form:focus{
+    border: 3px solid rgba(100, 100, 100, .2);
+}
+
 .search-form__input {
     border-radius: 8px;
     border: none;
