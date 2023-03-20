@@ -20,14 +20,14 @@ export default function SearchForm() {
         searchFormInput && setFormBorder({border: borderBlur});
     };
 
-
     return (
         <div className='search-form-container'>
-            <form className='search-form' ref={searchFormBorder} style={formBorder}>
+            <form className='search-form' ref={searchFormBorder} style={formBorder} >
                 <input
-                    required="required"
+                    required
                     className='search-form__input'
-                    type='text' placeholder='Фильм'
+                    type='text'
+                    placeholder='Фильм'
                     ref={searchFormInput}
                     onFocus={() => handleFocus(searchFormInput.current)}
                     onBlur={handleBlur}/>
