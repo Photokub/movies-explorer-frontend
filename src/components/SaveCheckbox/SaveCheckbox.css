@@ -1,0 +1,47 @@
+.save-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    grid-row: 1/3;
+    grid-column: 2 / 3;
+}
+
+.save-checkbox__switcher {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.save-checkbox__point {
+    height: 30px;
+    width: 30px;
+    grid-row: 1/3;
+    grid-column: 2/3;
+    align-self: center;
+    justify-self: end;
+    margin-left: 14px;
+    border: none;
+    border-radius: 50%;
+    background-image: url('../../images/save9d.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.save-checkbox__delete-point {
+    height: 30px;
+    width: 30px;
+    grid-row: 1/3;
+    grid-column: 2/3;
+    align-self: center;
+    justify-self: end;
+    margin-left: 14px;
+    border: none;
+    border-radius: 50%;
+    background-image: url('../../images/d9.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.save-checkbox__switcher:checked + .save-checkbox__point {
+    background-image: url('../../images/save9.svg');
+}
