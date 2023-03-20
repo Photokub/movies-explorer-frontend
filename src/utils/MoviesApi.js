@@ -21,7 +21,7 @@ class Api {
 
 }
 
-export const api = new Api({
+export const moviesApi = new Api({
     baseUrl: BASE_URL,
     headers: {
         "Content-Type": "application/json",
