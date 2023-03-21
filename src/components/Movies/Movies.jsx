@@ -4,11 +4,17 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoreButton from "../MoreButton/MoreButton";
 import './Movies.css'
 
-export default function Movies() {
+export default function Movies({onHandleSearchChange, onHandleSearchValue, searchTerm, moviesList}) {
     return (
         <section className='movies'>
-            <SearchForm/>
-            <MoviesCardList/>
+            <SearchForm
+                searchTerm={searchTerm}
+                onHandleSearchChange={onHandleSearchChange}
+                onHandleSearchValue={onHandleSearchValue}
+            />
+            <MoviesCardList
+                moviesList={moviesList}
+            />
             <MoreButton/>
         </section>
     )

@@ -1,4 +1,4 @@
-import {Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -9,8 +9,37 @@ import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
+import {moviesApi} from "../../utils/MoviesApi";
+import React, {useState} from "react";
 
 function App() {
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [beatfilmsArr, setBeatfilmsArr] = useState([])
+    const [moviesList, setMoviesList] = useState([])
+
+    ///////////поиск фильмов ///////////////////
+
+    const getbeatfilmMovies = () => {
+        moviesApi.getMovies()
+            .then(data => {
+                setBeatfilmsArr(data)
+            }).catch((err) => {
+            console.log(`Ошибка ${err}`)
+        })
+    }
+
+    const handleSearchChange = event => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleSearchValue = (e) => {
+        e.preventDefault()
+        getbeatfilmMovies()
+        console.log(beatfilmsArr)
+        const results = beatfilmsArr.filter((film) => film.nameRU.includes(searchTerm) || film.nameEN.includes(searchTerm))
+        setMoviesList( results )
+    }
 
 
     return (
@@ -18,7 +47,14 @@ function App() {
             <Routes>
                 <Route element={<Layout/>}>
                     <Route path='/' element={<Main/>}/>
-                    <Route path="/movies" element={<Movies/>}/>
+                    <Route path="/movies" element={
+                        <Movies
+                            searchTerm = {searchTerm}
+                            onHandleSearchValue={handleSearchValue}
+                            onHandleSearchChange={handleSearchChange}
+                            moviesList = {moviesList}
+                        />
+                    }/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>
                 </Route>
                 <Route element={<LayoutProfile/>}>
