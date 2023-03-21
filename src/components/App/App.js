@@ -10,7 +10,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 import {moviesApi} from "../../utils/MoviesApi";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 function App() {
 
@@ -18,27 +18,44 @@ function App() {
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
 
+    useEffect(() => {
+        Promise.all([moviesApi.getMovies()])
+            .then(([data]) => {
+                setBeatfilmsArr(data)
+            })
+            .catch((err) => {
+                console.log(`Ошибка ${err}`)
+            })
+    }, []);
+
     ///////////поиск фильмов ///////////////////
 
-    const getbeatfilmMovies = () => {
-        moviesApi.getMovies()
-            .then(data => {
-                setBeatfilmsArr(data)
-            }).catch((err) => {
-            console.log(`Ошибка ${err}`)
-        })
-    }
+    // const getBeatfilmMovies = () => {
+    //     moviesApi.getMovies()
+    //         .then(data => {
+    //             setBeatfilmsArr(data)
+    //         }).catch((err) => {
+    //         console.log(`Ошибка ${err}`)
+    //     })
+    // }
 
     const handleSearchChange = event => {
         setSearchTerm(event.target.value);
+        console.log(searchTerm)
+        localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
     };
 
     const handleSearchValue = (e) => {
         e.preventDefault()
-        getbeatfilmMovies()
         console.log(beatfilmsArr)
         const results = beatfilmsArr.filter((film) => film.nameRU.includes(searchTerm) || film.nameEN.includes(searchTerm))
-        setMoviesList( results )
+        setMoviesList(results)
+        localStorage.setItem('moviesList', JSON.stringify(moviesList));
+    }
+
+    const handleFilterCheckbox = (e) => {
+        const isChecked = e.target.checked
+        localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
     }
 
 
@@ -49,10 +66,11 @@ function App() {
                     <Route path='/' element={<Main/>}/>
                     <Route path="/movies" element={
                         <Movies
-                            searchTerm = {searchTerm}
-                            onHandleSearchValue={handleSearchValue}
-                            onHandleSearchChange={handleSearchChange}
-                            moviesList = {moviesList}
+                            searchTerm={searchTerm}
+                            handleSearchValue={handleSearchValue}
+                            handleSearchChange={handleSearchChange}
+                            moviesList={moviesList}
+                            handleFilterCheckbox={handleFilterCheckbox}
                         />
                     }/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>
