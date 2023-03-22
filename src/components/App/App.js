@@ -50,7 +50,7 @@ function App() {
     const handleSearchValue = (e) => {
         e.preventDefault()
         console.log(beatfilmsArr)
-        const results = beatfilmsArr.filter((film) => film.nameRU.includes(searchTerm) || film.nameEN.includes(searchTerm))
+        const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
         setMoviesList(results)
         localStorage.setItem('moviesList', JSON.stringify(moviesList));
     }
