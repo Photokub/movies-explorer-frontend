@@ -17,6 +17,7 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
+    const [isAnyMatches, setIsAnyMatches] = useState(false)
     const location = useLocation()
 
     useEffect(() => {
@@ -52,7 +53,9 @@ function App() {
         console.log(beatfilmsArr)
         const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
         setMoviesList(results)
+        console.log(moviesList)
         localStorage.setItem('moviesList', JSON.stringify(moviesList));
+        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
     const handleFilterCheckbox = (e) => {
@@ -72,6 +75,7 @@ function App() {
                             handleSearchChange={handleSearchChange}
                             moviesList={moviesList}
                             handleFilterCheckbox={handleFilterCheckbox}
+                            isAnyMatches={isAnyMatches}
                         />
                     }/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>
