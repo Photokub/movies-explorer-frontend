@@ -15,7 +15,6 @@ export default function SearchForm({handleSearchChange, handleSearchValue, searc
 
     const handleFocus = (searchFormInput) => {
         (document.activeElement === searchFormInput) && setFormBorder({border: borderFocus});
-
     };
 
     const handleBlur = (searchFormInput) => {

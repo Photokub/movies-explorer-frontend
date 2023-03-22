@@ -18,6 +18,7 @@ function App() {
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
     const [isAnyMatches, setIsAnyMatches] = useState(false)
+    const [isReqFailed, setReqFailed] = useState(false);
     const location = useLocation()
 
     useEffect(() => {
@@ -25,9 +26,11 @@ function App() {
             .then(([data]) => {
                 setBeatfilmsArr(data)
                 console.log(beatfilmsArr)
+                setReqFailed(false)
             })
             .catch((err) => {
                 console.log(`Ошибка ${err}`)
+                setReqFailed(true)
             })
     }, [location.pathname === '/movies']);
 
@@ -76,6 +79,7 @@ function App() {
                             moviesList={moviesList}
                             handleFilterCheckbox={handleFilterCheckbox}
                             isAnyMatches={isAnyMatches}
+                            isReqFailed={isReqFailed}
                         />
                     }/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>
