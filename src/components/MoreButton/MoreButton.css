@@ -1,5 +1,10 @@
 .more-btn{
     margin: 50px 70px 100px 70px;
+    display: none;
+}
+
+.more-btn_active{
+    display:flex;
 }
 
 .more-btn__button{

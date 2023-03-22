@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useLocation} from 'react-router-dom';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -17,16 +17,19 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
+    const [moreButton, setMorebuttonActive] = useState(false)
+    const location = useLocation()
 
     useEffect(() => {
         Promise.all([moviesApi.getMovies()])
             .then(([data]) => {
                 setBeatfilmsArr(data)
+                console.log(beatfilmsArr)
             })
             .catch((err) => {
                 console.log(`Ошибка ${err}`)
             })
-    }, []);
+    }, [location.pathname === '/movies']);
 
     ///////////поиск фильмов ///////////////////
 
@@ -57,6 +60,12 @@ function App() {
         const isChecked = e.target.checked
         localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
     }
+
+    //////////////кнопка ещё//////////////////
+
+    // useEffect(() =>{
+    //     setMorebuttonActive(moviesList)
+    // },[moviesList])
 
 
     return (
