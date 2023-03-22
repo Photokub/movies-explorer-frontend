@@ -36,11 +36,8 @@ export default function Movies({handleSearchChange, handleSearchValue, searchTer
     const [existedCards, setExistedCards] = useState(cardsQt.existed)
 
     const handleShowMore = () => {
-        setExistedCards(existedCards + cardsQt.existed)
-        //console.log(`кол-во найденных: ${moviesList.length}, \/\n кол-во отображаемых: ${existedCards.length}`)
+        setExistedCards(existedCards + cardsQt.expected)
     }
-
-    console.log(`кол-во найденных: ${moviesList.length},\n кол-во отображаемых: ${existedCards}`)
 
     ///////////////////////preloader///////////////
 
