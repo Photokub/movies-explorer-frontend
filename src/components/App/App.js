@@ -17,7 +17,6 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
-    const [moreButton, setMorebuttonActive] = useState(false)
     const location = useLocation()
 
     useEffect(() => {
@@ -33,7 +32,7 @@ function App() {
 
     ///////////поиск фильмов ///////////////////
 
-    // const getBeatfilmMovies = () => {
+    //TODO const getBeatfilmMovies = () => {
     //     moviesApi.getMovies()
     //         .then(data => {
     //             setBeatfilmsArr(data)
@@ -60,13 +59,6 @@ function App() {
         const isChecked = e.target.checked
         localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
     }
-
-    //////////////кнопка ещё//////////////////
-
-    // useEffect(() =>{
-    //     setMorebuttonActive(moviesList)
-    // },[moviesList])
-
 
     return (
         <div className="App">
