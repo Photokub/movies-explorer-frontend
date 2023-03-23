@@ -10,6 +10,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 import {moviesApi} from "../../utils/MoviesApi";
+import {mainApi} from "../../utils/MainApi";
 import React, {useEffect, useState} from "react";
 
 function App() {
@@ -17,11 +18,49 @@ function App() {
     const [searchTerm, setSearchTerm] = useState("");
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
+    const [savedMovies, setSavedMovies] = useState([])
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
     const location = useLocation()
     const [windowResizing, setWindowResizing] = useState(false);
 
+    const handleSaveMovie = (movieCard) => {
+        const id = movieCard.id
+        const isSaved = savedMovies.some((movies) => movies.id === id)
+        !isSaved ?
+            mainApi
+                .saveMovie(movieCard)
+                .then((newMovie) =>
+                        setSavedMovies([newMovie, ...savedMovies]),
+                ).catch((err) => {
+                console.log(`Ошибка ${err}`)
+            })
+            :
+            mainApi
+                .deleteMovie(id)
+                .then(
+                    setSavedMovies(movies => movies.filter((m) => m.id !== movieCard.id)),
+                ).catch((err) => {
+                console.log(`Ошибка ${err}`)
+            })
+    }
+
+
+    // function handleSaveMovie(e) {
+    //     const movieCard = e.currentTarget
+    //     const id = movieCard.id
+    //     const isSaved = savedMovies.some((movies) => movies.id === id)
+    //     !isSaved ?
+    //         setSavedMovies( [movieCard, ...savedMovies])
+    //         :
+    //         setSavedMovies(movies => movies.filter((m) => m.id !== movieCard.id))
+    //
+    //     console.log(savedMovies)
+    // }
+
+
+
+/////////////////////таймаут на ресайз экрана/////////////////////////
 
     useEffect(() => {
         let timeout;
@@ -38,6 +77,8 @@ function App() {
 
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    //////////////////получение фильмов с BeatFilms//////////////////////////////
 
     useEffect(() => {
         Promise.all([moviesApi.getMovies()])
@@ -99,6 +140,7 @@ function App() {
                             isAnyMatches={isAnyMatches}
                             isReqFailed={isReqFailed}
                             windowResizing={windowResizing}
+                            handleSaveMovie={handleSaveMovie}
                         />
                     }/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>

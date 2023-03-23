@@ -51,7 +51,7 @@ class MainApi {
         })
     }
 
-    // saveMovie(id, save) {
+    //todo saveMovie(id, save) {
     //     return this._request(`${this._adress}/movies`, {
     //         method: save ? "PUT" : "DELETE",
     //         credentials: 'include',

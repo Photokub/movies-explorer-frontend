@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css'
 import {REQUEST_ERR} from '../../utils/constants'
 
-export default function MoviesCardList({moviesList, existedCards, isAnyMatches, isReqFailed}) {
+export default function MoviesCardList({moviesList, existedCards, isAnyMatches, isReqFailed, handleSaveMovie}) {
     return (
         <section className='movies-card-list'>
             {
@@ -12,6 +12,7 @@ export default function MoviesCardList({moviesList, existedCards, isAnyMatches, 
                         <MoviesCard
                             key={film.id}
                             film={film}
+                            handleSaveMovie={handleSaveMovie}
                         />
                     ) : <p className='movies-card-list__message'>Ничего не найдено</p>
             }
