@@ -20,6 +20,24 @@ function App() {
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
     const location = useLocation()
+    //const [windowResizing, setWindowResizing] = useState(false);
+
+
+    useEffect(() => {
+        let timeout;
+        const handleResize = () => {
+            clearTimeout(timeout);
+
+            //setWindowResizing(true);
+
+            timeout = setTimeout(() => {
+                //setWindowResizing(false);
+            }, 2000);
+        }
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         Promise.all([moviesApi.getMovies()])
