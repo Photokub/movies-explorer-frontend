@@ -20,7 +20,7 @@ function App() {
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
     const location = useLocation()
-    //const [windowResizing, setWindowResizing] = useState(false);
+    const [windowResizing, setWindowResizing] = useState(false);
 
 
     useEffect(() => {
@@ -28,11 +28,11 @@ function App() {
         const handleResize = () => {
             clearTimeout(timeout);
 
-            //setWindowResizing(true);
+            setWindowResizing(true);
 
             timeout = setTimeout(() => {
-                //setWindowResizing(false);
-            }, 2000);
+                setWindowResizing(false);
+            }, 1000);
         }
         window.addEventListener("resize", handleResize);
 
@@ -98,6 +98,7 @@ function App() {
                             handleFilterCheckbox={handleFilterCheckbox}
                             isAnyMatches={isAnyMatches}
                             isReqFailed={isReqFailed}
+                            windowResizing={windowResizing}
                         />
                     }/>
                     <Route path="/saved-movies" element={<SavedMovies/>}/>
