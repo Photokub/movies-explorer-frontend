@@ -11,7 +11,8 @@ import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
-import React, {useEffect, useState} from "react";
+import * as Auth from '../../utils/Auth';
+import React, {useCallback, useEffect, useState} from "react";
 
 function App() {
 
@@ -23,6 +24,29 @@ function App() {
     const [isReqFailed, setReqFailed] = useState(false);
     const location = useLocation()
     const [windowResizing, setWindowResizing] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
+    const [userData, setUserData] = useState({
+        name: "", email: "", password: ""
+    })
+
+    const authenticate = useCallback((data) => {
+        setLoggedIn(true)
+        //setCurrentUser(data)
+    }, [setLoggedIn]);
+
+    const register = useCallback(async ({name, email, password}) => {
+        try {
+            const res = await Auth.register({name, email, password});
+            setLoggedIn(true)
+            setUserData({name, email, password})
+            return res;
+        } catch {
+            setIsSubmitBtnActive(false)
+        }
+    }, []);
+
+    //////////////////добавление и удалениекарточки и избранное///////////////////
 
     const handleSaveMovie = (movieCard) => {
         const id = movieCard.id
@@ -46,7 +70,7 @@ function App() {
     }
 
 
-    // function handleSaveMovie(e) {
+    //todo function handleSaveMovie(e) {
     //     const movieCard = e.currentTarget
     //     const id = movieCard.id
     //     const isSaved = savedMovies.some((movies) => movies.id === id)
@@ -91,7 +115,7 @@ function App() {
                 console.log(`Ошибка ${err}`)
                 setReqFailed(true)
             })
-    }, [location.pathname === '/movies']);
+    }, []);
 
     ///////////поиск фильмов ///////////////////
 
@@ -149,7 +173,12 @@ function App() {
                     <Route path="/profile" element={<Profile/>}/>
                 </Route>
                 <Route path="/signin" element={<Login/>}/>
-                <Route path="/signup" element={<Register/>}/>
+                <Route path="/signup" element={
+                    <Register
+                        register={register}
+                        loggedIn={loggedIn}
+                    />
+                }/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>
