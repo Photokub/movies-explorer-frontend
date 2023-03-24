@@ -7,7 +7,7 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import LoginForm from "../LoginForm/LoginForm";
 
 
-export default function WelcomeScreen({title, subtitle, sublink, to, onRegister, userData, setUserData}) {
+export default function WelcomeScreen({title, subtitle, sublink, to, onRegister, userData, setUserData, loggedIn}) {
     const location = useLocation()
 
     let component
@@ -16,6 +16,7 @@ export default function WelcomeScreen({title, subtitle, sublink, to, onRegister,
             onRegister={onRegister}
             userData={userData}
             setUserData={setUserData}
+            loggedIn={loggedIn}
         />
     } else if (location.pathname === '/signin') {
         component = <LoginForm/>

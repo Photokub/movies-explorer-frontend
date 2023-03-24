@@ -5,7 +5,7 @@ import {Navigate} from "react-router-dom";
 export default function Form({name, method, btnText, children, loggedIn, handleSubmit, isValid}){
 
     if (loggedIn) {
-        return <Navigate to="/"/>;
+        return <Navigate to="/movies"/>;
     }
 
     return(
@@ -19,7 +19,7 @@ export default function Form({name, method, btnText, children, loggedIn, handleS
             <div className='form__container'>
             {children}
             </div>
-            <button className={!isValid ? 'form__submit-btn_disabled' : 'form__submit-btn_enabled'} type='submit' disabled={true}>{btnText}</button>
+            <button className={!isValid ? 'form__submit-btn_disabled' : 'form__submit-btn_enabled'} type='submit' disabled={!isValid}>{btnText}</button>
         </form>
     )
 }
