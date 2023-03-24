@@ -39,6 +39,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
             loggedIn={loggedIn}
             userData={userData}
             handleSubmit={handleSubmit(handleRegisterSubmit)}
+            isValid={isValid}
         >
             <label className='form__field'>
                 <span className='form__input__title'>Имя</span>

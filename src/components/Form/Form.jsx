@@ -1,11 +1,8 @@
 import React from "react";
-import { useForm } from "react-hook-form";
 import './Form.css'
 import {Navigate} from "react-router-dom";
 
-export default function Form({name, method, btnText, children, loggedIn, handleSubmit}){
-
-
+export default function Form({name, method, btnText, children, loggedIn, handleSubmit, isValid}){
 
     if (loggedIn) {
         return <Navigate to="/"/>;
@@ -22,7 +19,7 @@ export default function Form({name, method, btnText, children, loggedIn, handleS
             <div className='form__container'>
             {children}
             </div>
-            <button className='form__submit-btn form__submit-btn_disabled' type='submit' >{btnText}</button>
+            <button className={!isValid ? 'form__submit-btn_disabled' : 'form__submit-btn_enabled'} type='submit' disabled={true}>{btnText}</button>
         </form>
     )
 }
