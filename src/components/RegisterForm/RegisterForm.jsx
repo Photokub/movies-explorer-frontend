@@ -17,7 +17,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
     const email = watch('email')
     const password = watch('password')
 
-    const handleOnSubmit = () => {
+    const handleRegisterSubmit = () => {
         onRegister({ name, email, password })
     }
 
@@ -38,45 +38,39 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
             onRegister={onRegister}
             loggedIn={loggedIn}
             userData={userData}
-            //handleSubmit={handleSubmit}
-            handleSubmit={handleSubmit(handleOnSubmit)}
+            handleSubmit={handleSubmit(handleRegisterSubmit)}
         >
             <label className='form__field'>
                 <span className='form__input__title'>Имя</span>
                 <input className='form__input'
                        type='text'
                        name='name'
-                    //defaultValue=""
                        required
-                       value={userData.name}
+                       value={name}
                        onChange={handleChange}
                        {...register('name', {
                            required: 'Обязательное поле',
                            minLength: {
                                value: 2,
-                               message: 'вы должны заполнить минимум 2 символа'
+                               message: 'Введите минимум 2 символа'
                            },
                            maxLength: {
                                value: 20,
-                               message: 'вы должны заполнить максимум 20 символов'
+                               message: 'Допустимо максимум 20 символов'
                            },
                            pattern: {
                                value: /^[A-Za-zА-Яа-яЁё /h -]+$/,
-                               message: 'Имя не должно содержать цифры'
+                               message: 'Вы должны использовать только латиницу, кириллицу, пробел или дефис'
                            }
                        })}
-                    //ref={nameRef}
                 />
-                {errors.email && <span className='form__input__err' id='name_field-err'>{errors?.email?.message || 'Что-то пошло не так...'}</span>}
-                {/*<span className='form__input__err' id='name_field-err'></span>*/}
+                {errors.name && <span className='form__input__err' id='name_field-err'>{errors?.name?.message}</span>}
             </label>
             <label className='form__field'>
                 <span className='form__input__title'>E-mail</span>
                 <input className='form__input'
-                    //name='email'
                        type='email'
                        required
-                    //value={userData.email}
                        value={email}
                        onChange={handleChange}
                        {...register('email', {
@@ -87,19 +81,28 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
                            }
                        })}
                 />
-                {errors.email && <span className='form__input__err' id='name_field-err'>{errors?.email?.message || 'Что-то пошло не так...'}</span>}
-                {/*<span className='form__input__err' id='name_field-err'></span>*/}
+                {errors.email && <span className='form__input__err' id='name_field-err'>{errors?.email?.message}</span>}
             </label>
             <label className='form__field'>
                 <span className='form__input__title'>Пароль</span>
                 <input className='form__input'
-                       name='password'
                        type='password'
                        required
-                       value={userData.password}
+                       value={password}
                        onChange={handleChange}
+                       {...register('password', {
+                           required: 'Обязательное поле',
+                           minLength: {
+                               value: 4,
+                               message: 'вы должны заполнить минимум 4 символа'
+                           },
+                           maxLength: {
+                               value: 30,
+                               message: 'вы должны заполнить максимум 30 символов'
+                           },
+                       })}
                 />
-                <span className='form__input__err' id='name_field-err'>Что-то пошло не так...</span>
+                {errors.password && <span className='form__input__err' id='name_field-err'>{errors?.password?.message}</span>}
             </label>
         </Form>
     )
