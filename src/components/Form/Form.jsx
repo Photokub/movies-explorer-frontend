@@ -1,14 +1,17 @@
-import React, {useCallback, useState} from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import './Form.css'
 import {Navigate} from "react-router-dom";
 
-export default function Form({name, method, btnText, children, register, userData, loggedIn}){
+export default function Form({name, method, btnText, children, onRegister, userData, loggedIn, handleSubmit}){
 
-    const handleSubmit = (e) => {
-        let {name, email, password} = userData;
-        e.preventDefault();
-        register({name, email, password})
-    }
+   // const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+    // const onSubmit = (e) => {
+    //     let {name, email, password} = userData;
+    //     e.preventDefault();
+    //     onRegister({name, email, password})
+    // }
 
     if (loggedIn) {
         return <Navigate to="/"/>;
@@ -19,13 +22,13 @@ export default function Form({name, method, btnText, children, register, userDat
             className='form'
             name={`${name}`}
             method={`${method}`}
-            noValidate={false}
+            noValidate={true}
             onSubmit={handleSubmit}
         >
             <div className='form__container'>
             {children}
             </div>
-            <button className='form__submit-btn' type='submit'>{btnText}</button>
+            <button className='form__submit-btn form__submit-btn_disabled' type='submit' >{btnText}</button>
         </form>
     )
 }

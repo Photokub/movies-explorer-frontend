@@ -177,7 +177,7 @@ function App() {
                 <Route path="/signin" element={<Login/>}/>
                 <Route path="/signup" element={
                     <Register
-                        register={register}
+                        onRegister={register}
                         loggedIn={loggedIn}
                         userData={userData}
                         setUserData={setUserData}
