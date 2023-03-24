@@ -35,7 +35,7 @@ function App() {
         //setCurrentUser(data)
     }, [setLoggedIn]);
 
-    const register = useCallback(async ({name, email, password}) => {
+    const register =  useCallback(async ({name, email, password}) => {
         try {
             const res = await Auth.register({name, email, password});
             setLoggedIn(true)

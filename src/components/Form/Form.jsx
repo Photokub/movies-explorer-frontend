@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import './Form.css'
 import {Navigate} from "react-router-dom";
 
-export default function Form({name, method, btnText, children, register, loggedIn, userData}){
+export default function Form({name, method, btnText, children, register, userData, loggedIn}){
 
     const handleSubmit = (e) => {
         let {name, email, password} = {userData};

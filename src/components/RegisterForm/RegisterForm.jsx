@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {Navigate} from "react-router-dom";
 import Form from "../Form/Form";
 
 export default function RegisterForm({ register, loggedIn }){
