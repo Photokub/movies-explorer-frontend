@@ -36,10 +36,10 @@ function App() {
     //     //setCurrentUser(data)
     // }, [setLoggedIn]);
 
-    const register =  useCallback(async ({name, email, password}) => {
-            console.log(userData)
+    const register = useCallback(async ({name, email, password}) => {
+        console.log(userData)
         try {
-            const res = await Auth.register({name , email, password});
+            const res = await Auth.register({name, email, password});
             setLoggedIn(true)
             setUserData({name, email, password})
             return res;
@@ -47,6 +47,20 @@ function App() {
             setIsSubmitBtnActive(false)
         }
     }, []);
+
+    const login = useCallback(async ({password, email}) => {
+            try {
+                const data = await Auth.authorize({password, email});
+                if (!data) {
+                    // обработать ошибку
+                }
+                setUserData({password, email})
+                setLoggedIn(true)
+            } catch {
+                setIsSubmitBtnActive(false)
+            }
+        }
+    )
 
     //////////////////добавление и удалениекарточки и избранное///////////////////
 
@@ -57,7 +71,7 @@ function App() {
             mainApi
                 .saveMovie(movieCard)
                 .then((newMovie) =>
-                        setSavedMovies([newMovie, ...savedMovies]),
+                    setSavedMovies([newMovie, ...savedMovies]),
                 ).catch((err) => {
                 console.log(`Ошибка ${err}`)
             })
@@ -83,7 +97,6 @@ function App() {
     //
     //     console.log(savedMovies)
     // }
-
 
 
 /////////////////////таймаут на ресайз экрана/////////////////////////
@@ -174,7 +187,14 @@ function App() {
                 <Route element={<LayoutProfile/>}>
                     <Route path="/profile" element={<Profile/>}/>
                 </Route>
-                <Route path="/signin" element={<Login/>}/>
+                <Route path="/signin" element={
+                    <Login
+                        login={login}
+                        loggedIn={loggedIn}
+                        userData={userData}
+                        setUserData={setUserData}
+                    />
+                }/>
                 <Route path="/signup" element={
                     <Register
                         onRegister={register}
