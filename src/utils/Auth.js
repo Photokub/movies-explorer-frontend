@@ -13,6 +13,19 @@ export const register = ({name, email, password}) => {
         .then(checkResponse)
 };
 
+// export async function register  (data)  {
+//     return fetch(`${BASE_URL}/signup`, {
+//         method: 'POST',
+//         mode: "cors",
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data)
+//     })
+//         .then(checkResponse)
+// };
+
 export const authorize = ({password, email}) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',

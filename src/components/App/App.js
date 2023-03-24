@@ -29,15 +29,17 @@ function App() {
     const [userData, setUserData] = useState({
         name: "", email: "", password: ""
     })
+    console.log(userData)
 
-    const authenticate = useCallback((data) => {
-        setLoggedIn(true)
-        //setCurrentUser(data)
-    }, [setLoggedIn]);
+    // const authenticate = useCallback((data) => {
+    //     setLoggedIn(true)
+    //     //setCurrentUser(data)
+    // }, [setLoggedIn]);
 
     const register =  useCallback(async ({name, email, password}) => {
+            console.log(userData)
         try {
-            const res = await Auth.register({name, email, password});
+            const res = await Auth.register({name , email, password});
             setLoggedIn(true)
             setUserData({name, email, password})
             return res;
@@ -177,6 +179,8 @@ function App() {
                     <Register
                         register={register}
                         loggedIn={loggedIn}
+                        userData={userData}
+                        setUserData={setUserData}
                     />
                 }/>
                 <Route path="*" element={<PageNotFound/>}/>

@@ -5,7 +5,7 @@ import {Navigate} from "react-router-dom";
 export default function Form({name, method, btnText, children, register, userData, loggedIn}){
 
     const handleSubmit = (e) => {
-        let {name, email, password} = {userData};
+        let {name, email, password} = userData;
         e.preventDefault();
         register({name, email, password})
     }

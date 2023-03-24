@@ -1,13 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import Form from "../Form/Form";
 
-export default function RegisterForm({ register, loggedIn }){
-
-    const [userData, setUserData] = useState({
-        name:'',
-        email: '',
-        password: '',
-    })
+export default function RegisterForm({ register, loggedIn, userData, setUserData }){
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -15,6 +9,7 @@ export default function RegisterForm({ register, loggedIn }){
             ...userData,
             [name]: value
         });
+        console.log(userData)
     }
 
     return(
@@ -29,10 +24,13 @@ export default function RegisterForm({ register, loggedIn }){
             <label className='form__field'>
                 <span className='form__input__title'>Имя</span>
                 <input className='form__input'
+                       type='text'
                        name='name'
-                       defaultValue=""
+                       //defaultValue=""
                        required
+                       value={userData.name}
                        onChange={handleChange}
+                       //ref={nameRef}
                 />
                 <span className='form__input__err' id='name_field-err'></span>
             </label>
@@ -41,8 +39,8 @@ export default function RegisterForm({ register, loggedIn }){
                 <input className='form__input'
                        name='email'
                        type='email'
-                       defaultValue=""
                        required
+                       value={userData.email}
                        onChange={handleChange}
                 />
                 <span className='form__input__err' id='name_field-err'></span>
@@ -52,8 +50,8 @@ export default function RegisterForm({ register, loggedIn }){
                 <input className='form__input'
                        name='password'
                        type='password'
-                       defaultValue=""
                        required
+                       value={userData.password}
                        onChange={handleChange}
                 />
                 <span className='form__input__err' id='name_field-err'>Что-то пошло не так...</span>
