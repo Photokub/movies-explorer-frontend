@@ -9,6 +9,7 @@ import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
 import * as Auth from '../../utils/Auth';
@@ -26,15 +27,16 @@ function App() {
     const [windowResizing, setWindowResizing] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
+    const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({
         name: "", email: "", password: ""
     })
     console.log(userData)
 
-    // const authenticate = useCallback((data) => {
-    //     setLoggedIn(true)
-    //     //setCurrentUser(data)
-    // }, [setLoggedIn]);
+    const authenticate = useCallback((data) => {
+        setLoggedIn(true)
+        setCurrentUser(data)
+    }, [setLoggedIn]);
 
     const register = useCallback(async ({name, email, password}) => {
         console.log(userData)
@@ -46,7 +48,7 @@ function App() {
         } catch {
             setIsSubmitBtnActive(false)
         }
-    }, []);
+    }, [authenticate]);
 
     const login = useCallback(async ({password, email}) => {
             try {
@@ -55,7 +57,9 @@ function App() {
                     // обработать ошибку
                 }
                 setUserData({password, email})
+                setCurrentUser({password, email})
                 setLoggedIn(true)
+                console.log(currentUser)
             } catch {
                 setIsSubmitBtnActive(false)
             }
@@ -165,47 +169,53 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <Routes>
-                <Route element={<Layout/>}>
-                    <Route path='/' element={<Main/>}/>
-                    <Route path="/movies" element={
-                        <Movies
-                            searchTerm={searchTerm}
-                            handleSearchValue={handleSearchValue}
-                            handleSearchChange={handleSearchChange}
-                            moviesList={moviesList}
-                            handleFilterCheckbox={handleFilterCheckbox}
-                            isAnyMatches={isAnyMatches}
-                            isReqFailed={isReqFailed}
-                            windowResizing={windowResizing}
-                            handleSaveMovie={handleSaveMovie}
+        <CurrentUserContext.Provider value={currentUser}>
+            <div className="App">
+                <Routes>
+                    <Route element={
+                        <Layout
+                            userData={userData}
+                        />
+                    }>
+                        <Route path='/' element={<Main/>}/>
+                        <Route path="/movies" element={
+                            <Movies
+                                searchTerm={searchTerm}
+                                handleSearchValue={handleSearchValue}
+                                handleSearchChange={handleSearchChange}
+                                moviesList={moviesList}
+                                handleFilterCheckbox={handleFilterCheckbox}
+                                isAnyMatches={isAnyMatches}
+                                isReqFailed={isReqFailed}
+                                windowResizing={windowResizing}
+                                handleSaveMovie={handleSaveMovie}
+                            />
+                        }/>
+                        <Route path="/saved-movies" element={<SavedMovies/>}/>
+                    </Route>
+                    <Route element={<LayoutProfile/>}>
+                        <Route path="/profile" element={<Profile/>}/>
+                    </Route>
+                    <Route path="/signin" element={
+                        <Login
+                            login={login}
+                            loggedIn={loggedIn}
+                            userData={userData}
+                            setUserData={setUserData}
                         />
                     }/>
-                    <Route path="/saved-movies" element={<SavedMovies/>}/>
-                </Route>
-                <Route element={<LayoutProfile/>}>
-                    <Route path="/profile" element={<Profile/>}/>
-                </Route>
-                <Route path="/signin" element={
-                    <Login
-                        login={login}
-                        loggedIn={loggedIn}
-                        userData={userData}
-                        setUserData={setUserData}
-                    />
-                }/>
-                <Route path="/signup" element={
-                    <Register
-                        onRegister={register}
-                        loggedIn={loggedIn}
-                        userData={userData}
-                        setUserData={setUserData}
-                    />
-                }/>
-                <Route path="*" element={<PageNotFound/>}/>
-            </Routes>
-        </div>
+                    <Route path="/signup" element={
+                        <Register
+                            onRegister={register}
+                            loggedIn={loggedIn}
+                            userData={userData}
+                            setUserData={setUserData}
+                        />
+                    }/>
+                    <Route path="*" element={<PageNotFound/>}/>
+                </Routes>
+            </div>
+        </CurrentUserContext.Provider>
     )
 }
 

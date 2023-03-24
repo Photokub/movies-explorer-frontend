@@ -3,10 +3,12 @@ import React from "react";
 import './Header.css'
 import Navigation from "../Navigation/Navigation";
 
-export default function Header() {
+export default function Header({userData}) {
     return (
         <header className="header">
-            <Navigation/>
+            <Navigation
+                userData={userData}
+            />
         </header>
     )
 }

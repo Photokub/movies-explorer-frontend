@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-export default function Navigation() {
+export default function Navigation({userData}) {
     const navigate = useNavigate();
     const signinRoute = () => navigate('/signin');
     const profileRoute = () => navigate('/profile');
@@ -22,7 +22,7 @@ export default function Navigation() {
                 <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
             </div>
             <div className='navigation__container_auth'>
-                <button className='navigation__account-btn' type='button' onClick={profileRoute}>Аккаунт</button>
+                <button className='navigation__account-btn' type='button' onClick={profileRoute}>{userData.email}</button>
             </div>
         </div>
     const menu = location.pathname !== '/' ? navContainerAuth : navContainer
