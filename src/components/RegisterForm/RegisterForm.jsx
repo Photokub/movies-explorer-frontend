@@ -94,12 +94,12 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
                        {...register('password', {
                            required: 'Обязательное поле',
                            minLength: {
-                               value: 4,
-                               message: 'вы должны заполнить минимум 4 символа'
+                               value: 6,
+                               message: 'Введите минимум 6 символа'
                            },
                            maxLength: {
-                               value: 30,
-                               message: 'вы должны заполнить максимум 30 символов'
+                               value: 20,
+                               message: 'Допустимо максимум 20 символов'
                            },
                        })}
                 />
