@@ -1,10 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import {CurrentUserContext} from "../../context/CurrentUserContext";
 
-export default function Navigation({userData}) {
+export default function Navigation() {
+
+    //todo//const currentUser = useContext(CurrentUserContext)
+
     const navigate = useNavigate();
     const signinRoute = () => navigate('/signin');
     const profileRoute = () => navigate('/profile');
@@ -22,7 +26,7 @@ export default function Navigation({userData}) {
                 <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink_active" : "navigation__movies-navlink"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
             </div>
             <div className='navigation__container_auth'>
-                <button className='navigation__account-btn' type='button' onClick={profileRoute}>{userData.email}</button>
+                <button className='navigation__account-btn' type='button' onClick={profileRoute}>Аккаунт</button>
             </div>
         </div>
     const menu = location.pathname !== '/' ? navContainerAuth : navContainer

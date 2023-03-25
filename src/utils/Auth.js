@@ -13,7 +13,7 @@ export const register = ({name, email, password}) => {
         .then(checkResponse)
 };
 
-export const authorize = ({password, email}) => {
+export const login = ({password, email}) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         credentials: 'include',
@@ -27,23 +27,18 @@ export const authorize = ({password, email}) => {
         .then(checkResponse)
 };
 
-export const checkToken = () => {
-    return fetch(`${BASE_URL}/users/me`, {
-        credentials: 'include',
-        headers: this._headers,
-    }).then((res) => this.handleResponse(res));
-}
 
-
-export const logOut =() => {
+export const logOut = () => {
     return fetch(`${BASE_URL}/signout`, {
         method: 'POST',
         credentials: 'include',
+        mode: "cors",
         headers: {
             'Content-Type': 'application/json',
         },
     })
         .then(checkResponse)
 }
+
 
 const checkResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.statusText}`)

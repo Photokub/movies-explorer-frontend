@@ -9,15 +9,14 @@ import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
-import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import * as Auth from '../../utils/Auth';
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 
 function App() {
 
-    const [searchTerm, setSearchTerm] = useState("");
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
     const [savedMovies, setSavedMovies] = useState([])
@@ -28,43 +27,87 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
-    const [userData, setUserData] = useState({
-        name: "", email: "", password: ""
-    })
+    const [userData, setUserData] = useState({})
     console.log(userData)
+    console.log(currentUser)
+    //const currentUser = useContext(CurrentUserContext)
 
-    const authenticate = useCallback((data) => {
-        setLoggedIn(true)
-        setCurrentUser(data)
-    }, [setLoggedIn]);
+    //////////////////получение фильмов с BeatFilms//////////////////////////////
+
+    useEffect(() => {
+            if (loggedIn) {
+                Promise.all([moviesApi.getMovies()])
+                    .then(([data]) => {
+                        setBeatfilmsArr(data)
+                        console.log(beatfilmsArr)
+                        setReqFailed(false)
+                    })
+                    .catch((err) => {
+                        console.log(`Ошибка ${err}`)
+                        setReqFailed(true)
+                    })
+            }
+        },
+        [loggedIn]);
+
+////////////////////////авторизация//////////////////////////////////////////
+
+    const checkToken = useCallback(async () => {
+        try {
+            const user = await mainApi.getUserProfile()
+            if (user) {
+                console.log(user)
+                setLoggedIn(true)
+                setCurrentUser(user)
+                setUserData(user)
+            }
+        } catch {
+        } finally {
+        }
+    }, []);
 
     const register = useCallback(async ({name, email, password}) => {
-        console.log(userData)
         try {
             const res = await Auth.register({name, email, password});
+            console.log(res)
             setLoggedIn(true)
             setUserData({name, email, password})
             return res;
         } catch {
             setIsSubmitBtnActive(false)
         }
-    }, [authenticate]);
+    }, []);
 
     const login = useCallback(async ({password, email}) => {
             try {
-                const data = await Auth.authorize({password, email});
+                const data = await Auth.login({password, email});
                 if (!data) {
-                    // обработать ошибку
+                    setLoggedIn(false)
                 }
-                setUserData({password, email})
-                setCurrentUser({password, email})
+                console.log(data)
                 setLoggedIn(true)
-                console.log(currentUser)
+                setUserData(data.user)
             } catch {
                 setIsSubmitBtnActive(false)
             }
-        }
+        }, []
     )
+
+    useEffect(() => {
+        checkToken();
+    }, [checkToken])
+
+    const logOut = useCallback(() => {
+        Auth.logOut()
+            .then(() => {
+                setLoggedIn(false)
+                setUserData({});
+                setCurrentUser({})
+                localStorage.removeItem('searchTerm')
+                localStorage.removeItem('moviesList')
+                localStorage.removeItem('filterCheckbox')
+            })
+    })
 
     //////////////////добавление и удалениекарточки и избранное///////////////////
 
@@ -89,20 +132,6 @@ function App() {
             })
     }
 
-
-    //todo function handleSaveMovie(e) {
-    //     const movieCard = e.currentTarget
-    //     const id = movieCard.id
-    //     const isSaved = savedMovies.some((movies) => movies.id === id)
-    //     !isSaved ?
-    //         setSavedMovies( [movieCard, ...savedMovies])
-    //         :
-    //         setSavedMovies(movies => movies.filter((m) => m.id !== movieCard.id))
-    //
-    //     console.log(savedMovies)
-    // }
-
-
 /////////////////////таймаут на ресайз экрана/////////////////////////
 
     useEffect(() => {
@@ -121,20 +150,6 @@ function App() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    //////////////////получение фильмов с BeatFilms//////////////////////////////
-
-    useEffect(() => {
-        Promise.all([moviesApi.getMovies()])
-            .then(([data]) => {
-                setBeatfilmsArr(data)
-                console.log(beatfilmsArr)
-                setReqFailed(false)
-            })
-            .catch((err) => {
-                console.log(`Ошибка ${err}`)
-                setReqFailed(true)
-            })
-    }, []);
 
     ///////////поиск фильмов ///////////////////
 
@@ -147,8 +162,9 @@ function App() {
     //     })
     // }
 
+    let searchTerm;
     const handleSearchChange = event => {
-        setSearchTerm(event.target.value);
+        searchTerm = (event.target.value);
         console.log(searchTerm)
         localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
     };
@@ -169,8 +185,8 @@ function App() {
     }
 
     return (
-        <CurrentUserContext.Provider value={currentUser}>
-            <div className="App">
+        <div className="App">
+            <CurrentUserContext.Provider value={currentUser}>
                 <Routes>
                     <Route element={
                         <Layout
@@ -194,7 +210,12 @@ function App() {
                         <Route path="/saved-movies" element={<SavedMovies/>}/>
                     </Route>
                     <Route element={<LayoutProfile/>}>
-                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/profile" element={
+                            <Profile
+                                logOut={logOut}
+                                loggedIn={loggedIn}
+                            />}
+                        />
                     </Route>
                     <Route path="/signin" element={
                         <Login
@@ -214,8 +235,8 @@ function App() {
                     }/>
                     <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
-            </div>
-        </CurrentUserContext.Provider>
+            </CurrentUserContext.Provider>
+        </div>
     )
 }
 

@@ -8,6 +8,7 @@ import NavTab from "../NavTab/NavTab";
 import './Main.css'
 
 export default function Main() {
+
     return (
         <main className='main'>
             <Promo/>

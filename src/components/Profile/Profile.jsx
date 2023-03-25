@@ -1,7 +1,13 @@
 import React from "react";
 import './Profile.css'
+import {Navigate} from "react-router-dom";
 
-export default function Profile() {
+export default function Profile({logOut, loggedIn}) {
+
+    if (!loggedIn) {
+        return <Navigate to="/signin"/>;
+    }
+
     return (
         <section className='profile'>
             <div className='profile__container'>
@@ -19,7 +25,7 @@ export default function Profile() {
                     </ul>
                     <button className='profile-form__btn'>Редактировать</button>
                 </form>
-                <button className='profile__logout-btn'>Выйти из аккаунта</button>
+                <button className='profile__logout-btn' onClick={logOut}>Выйти из аккаунта</button>
             </div>
         </section>
     )
