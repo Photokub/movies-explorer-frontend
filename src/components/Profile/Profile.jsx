@@ -4,9 +4,9 @@ import {Navigate} from "react-router-dom";
 
 export default function Profile({logOut, loggedIn}) {
 
-    if (!loggedIn) {
-        return <Navigate to="/signin"/>;
-    }
+    // if (!loggedIn) {
+    //     return <Navigate to="/signin"/>;
+    // }
 
     return (
         <section className='profile'>

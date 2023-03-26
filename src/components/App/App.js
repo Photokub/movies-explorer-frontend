@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -31,6 +31,7 @@ function App() {
     console.log(userData)
     console.log(currentUser)
     //const currentUser = useContext(CurrentUserContext)
+    const navigate = useNavigate();
 
     //////////////////получение фильмов с BeatFilms//////////////////////////////
 
@@ -52,19 +53,36 @@ function App() {
 
 ////////////////////////авторизация//////////////////////////////////////////
 
-    const checkToken = useCallback(async () => {
-        try {
-            const user = await mainApi.getUserProfile()
-            if (user) {
-                console.log(user)
-                setLoggedIn(true)
-                setCurrentUser(user)
-                setUserData(user)
-            }
-        } catch {
-        } finally {
-        }
-    }, []);
+    //todo const checkToken = useCallback(async () => {
+    //     try {
+    //         const user = await mainApi.getUserProfile()
+    //         if (user) {
+    //             console.log(user)
+    //             setLoggedIn(true)
+    //             setCurrentUser(user)
+    //             setUserData(user)
+    //         }
+    //     } catch {
+    //     }
+    // }, []);
+    //
+    // useEffect(() => {
+    //     checkToken();
+    // }, [checkToken])
+
+    //todo useEffect(() => {
+    //     mainApi
+    //         .getUserProfile()
+    //         .then((data) => {
+    //             setLoggedIn(true);
+    //             setCurrentUser(data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
+
+
 
     const register = useCallback(async ({name, email, password}) => {
         try {
@@ -86,26 +104,46 @@ function App() {
                 }
                 console.log(data)
                 setLoggedIn(true)
-                setUserData(data.user)
+                //setUserData(data.user)
             } catch {
                 setIsSubmitBtnActive(false)
             }
         }, []
     )
 
-    useEffect(() => {
-        checkToken();
-    }, [checkToken])
+    //todo const checkToken = useCallback(async () => {
+    //     try {
+    //         const user = await mainApi.getUserProfile()
+    //         if (user) {
+    //             console.log(user)
+    //             setLoggedIn(true)
+    //             setCurrentUser(user)
+    //             setUserData(user)
+    //         }
+    //     } catch {
+    //     } finally {
+    //     }
+    // }, [login]);
+    //
+    // useEffect(() => {
+    //     checkToken();
+    // }, [checkToken])
+
+    // function eraseCookie() {
+    //     document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
+    // }
 
     const logOut = useCallback(() => {
         Auth.logOut()
             .then(() => {
+                // eraseCookie()
                 setLoggedIn(false)
                 setUserData({});
                 setCurrentUser({})
                 localStorage.removeItem('searchTerm')
                 localStorage.removeItem('moviesList')
                 localStorage.removeItem('filterCheckbox')
+                navigate('/signin');
             })
     })
 

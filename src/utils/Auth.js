@@ -31,8 +31,9 @@ export const login = ({password, email}) => {
 export const logOut = () => {
     return fetch(`${BASE_URL}/signout`, {
         method: 'POST',
+        //credentials: 'same-origin',
+       // credentials: "omit",
         credentials: 'include',
-        mode: "cors",
         headers: {
             'Content-Type': 'application/json',
         },
