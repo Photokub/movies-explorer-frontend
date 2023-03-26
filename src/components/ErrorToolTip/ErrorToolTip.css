@@ -1,0 +1,13 @@
+.error-tip{
+    width: 100%;
+}
+
+.error-tip__text{
+    transition: .5s;
+    margin-top: 60px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FF3055;
+}

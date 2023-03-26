@@ -1,3 +1,5 @@
+import {BASE_URL} from "./Auth";
+
 class MainApi {
     constructor(setting) {
         this._adress = setting.baseUrl;
@@ -23,14 +25,14 @@ class MainApi {
         })
     }
 
-    updateUserData({name, about}) {
+    updateUserData({name, email}) {
         return this._request(`${this._adress}/users/me`, {
             method: 'PATCH',
             credentials: 'include',
             headers: this._headers,
             body: JSON.stringify({
                 name: name,
-                about: about,
+                email: email,
             })
         })
     }
@@ -72,6 +74,7 @@ class MainApi {
 export const mainApi = new MainApi({
     credentials: 'include',
     baseUrl: 'https://api.photokub.nomoredomains.work',
+    //todo/baseUrl: 'http://localhost:3001',
     headers: {
         "content-type": "application/json",
         'Accept': 'application/json',

@@ -2,7 +2,7 @@ import React from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 
-export default function LoginForm({login, loggedIn, userData, setUserData}){
+export default function LoginForm({login, loggedIn, userData, setUserData, errorToolTip}){
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {
@@ -38,6 +38,7 @@ export default function LoginForm({login, loggedIn, userData, setUserData}){
             userData={userData}
             handleSubmit={handleSubmit(handleLoginSubmit)}
             isValid={isValid}
+            errorToolTip={errorToolTip}
         >
             <label className='form__field'>
                 <span className='form__input__title'>E-mail</span>

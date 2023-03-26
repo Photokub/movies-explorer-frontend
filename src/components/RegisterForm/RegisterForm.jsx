@@ -2,7 +2,7 @@ import React from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 
-export default function RegisterForm({ onRegister, loggedIn, userData, setUserData   }) {
+export default function RegisterForm({ onRegister, loggedIn, userData, setUserData, errorToolTip }) {
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {
@@ -40,6 +40,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
             userData={userData}
             handleSubmit={handleSubmit(handleRegisterSubmit)}
             isValid={isValid}
+            errorToolTip={errorToolTip}
         >
             <label className='form__field'>
                 <span className='form__input__title'>Имя</span>

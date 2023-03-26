@@ -29,24 +29,30 @@ function App() {
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({})
+    const [errorToolTip, setErrorToolTip] = useState({text: ''})
+    const [respMessage, setRespMessage] = useState({message: ''})
+    const navigate = useNavigate();
+
+
     console.log(userData)
     console.log(currentUser)
+    console.log(currentUser.name)
+    console.log(CurrentUserContext)
     //const currentUser = useContext(CurrentUserContext)
-    const navigate = useNavigate();
 
     //////////////////получение фильмов с BeatFilms//////////////////////////////
 
     useEffect(() => {
-                Promise.all([moviesApi.getMovies()])
-                    .then(([data]) => {
-                        setBeatfilmsArr(data)
-                        console.log(beatfilmsArr)
-                        setReqFailed(false)
-                    })
-                    .catch((err) => {
-                        console.log(`Ошибка ${err}`)
-                        setReqFailed(true)
-                    })
+            Promise.all([moviesApi.getMovies()])
+                .then(([data]) => {
+                    setBeatfilmsArr(data)
+                    console.log(beatfilmsArr)
+                    setReqFailed(false)
+                })
+                .catch((err) => {
+                    console.log(`Ошибка ${err}`)
+                    setReqFailed(true)
+                })
         },
         []);
 
@@ -98,218 +104,255 @@ function App() {
     // }, [])
 
 
-
     const register = useCallback(async ({name, email, password}) => {
         try {
             const res = await Auth.register({name, email, password});
-            console.log(res)
             setLoggedIn(true)
-            setUserData({name, email, password})
+            setUserData({name, email})
+            setCurrentUser({name, email})
             return res;
-        } catch {
+        } catch (err) {
+            setErrorToolTip({text: `${err}`})
             setIsSubmitBtnActive(false)
         }
     }, []);
 
-    const login = useCallback(async ({password, email}) => {
-            try {
-                const data = await Auth.login({password, email});
-                if (!data) {
-                    setLoggedIn(false)
-                }
-                console.log(data)
-                setLoggedIn(true)
-                setUserData(data.user)
-                //setCurrentUser(data._id)
-            } catch {
-                setIsSubmitBtnActive(false)
-            }
-        }, []
-    )
-
-    //todo const checkToken = useCallback(async () => {
-    //     try {
-    //         const user = await mainApi.getUserProfile()
-    //         if (user) {
-    //             console.log(user)
+    //todo const register = useCallback(({name, email, password}) => {
+    //     Auth
+    //         .register({name, email, password})
+    //         .then(({name, email}) => {
     //             setLoggedIn(true)
-    //             setCurrentUser(user)
-    //             setUserData(user)
-    //         }
-    //     } catch {
-    //     } finally {
-    //     }
-    // }, [login]);
-    //
-    // useEffect(() => {
-    //     checkToken();
-    // }, [checkToken])
+    //             setUserData({name, email})
+    //             setCurrentUser({name, email})
+    //         })
+    //         .catch((err)=> err.json())
+    //         .then(errJson=>{
+    //             // handle error message here
+    //             console.log(errJson) });
+    // },[])
 
-    // function eraseCookie() {
-    //     document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
-    // }
 
-    const logOut = useCallback(() => {
-        Auth.logOut()
-            .then(() => {
-                // eraseCookie()
+
+const login = useCallback(async ({password, email}) => {
+        try {
+            const data = await Auth.login({password, email});
+            if (!data) {
                 setLoggedIn(false)
-                setUserData({});
-                setCurrentUser({})
-                localStorage.removeItem('searchTerm')
-                localStorage.removeItem('moviesList')
-                localStorage.removeItem('filterCheckbox')
-                navigate('/signin');
-            })
-    })
+            }
+            console.log(data)
+            setLoggedIn(true)
+            setUserData(data)
+            setCurrentUser(data)
+        } catch (err) {
+            setErrorToolTip({text: `${err}`})
+            setIsSubmitBtnActive(false)
+        }
+    }, []
+)
 
-    //////////////////добавление и удалениекарточки и избранное///////////////////
+const updateUser = useCallback(async ({name, email}) => {
+        try {
+            const data = await mainApi.updateUserData({name, email});
+            if (!data) {
+                setLoggedIn(false)
+            }
+            console.log(data)
+            setUserData(data)
+            setCurrentUser(data)
+        } catch {
+            setIsSubmitBtnActive(false)
+        }
+    }, []
+)
 
-    const handleSaveMovie = (movieCard) => {
-        const id = movieCard.id
-        const isSaved = savedMovies.some((movies) => movies.id === id)
-        !isSaved ?
-            mainApi
-                .saveMovie(movieCard)
-                .then((newMovie) =>
-                    setSavedMovies([newMovie, ...savedMovies]),
-                ).catch((err) => {
-                console.log(`Ошибка ${err}`)
-            })
-            :
-            mainApi
-                .deleteMovie(id)
-                .then(
-                    setSavedMovies(movies => movies.filter((m) => m.id !== movieCard.id)),
-                ).catch((err) => {
-                console.log(`Ошибка ${err}`)
-            })
-    }
+//todo const checkToken = useCallback(async () => {
+//     try {
+//         const user = await mainApi.getUserProfile()
+//         if (user) {
+//             console.log(user)
+//             setLoggedIn(true)
+//             setCurrentUser(user)
+//             setUserData(user)
+//         }
+//     } catch {
+//     } finally {
+//     }
+// }, [login]);
+//
+// useEffect(() => {
+//     checkToken();
+// }, [checkToken])
+
+// function eraseCookie() {
+//     document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
+// }
+
+const logOut = useCallback(() => {
+    Auth.logOut()
+        .then(() => {
+            // eraseCookie()
+            setLoggedIn(false)
+            setUserData({});
+            setCurrentUser({})
+            localStorage.removeItem('searchTerm')
+            localStorage.removeItem('moviesList')
+            localStorage.removeItem('filterCheckbox')
+            navigate('/signin');
+        })
+})
+
+//////////////////добавление и удалениекарточки и избранное///////////////////
+
+const handleSaveMovie = (movieCard) => {
+    const id = movieCard.id
+    const isSaved = savedMovies.some((movies) => movies.id === id)
+    !isSaved ?
+        mainApi
+            .saveMovie(movieCard)
+            .then((newMovie) =>
+                setSavedMovies([newMovie, ...savedMovies]),
+            ).catch((err) => {
+            console.log(`Ошибка ${err}`)
+        })
+        :
+        mainApi
+            .deleteMovie(id)
+            .then(
+                setSavedMovies(movies => movies.filter((m) => m.id !== movieCard.id)),
+            ).catch((err) => {
+            console.log(`Ошибка ${err}`)
+        })
+}
 
 /////////////////////таймаут на ресайз экрана/////////////////////////
 
-    useEffect(() => {
-        let timeout;
-        const handleResize = () => {
-            clearTimeout(timeout);
+useEffect(() => {
+    let timeout;
+    const handleResize = () => {
+        clearTimeout(timeout);
 
-            setWindowResizing(true);
+        setWindowResizing(true);
 
-            timeout = setTimeout(() => {
-                setWindowResizing(false);
-            }, 1000);
-        }
-        window.addEventListener("resize", handleResize);
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-
-    ///////////поиск фильмов ///////////////////
-
-    // const getBeatfilmMovies = () => {
-    //     moviesApi.getMovies()
-    //         .then(data => {
-    //             setBeatfilmsArr(data)
-    //         }).catch((err) => {
-    //         console.log(`Ошибка ${err}`)
-    //     })
-    // }
-    //
-    // useEffect(() => {
-    //     moviesApi.getMovies()
-    //         .then(data => {
-    //             setBeatfilmsArr(data)
-    //         }).catch((err) => {
-    //         console.log(`Ошибка ${err}`)
-    //     })
-    // })
-
-    // let currentSearchTerm;
-    // const handleSearchChange = event => {
-    //     currentSearchTerm = (event.target.value);
-    //     console.log(currentSearchTerm)
-    //     localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
-    //     setSearchTerm(currentSearchTerm)
-    // };
-
-    const handleSearchChange = event => {
-        setSearchTerm(event.target.value);
-        console.log(searchTerm)
-        localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
-    };
-
-
-    const handleSearchValue = (e) => {
-        e.preventDefault()
-        //getBeatfilmMovies()
-        console.log(beatfilmsArr)
-        const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
-        setMoviesList(results)
-        console.log(moviesList)
-        localStorage.setItem('moviesList', JSON.stringify(moviesList));
-        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+        timeout = setTimeout(() => {
+            setWindowResizing(false);
+        }, 1000);
     }
+    window.addEventListener("resize", handleResize);
 
-    const handleFilterCheckbox = (e) => {
-        const isChecked = e.target.checked
-        localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
-    }
+    return () => window.removeEventListener("resize", handleResize);
+}, []);
 
-    return (
+
+///////////поиск фильмов ///////////////////
+
+// const getBeatfilmMovies = () => {
+//     moviesApi.getMovies()
+//         .then(data => {
+//             setBeatfilmsArr(data)
+//         }).catch((err) => {
+//         console.log(`Ошибка ${err}`)
+//     })
+// }
+//
+//todo useEffect(() => {
+//     moviesApi.getMovies()
+//         .then(data => {
+//             setBeatfilmsArr(data)
+//         }).catch((err) => {
+//         console.log(`Ошибка ${err}`)
+//     })
+// })
+
+// let currentSearchTerm;
+// const handleSearchChange = event => {
+//     currentSearchTerm = (event.target.value);
+//     console.log(currentSearchTerm)
+//     localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+//     setSearchTerm(currentSearchTerm)
+// };
+
+const handleSearchChange = event => {
+    setSearchTerm(event.target.value);
+    console.log(searchTerm)
+    localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+};
+
+
+const handleSearchValue = (e) => {
+    e.preventDefault()
+    //getBeatfilmMovies()
+    console.log(beatfilmsArr)
+    const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
+    setMoviesList(results)
+    console.log(moviesList)
+    localStorage.setItem('moviesList', JSON.stringify(moviesList));
+    results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+}
+
+const handleFilterCheckbox = (e) => {
+    const isChecked = e.target.checked
+    localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
+}
+
+return (
+    <CurrentUserContext.Provider value={currentUser}>
         <div className="App">
-            <CurrentUserContext.Provider value={currentUser}>
-                <Routes>
-                    <Route element={
-                        <Layout
-                            userData={userData}
+            <Routes>
+                <Route element={
+                    <Layout
+                        userData={userData}
+                    />
+                }>
+                    <Route path='/' element={<Main/>}/>
+                    <Route path="/movies" element={
+                        <Movies
+                            searchTerm={searchTerm}
+                            handleSearchValue={handleSearchValue}
+                            handleSearchChange={handleSearchChange}
+                            moviesList={moviesList}
+                            handleFilterCheckbox={handleFilterCheckbox}
+                            isAnyMatches={isAnyMatches}
+                            isReqFailed={isReqFailed}
+                            windowResizing={windowResizing}
+                            handleSaveMovie={handleSaveMovie}
                         />
-                    }>
-                        <Route path='/' element={<Main/>}/>
-                        <Route path="/movies" element={
-                            <Movies
-                                searchTerm={searchTerm}
-                                handleSearchValue={handleSearchValue}
-                                handleSearchChange={handleSearchChange}
-                                moviesList={moviesList}
-                                handleFilterCheckbox={handleFilterCheckbox}
-                                isAnyMatches={isAnyMatches}
-                                isReqFailed={isReqFailed}
-                                windowResizing={windowResizing}
-                                handleSaveMovie={handleSaveMovie}
-                            />
-                        }/>
-                        <Route path="/saved-movies" element={<SavedMovies/>}/>
-                    </Route>
-                    <Route element={<LayoutProfile/>}>
-                        <Route path="/profile" element={
-                            <Profile
-                                logOut={logOut}
-                                loggedIn={loggedIn}
-                            />}
-                        />
-                    </Route>
-                    <Route path="/signin" element={
-                        <Login
-                            login={login}
+                    }/>
+                    <Route path="/saved-movies" element={<SavedMovies/>}/>
+                </Route>
+                <Route element={<LayoutProfile/>}>
+                    <Route path="/profile" element={
+                        <Profile
+                            logOut={logOut}
                             loggedIn={loggedIn}
                             userData={userData}
                             setUserData={setUserData}
-                        />
-                    }/>
-                    <Route path="/signup" element={
-                        <Register
-                            onRegister={register}
-                            loggedIn={loggedIn}
-                            userData={userData}
-                            setUserData={setUserData}
-                        />
-                    }/>
-                    <Route path="*" element={<PageNotFound/>}/>
-                </Routes>
-            </CurrentUserContext.Provider>
+                            updateUser={updateUser}
+                        />}
+                    />
+                </Route>
+                <Route path="/signin" element={
+                    <Login
+                        login={login}
+                        loggedIn={loggedIn}
+                        userData={userData}
+                        setUserData={setUserData}
+                        errorToolTip={errorToolTip}
+                    />
+                }/>
+                <Route path="/signup" element={
+                    <Register
+                        onRegister={register}
+                        loggedIn={loggedIn}
+                        userData={userData}
+                        setUserData={setUserData}
+                        errorToolTip={errorToolTip}
+                    />
+                }/>
+                <Route path="*" element={<PageNotFound/>}/>
+            </Routes>
         </div>
-    )
+    </CurrentUserContext.Provider>
+)
 }
 
 export default App;

@@ -3,7 +3,7 @@ import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
-import {CurrentUserContext} from "../../context/CurrentUserContext";
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
 export default function Navigation() {
 

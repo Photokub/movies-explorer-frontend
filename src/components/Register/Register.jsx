@@ -1,7 +1,7 @@
 import React from "react";
 import WelcomeScreen from "../WelcomeScreen/WelcomeScreen";
 
-export default function Register({onRegister, loggedIn, userData, setUserData}) {
+export default function Register({onRegister, loggedIn, userData, setUserData, errorToolTip}) {
     return (
         <WelcomeScreen
             title='Добро пожаловать!'
@@ -12,6 +12,7 @@ export default function Register({onRegister, loggedIn, userData, setUserData}) 
             loggedIn={loggedIn}
             userData={userData}
             setUserData={setUserData}
+            errorToolTip={errorToolTip}
         />
     )
 }
