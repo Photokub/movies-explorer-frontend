@@ -17,6 +17,7 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 
 function App() {
 
+    const [searchTerm, setSearchTerm] = useState('')
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
     const [savedMovies, setSavedMovies] = useState([])
@@ -36,7 +37,6 @@ function App() {
     //////////////////получение фильмов с BeatFilms//////////////////////////////
 
     useEffect(() => {
-            if (loggedIn) {
                 Promise.all([moviesApi.getMovies()])
                     .then(([data]) => {
                         setBeatfilmsArr(data)
@@ -47,9 +47,24 @@ function App() {
                         console.log(`Ошибка ${err}`)
                         setReqFailed(true)
                     })
-            }
         },
-        [loggedIn]);
+        []);
+
+    //todo useEffect(() => {
+    //         if (loggedIn) {
+    //             Promise.all([moviesApi.getMovies()])
+    //                 .then(([data]) => {
+    //                     setBeatfilmsArr(data)
+    //                     console.log(beatfilmsArr)
+    //                     setReqFailed(false)
+    //                 })
+    //                 .catch((err) => {
+    //                     console.log(`Ошибка ${err}`)
+    //                     setReqFailed(true)
+    //                 })
+    //         }
+    //     },
+    //     [loggedIn]);
 
 ////////////////////////авторизация//////////////////////////////////////////
 
@@ -104,7 +119,8 @@ function App() {
                 }
                 console.log(data)
                 setLoggedIn(true)
-                //setUserData(data.user)
+                setUserData(data.user)
+                //setCurrentUser(data._id)
             } catch {
                 setIsSubmitBtnActive(false)
             }
@@ -191,7 +207,7 @@ function App() {
 
     ///////////поиск фильмов ///////////////////
 
-    //TODO const getBeatfilmMovies = () => {
+    // const getBeatfilmMovies = () => {
     //     moviesApi.getMovies()
     //         .then(data => {
     //             setBeatfilmsArr(data)
@@ -199,16 +215,34 @@ function App() {
     //         console.log(`Ошибка ${err}`)
     //     })
     // }
+    //
+    // useEffect(() => {
+    //     moviesApi.getMovies()
+    //         .then(data => {
+    //             setBeatfilmsArr(data)
+    //         }).catch((err) => {
+    //         console.log(`Ошибка ${err}`)
+    //     })
+    // })
 
-    let searchTerm;
+    // let currentSearchTerm;
+    // const handleSearchChange = event => {
+    //     currentSearchTerm = (event.target.value);
+    //     console.log(currentSearchTerm)
+    //     localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+    //     setSearchTerm(currentSearchTerm)
+    // };
+
     const handleSearchChange = event => {
-        searchTerm = (event.target.value);
+        setSearchTerm(event.target.value);
         console.log(searchTerm)
         localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
     };
 
+
     const handleSearchValue = (e) => {
         e.preventDefault()
+        //getBeatfilmMovies()
         console.log(beatfilmsArr)
         const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
         setMoviesList(results)
