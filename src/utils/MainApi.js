@@ -46,20 +46,25 @@ class MainApi {
     }
 
     saveMovie(data) {
-        return this._request(`${this._adress}/movies`, {
+        return this._request(`${this._adress}/movies/`, {
             method: "POST",
             credentials: 'include',
             headers: this._headers,
+            body: JSON.stringify({
+                country: data.country,
+                director: data.director,
+                duration: data.duration,
+                year: data.year,
+                description: data.description,
+                trailerLink: data.trailerLink,
+                image: 'https://api.nomoreparties.co' + data.image.url,
+                thumbnail: 'https://api.nomoreparties.co' + data.image.formats.thumbnail.url,
+                movieId: data.id,
+                nameRU: data.nameRU,
+                nameEN: data.nameEN,
+            })
         })
     }
-
-    //todo saveMovie(id, save) {
-    //     return this._request(`${this._adress}/movies`, {
-    //         method: save ? "PUT" : "DELETE",
-    //         credentials: 'include',
-    //         headers: this._headers,
-    //     })
-    // }
 
     deleteMovie(id) {
         return this._request(`${this._adress}/movies/${id}`, {

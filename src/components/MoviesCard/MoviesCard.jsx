@@ -2,7 +2,7 @@ import React from "react";
 import './MoviesCard.css'
 import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
 
-export default function MoviesCard({film, handleSaveMovie}) {
+export default function MoviesCard({film, handleSaveMovie, handleSaveCheckbox, checkboxStatus}) {
     const timeFull  = film.duration
 
     function getTimeFromMins(mins) {
@@ -18,6 +18,9 @@ export default function MoviesCard({film, handleSaveMovie}) {
                 <p className='movies-card-element__label__subtitle'>{getTimeFromMins(timeFull)}</p>
                 <SaveCheckbox
                     handleSaveMovie={handleSaveMovie}
+                    film={film}
+                    handleSaveCheckbox={handleSaveCheckbox}
+                    checkboxStatus={checkboxStatus}
                 />
             </div>
             <img className='movies-card-element__image' src={`https://api.nomoreparties.co/${film.image.url}`} alt={`Афиша ${film.nameRU}`}/>

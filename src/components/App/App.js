@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -31,6 +31,7 @@ function App() {
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
     const [respMessage, setRespMessage] = useState({message: ''})
+    const [checkboxStatus, setCheckboxStatus] = useState(false)
     const navigate = useNavigate();
 
     const history = useNavigate()
@@ -84,7 +85,7 @@ function App() {
     // }, [checkToken, history])
 
 
-   useEffect(() => {
+    useEffect(() => {
         mainApi
             .getUserProfile()
             .then((data) => {
@@ -124,39 +125,37 @@ function App() {
     // },[])
 
 
-
-const login = useCallback(async ({password, email}) => {
-        try {
-            const data = await Auth.login({password, email});
-            if (!data) {
-                setLoggedIn(false)
+    const login = useCallback(async ({password, email}) => {
+            try {
+                const data = await Auth.login({password, email});
+                if (!data) {
+                    setLoggedIn(false)
+                }
+                console.log(data)
+                setLoggedIn(true)
+                setUserData(data)
+                //setCurrentUser(data)
+            } catch (err) {
+                setErrorToolTip({text: `${err}`})
+                setIsSubmitBtnActive(false)
             }
-            console.log(data)
-            setLoggedIn(true)
-            setUserData(data)
-            //setCurrentUser(data)
-        } catch (err) {
-            setErrorToolTip({text: `${err}`})
-            setIsSubmitBtnActive(false)
-        }
-    }, []
-)
+        }, []
+    )
 
-const updateUser = useCallback(async ({name, email}) => {
-        try {
-            const data = await mainApi.updateUserData({name, email});
-            if (!data) {
-                setLoggedIn(false)
+    const updateUser = useCallback(async ({name, email}) => {
+            try {
+                const data = await mainApi.updateUserData({name, email});
+                if (!data) {
+                    setLoggedIn(false)
+                }
+                console.log(data)
+                setUserData(data)
+                setCurrentUser(data)
+            } catch {
+                setIsSubmitBtnActive(false)
             }
-            console.log(data)
-            setUserData(data)
-            setCurrentUser(data)
-        } catch {
-            setIsSubmitBtnActive(false)
-        }
-    }, []
-)
-
+        }, []
+    )
 
 
 // function eraseCookie(name) {
@@ -196,61 +195,95 @@ const updateUser = useCallback(async ({name, email}) => {
     }
 
 
-
-const logOut = useCallback(() => {
-    Auth.logOut()
-        .then(() => {
-            deleteCookie('jwt')
-            setLoggedIn(false)
-            setUserData({});
-            setCurrentUser({})
-            localStorage.removeItem('searchTerm')
-            localStorage.removeItem('moviesList')
-            localStorage.removeItem('filterCheckbox')
-            navigate('/signin');
-        })
-})
+    const logOut = useCallback(() => {
+        Auth.logOut()
+            .then(() => {
+                deleteCookie('jwt')
+                setLoggedIn(false)
+                setUserData({});
+                setCurrentUser({})
+                localStorage.removeItem('searchTerm')
+                localStorage.removeItem('moviesList')
+                localStorage.removeItem('filterCheckbox')
+                navigate('/signin');
+            })
+    })
 
 //////////////////добавление и удалениекарточки и избранное///////////////////
 
-const handleSaveMovie = (movieCard) => {
-    const id = movieCard.id
-    const isSaved = savedMovies.some((movies) => movies.id === id)
-    !isSaved ?
-        mainApi
-            .saveMovie(movieCard)
-            .then((newMovie) =>
-                setSavedMovies([newMovie, ...savedMovies]),
-            ).catch((err) => {
-            console.log(`Ошибка ${err}`)
-        })
-        :
-        mainApi
-            .deleteMovie(id)
-            .then(
-                setSavedMovies(movies => movies.filter((m) => m.id !== movieCard.id)),
-            ).catch((err) => {
-            console.log(`Ошибка ${err}`)
-        })
-}
+
+    const handleSaveMovie = (movieCard) => {
+        console.log(movieCard)
+        console.log(savedMovies)
+        const id = movieCard.id
+        const isSaved = savedMovies.some((movie) => (movie.movieId === id) || (movie.id === id))
+        const searchTerm = id
+        const movieInArray = savedMovies.find(movie => movie.movieId === searchTerm)
+        !isSaved ?
+            mainApi
+                .saveMovie(movieCard)
+                .then((newMovie) =>
+                    setSavedMovies([newMovie, ...savedMovies])
+                ).catch((err) => {
+                console.log(`Ошибка ${err}`)
+            })
+            :
+            mainApi
+                .deleteMovie(movieInArray._id)
+                .then(() => {
+                        setSavedMovies(movies => movies.filter((m) => m._id !== movieInArray._id))
+                    }
+                ).catch((err) => {
+                console.log(`Ошибка ${err}`)
+            })
+    }
+
+    const handleSaveCheckbox = (movie) => {
+        const id = movie.id
+        const isSaved = savedMovies.some((movie) => (movie.movieId === id) || (movie.id === id))
+        console.log(isSaved)
+        !isSaved && setCheckboxStatus(true)
+    }
+
+    //checkboxStatus, setCheckboxStatus
+
+
+    const getSavedMovies = useCallback(async () => {
+        try {
+            mainApi
+                .getMovies()
+                .then((data) =>
+                    setSavedMovies(data)
+                )
+        } catch {
+        }
+    }, [])
+
+
+    console.log(savedMovies)
+
+    useEffect(() => {
+        getSavedMovies()
+    }, [getSavedMovies])
+
 
 /////////////////////таймаут на ресайз экрана/////////////////////////
 
-useEffect(() => {
-    let timeout;
-    const handleResize = () => {
-        clearTimeout(timeout);
+    useEffect(() => {
+        let timeout;
+        const handleResize = () => {
+            clearTimeout(timeout);
 
-        setWindowResizing(true);
+            setWindowResizing(true);
 
-        timeout = setTimeout(() => {
-            setWindowResizing(false);
-        }, 1000);
-    }
-    window.addEventListener("resize", handleResize);
+            timeout = setTimeout(() => {
+                setWindowResizing(false);
+            }, 1000);
+        }
+        window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
-}, []);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
 
 ///////////поиск фильмов ///////////////////
@@ -281,88 +314,94 @@ useEffect(() => {
 //     setSearchTerm(currentSearchTerm)
 // };
 
-const handleSearchChange = event => {
-    setSearchTerm(event.target.value);
-    console.log(searchTerm)
-    localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
-};
+    const handleSearchChange = event => {
+        setSearchTerm(event.target.value);
+        console.log(searchTerm)
+        localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+    };
 
 
-const handleSearchValue = (e) => {
-    e.preventDefault()
-    //getBeatfilmMovies()
-    console.log(beatfilmsArr)
-    const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
-    setMoviesList(results)
-    console.log(moviesList)
-    localStorage.setItem('moviesList', JSON.stringify(moviesList));
-    results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
-}
+    const handleSearchValue = (e) => {
+        e.preventDefault()
+        //getBeatfilmMovies()
+        console.log(beatfilmsArr)
+        const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
+        setMoviesList(results)
+        console.log(moviesList)
+        localStorage.setItem('moviesList', JSON.stringify(moviesList));
+        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+    }
 
-const handleFilterCheckbox = (e) => {
-    const isChecked = e.target.checked
-    localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
-}
+    const handleFilterCheckbox = (e) => {
+        const isChecked = e.target.checked
+        localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
+    }
 
-return (
-    <CurrentUserContext.Provider value={currentUser}>
-        <div className="App">
-            <Routes>
-                <Route element={
-                    <Layout
-                        userData={userData}
-                    />
-                }>
-                    <Route path='/' element={<Main/>}/>
-                    <Route path="/movies" element={
-                        <Movies
-                            searchTerm={searchTerm}
-                            handleSearchValue={handleSearchValue}
-                            handleSearchChange={handleSearchChange}
-                            moviesList={moviesList}
-                            handleFilterCheckbox={handleFilterCheckbox}
-                            isAnyMatches={isAnyMatches}
-                            isReqFailed={isReqFailed}
-                            windowResizing={windowResizing}
-                            handleSaveMovie={handleSaveMovie}
+    return (
+        <CurrentUserContext.Provider value={currentUser}>
+            <div className="App">
+                <Routes>
+                    <Route element={
+                        <Layout
+                            userData={userData}
                         />
-                    }/>
-                    <Route path="/saved-movies" element={<SavedMovies/>}/>
-                </Route>
-                <Route element={<LayoutProfile/>}>
-                    <Route path="/profile" element={
-                        <Profile
-                            logOut={logOut}
+                    }>
+                        <Route path='/' element={<Main/>}/>
+                        <Route path="/movies" element={
+                            <Movies
+                                searchTerm={searchTerm}
+                                handleSearchValue={handleSearchValue}
+                                handleSearchChange={handleSearchChange}
+                                moviesList={moviesList}
+                                handleFilterCheckbox={handleFilterCheckbox}
+                                isAnyMatches={isAnyMatches}
+                                isReqFailed={isReqFailed}
+                                windowResizing={windowResizing}
+                                handleSaveMovie={handleSaveMovie}
+                                handleSaveCheckbox={handleSaveCheckbox}
+                                checkboxStatus={checkboxStatus}
+                            />
+                        }/>
+                        <Route path="/saved-movies" element={
+                            <SavedMovies
+
+                            />}
+                        />
+                    </Route>
+                    <Route element={<LayoutProfile/>}>
+                        <Route path="/profile" element={
+                            <Profile
+                                logOut={logOut}
+                                loggedIn={loggedIn}
+                                userData={userData}
+                                setUserData={setUserData}
+                                updateUser={updateUser}
+                            />}
+                        />
+                    </Route>
+                    <Route path="/signin" element={
+                        <Login
+                            login={login}
                             loggedIn={loggedIn}
                             userData={userData}
                             setUserData={setUserData}
-                            updateUser={updateUser}
-                        />}
-                    />
-                </Route>
-                <Route path="/signin" element={
-                    <Login
-                        login={login}
-                        loggedIn={loggedIn}
-                        userData={userData}
-                        setUserData={setUserData}
-                        errorToolTip={errorToolTip}
-                    />
-                }/>
-                <Route path="/signup" element={
-                    <Register
-                        onRegister={register}
-                        loggedIn={loggedIn}
-                        userData={userData}
-                        setUserData={setUserData}
-                        errorToolTip={errorToolTip}
-                    />
-                }/>
-                <Route path="*" element={<PageNotFound/>}/>
-            </Routes>
-        </div>
-    </CurrentUserContext.Provider>
-)
+                            errorToolTip={errorToolTip}
+                        />
+                    }/>
+                    <Route path="/signup" element={
+                        <Register
+                            onRegister={register}
+                            loggedIn={loggedIn}
+                            userData={userData}
+                            setUserData={setUserData}
+                            errorToolTip={errorToolTip}
+                        />
+                    }/>
+                    <Route path="*" element={<PageNotFound/>}/>
+                </Routes>
+            </div>
+        </CurrentUserContext.Provider>
+    )
 }
 
 export default App;
