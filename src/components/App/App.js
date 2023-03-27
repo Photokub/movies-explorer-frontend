@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -33,12 +33,7 @@ function App() {
     const [respMessage, setRespMessage] = useState({message: ''})
     const navigate = useNavigate();
 
-
-    console.log(userData)
-    console.log(currentUser)
-    console.log(currentUser.name)
-    console.log(CurrentUserContext)
-    //const currentUser = useContext(CurrentUserContext)
+    const history = useNavigate()
 
     //////////////////получение фильмов с BeatFilms//////////////////////////////
 
@@ -74,14 +69,11 @@ function App() {
 
 ////////////////////////авторизация//////////////////////////////////////////
 
-    //todo const checkToken = useCallback(async () => {
+    // const checkToken = useCallback(async () => {
     //     try {
     //         const user = await mainApi.getUserProfile()
     //         if (user) {
-    //             console.log(user)
-    //             setLoggedIn(true)
     //             setCurrentUser(user)
-    //             setUserData(user)
     //         }
     //     } catch {
     //     }
@@ -89,19 +81,19 @@ function App() {
     //
     // useEffect(() => {
     //     checkToken();
-    // }, [checkToken])
+    // }, [checkToken, history])
 
-    //todo useEffect(() => {
-    //     mainApi
-    //         .getUserProfile()
-    //         .then((data) => {
-    //             setLoggedIn(true);
-    //             setCurrentUser(data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         })
-    // }, [])
+
+   useEffect(() => {
+        mainApi
+            .getUserProfile()
+            .then((data) => {
+                setCurrentUser(data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [history])
 
 
     const register = useCallback(async ({name, email, password}) => {
@@ -142,7 +134,7 @@ const login = useCallback(async ({password, email}) => {
             console.log(data)
             setLoggedIn(true)
             setUserData(data)
-            setCurrentUser(data)
+            //setCurrentUser(data)
         } catch (err) {
             setErrorToolTip({text: `${err}`})
             setIsSubmitBtnActive(false)
@@ -165,32 +157,50 @@ const updateUser = useCallback(async ({name, email}) => {
     }, []
 )
 
-//todo const checkToken = useCallback(async () => {
-//     try {
-//         const user = await mainApi.getUserProfile()
-//         if (user) {
-//             console.log(user)
-//             setLoggedIn(true)
-//             setCurrentUser(user)
-//             setUserData(user)
-//         }
-//     } catch {
-//     } finally {
-//     }
-// }, [login]);
-//
-// useEffect(() => {
-//     checkToken();
-// }, [checkToken])
 
-// function eraseCookie() {
-//     document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
+
+// function eraseCookie(name) {
+//     document.cookie(name, "jwt", {
+//         'max-age': -1
+//     })
 // }
+
+    function setCookie(name, value, options = {}) {
+
+        options = {
+            path: '/profile',
+            ...options
+        };
+
+        if (options.expires instanceof Date) {
+            options.expires = options.expires.toUTCString();
+        }
+
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
+
+    function deleteCookie(name) {
+        setCookie(name, "", {
+            'max-age': -1
+        })
+    }
+
+
 
 const logOut = useCallback(() => {
     Auth.logOut()
         .then(() => {
-            // eraseCookie()
+            deleteCookie('jwt')
             setLoggedIn(false)
             setUserData({});
             setCurrentUser({})
