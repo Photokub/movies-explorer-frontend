@@ -214,9 +214,11 @@ function App() {
         console.log(movieCard)
         console.log(savedMovies)
         const id = movieCard.id
-        const isSaved = savedMovies.some((movie) => (movie.movieId === id) || (movie.id === id))
+        const movieId = movieCard.movieId
+        const isSaved = savedMovies.some((movie) => (movie.movieId === id || movieId) || (movie.id === id || movieId))
         const searchTerm = id
-        const movieInArray = savedMovies.find(movie => movie.movieId === searchTerm)
+        const searchTermInSavedArray = movieId
+        const movieInArray = savedMovies.find(movie => movie.movieId === searchTerm || searchTermInSavedArray)
         !isSaved ?
             mainApi
                 .saveMovie(movieCard)
@@ -235,10 +237,6 @@ function App() {
                 console.log(`Ошибка ${err}`)
             })
     }
-
-
-    //checkboxStatus, setCheckboxStatus
-
 
     const getSavedMovies = useCallback(async () => {
         try {
@@ -354,7 +352,8 @@ function App() {
                         }/>
                         <Route path="/saved-movies" element={
                             <SavedMovies
-
+                                handleSaveMovie={handleSaveMovie}
+                                savedMovies={savedMovies}
                             />}
                         />
                     </Route>

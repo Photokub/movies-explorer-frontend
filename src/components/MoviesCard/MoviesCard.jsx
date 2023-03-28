@@ -1,8 +1,10 @@
 import React from "react";
 import './MoviesCard.css'
 import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
+import {useLocation} from "react-router-dom";
 
 export default function MoviesCard({film, handleSaveMovie, savedMovies}) {
+    const location = useLocation()
     const timeFull  = film.duration
 
     function getTimeFromMins(mins) {
@@ -22,7 +24,7 @@ export default function MoviesCard({film, handleSaveMovie, savedMovies}) {
                     savedMovies={savedMovies}
                 />
             </div>
-            <img className='movies-card-element__image' src={`https://api.nomoreparties.co/${film.image.url}`} alt={`Афиша ${film.nameRU}`}/>
+            <img className='movies-card-element__image' src={location.pathname !== '/saved-movies' ? `https://api.nomoreparties.co/${film.image.url}` : film.image} alt={`Афиша ${film.nameRU}`}/>
         </section>
     )
 }
