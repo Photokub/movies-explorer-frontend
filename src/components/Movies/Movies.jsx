@@ -5,7 +5,7 @@ import MoreButton from "../MoreButton/MoreButton";
 import './Movies.css'
 import Preloader from "../Preloader/Preloader";
 
-export default function Movies({handleSearchChange, handleSearchValue, searchTerm, moviesList, handleFilterCheckbox, isAnyMatches, isReqFailed, windowResizing, handleSaveMovie, handleSaveCheckbox, checkboxStatus}) {
+export default function Movies({handleSearchChange, handleSearchValue, searchTerm, moviesList, handleFilterCheckbox, isAnyMatches, isReqFailed, windowResizing, handleSaveMovie, savedMovies}) {
     const [isPreloaderActive, setIsPreloaderActive] = useState(false);
     const windowInnerWidth = window.innerWidth;
     const windowWidth = useMemo(() => windowInnerWidth, [windowInnerWidth]);
@@ -61,8 +61,7 @@ export default function Movies({handleSearchChange, handleSearchValue, searchTer
                 isAnyMatches={isAnyMatches}
                 isReqFailed={isReqFailed}
                 handleSaveMovie={handleSaveMovie}
-                handleSaveCheckbox={handleSaveCheckbox}
-                checkboxStatus={checkboxStatus}
+                savedMovies={savedMovies}
             />}
             <Preloader isActive={isPreloaderActive}/>
             <MoreButton

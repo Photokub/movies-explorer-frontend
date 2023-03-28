@@ -30,8 +30,6 @@ function App() {
     const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
-    const [respMessage, setRespMessage] = useState({message: ''})
-    const [checkboxStatus, setCheckboxStatus] = useState(false)
     const navigate = useNavigate();
 
     const history = useNavigate()
@@ -238,12 +236,6 @@ function App() {
             })
     }
 
-    const handleSaveCheckbox = (movie) => {
-        const id = movie.id
-        const isSaved = savedMovies.some((movie) => (movie.movieId === id) || (movie.id === id))
-        console.log(isSaved)
-        !isSaved && setCheckboxStatus(true)
-    }
 
     //checkboxStatus, setCheckboxStatus
 
@@ -320,14 +312,13 @@ function App() {
         localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
     };
 
-
     const handleSearchValue = (e) => {
         e.preventDefault()
-        //getBeatfilmMovies()
-        console.log(beatfilmsArr)
-        const results = beatfilmsArr.filter((film) => film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm))
+        const results = beatfilmsArr.filter(
+            (film) =>
+                film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm)
+        )
         setMoviesList(results)
-        console.log(moviesList)
         localStorage.setItem('moviesList', JSON.stringify(moviesList));
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
@@ -358,8 +349,7 @@ function App() {
                                 isReqFailed={isReqFailed}
                                 windowResizing={windowResizing}
                                 handleSaveMovie={handleSaveMovie}
-                                handleSaveCheckbox={handleSaveCheckbox}
-                                checkboxStatus={checkboxStatus}
+                                savedMovies={savedMovies}
                             />
                         }/>
                         <Route path="/saved-movies" element={
