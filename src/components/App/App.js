@@ -208,7 +208,8 @@ function App() {
     })
 
 //////////////////добавление и удалениекарточки и избранное///////////////////
-
+console.log(beatfilmsArr)
+console.log(moviesList)
 
     const handleSaveMovie = (movieCard) => {
         console.log(movieCard)
@@ -218,7 +219,7 @@ function App() {
         const isSaved = savedMovies.some((movie) => (movie.movieId === id || movieId) || (movie.id === id || movieId))
         const searchTerm = id
         const searchTermInSavedArray = movieId
-        const movieInArray = savedMovies.find(movie => movie.movieId === searchTerm || searchTermInSavedArray)
+        const movieInArray = savedMovies.find(movie => (movie.movieId === searchTerm) || (movie.movieId === searchTermInSavedArray))
         !isSaved ?
             mainApi
                 .saveMovie(movieCard)
