@@ -7,6 +7,7 @@ import Register from "../Register/Register";
 import Main from "../Main/Main";
 import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 import {moviesApi} from "../../utils/MoviesApi";
@@ -208,8 +209,8 @@ function App() {
     })
 
 //////////////////добавление и удалениекарточки и избранное///////////////////
-console.log(beatfilmsArr)
-console.log(moviesList)
+    console.log(beatfilmsArr)
+    console.log(moviesList)
 
     const handleSaveMovie = (movieCard) => {
         console.log(movieCard)
@@ -334,39 +335,44 @@ console.log(moviesList)
                     <Route element={
                         <Layout
                             userData={userData}
+                            loggedIn={loggedIn}
                         />
                     }>
                         <Route path='/' element={<Main/>}/>
                         <Route path="/movies" element={
-                            <Movies
-                                searchTerm={searchTerm}
-                                handleSearchValue={handleSearchValue}
-                                handleSearchChange={handleSearchChange}
-                                moviesList={moviesList}
-                                handleFilterCheckbox={handleFilterCheckbox}
-                                isAnyMatches={isAnyMatches}
-                                isReqFailed={isReqFailed}
-                                windowResizing={windowResizing}
-                                handleSaveMovie={handleSaveMovie}
-                                savedMovies={savedMovies}
-                            />
+                                <Movies
+                                    searchTerm={searchTerm}
+                                    handleSearchValue={handleSearchValue}
+                                    handleSearchChange={handleSearchChange}
+                                    moviesList={moviesList}
+                                    handleFilterCheckbox={handleFilterCheckbox}
+                                    isAnyMatches={isAnyMatches}
+                                    isReqFailed={isReqFailed}
+                                    windowResizing={windowResizing}
+                                    handleSaveMovie={handleSaveMovie}
+                                    savedMovies={savedMovies}
+                                />
                         }/>
                         <Route path="/saved-movies" element={
-                            <SavedMovies
-                                handleSaveMovie={handleSaveMovie}
-                                savedMovies={savedMovies}
-                            />}
+                                <SavedMovies
+                                    handleSaveMovie={handleSaveMovie}
+                                    savedMovies={savedMovies}
+                                />
+                        }
                         />
                     </Route>
-                    <Route element={<LayoutProfile/>}>
+                    <Route element={
+                        <LayoutProfile/>
+                    }>
                         <Route path="/profile" element={
-                            <Profile
-                                logOut={logOut}
-                                loggedIn={loggedIn}
-                                userData={userData}
-                                setUserData={setUserData}
-                                updateUser={updateUser}
-                            />}
+                                <Profile
+                                    logOut={logOut}
+                                    loggedIn={loggedIn}
+                                    userData={userData}
+                                    setUserData={setUserData}
+                                    updateUser={updateUser}
+                                />
+                        }
                         />
                     </Route>
                     <Route path="/signin" element={
