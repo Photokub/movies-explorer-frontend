@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import './FilterCheckbox.css'
 
 export default function FilterCheckbox({handleFilterCheckbox}) {
+
+    const [isActive, setFilterStatus] = useState(false)
+
     return (
         <label className='filter'>
             <input className='filter__switcher' type='checkbox' onChange={handleFilterCheckbox}/>

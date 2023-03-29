@@ -81,7 +81,7 @@ function App() {
     //
     // useEffect(() => {
     //     checkToken();
-    // }, [checkToken, history])
+    // }, [checkToken])
 
 
     useEffect(() => {
@@ -93,7 +93,7 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-    }, [history])
+    }, [])
 
 
     const register = useCallback(async ({name, email, password}) => {
@@ -156,48 +156,9 @@ function App() {
         }, []
     )
 
-
-// function eraseCookie(name) {
-//     document.cookie(name, "jwt", {
-//         'max-age': -1
-//     })
-// }
-
-    function setCookie(name, value, options = {}) {
-
-        options = {
-            path: '/profile',
-            ...options
-        };
-
-        if (options.expires instanceof Date) {
-            options.expires = options.expires.toUTCString();
-        }
-
-        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
-        for (let optionKey in options) {
-            updatedCookie += "; " + optionKey;
-            let optionValue = options[optionKey];
-            if (optionValue !== true) {
-                updatedCookie += "=" + optionValue;
-            }
-        }
-
-        document.cookie = updatedCookie;
-    }
-
-    function deleteCookie(name) {
-        setCookie(name, "", {
-            'max-age': -1
-        })
-    }
-
-
     const logOut = useCallback(() => {
         Auth.logOut()
             .then(() => {
-                deleteCookie('jwt')
                 setLoggedIn(false)
                 setUserData({});
                 setCurrentUser({})
