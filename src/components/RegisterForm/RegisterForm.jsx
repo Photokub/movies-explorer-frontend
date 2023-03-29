@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 
-export default function RegisterForm({ onRegister, loggedIn, userData, setUserData, errorToolTip }) {
+export default function RegisterForm({ onRegister, loggedIn, userData, setUserData, errorToolTip,hasError }) {
 
     const [errorStatus, setErrorStatus]=useState(false)
 
@@ -21,7 +21,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
 
     const handleRegisterSubmit = () => {
         onRegister({ name, email, password })
-        !loggedIn ? setErrorStatus(true) : setErrorStatus(false)
+        hasError ? setErrorStatus(true) : setErrorStatus(false)
     }
 
     const handleChange = (e) => {

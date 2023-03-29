@@ -1,7 +1,7 @@
 import WelcomeScreen from "../WelcomeScreen/WelcomeScreen";
 import React from "react";
 
-export default function Login({login, loggedIn, userData ,setUserData, errorToolTip}) {
+export default function Login({login, loggedIn, userData ,setUserData, errorToolTip, hasError}) {
     return (
         <WelcomeScreen
             title='Рады видеть!'
@@ -13,6 +13,7 @@ export default function Login({login, loggedIn, userData ,setUserData, errorTool
             userData={userData}
             setUserData={setUserData}
             errorToolTip={errorToolTip}
+            hasError={hasError}
         />
     )
 }

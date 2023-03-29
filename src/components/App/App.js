@@ -29,6 +29,7 @@ function App(callback, deps) {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
     const [isFilterActive, setFilterStatus] = useState(false)
+    const [hasError, setHasError] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
@@ -98,12 +99,14 @@ function App(callback, deps) {
 
     const register = useCallback(async ({name, email, password}) => {
         try {
+            setHasError(false)
             const res = await Auth.register({name, email, password});
             setLoggedIn(true)
             setUserData({name, email})
             setCurrentUser({name, email})
             return res;
         } catch (err) {
+            setHasError(true)
             setErrorToolTip({text: `${err}`})
             setIsSubmitBtnActive(false)
         }
@@ -137,6 +140,7 @@ function App(callback, deps) {
                 setUserData(data)
                 setCurrentUser(data)
             } catch (err) {
+                setHasError(true)
                 setErrorToolTip({text: `${err}`})
                 setIsSubmitBtnActive(false)
             }
@@ -396,6 +400,7 @@ function App(callback, deps) {
                             userData={userData}
                             setUserData={setUserData}
                             errorToolTip={errorToolTip}
+                            hasError={hasError}
                         />
                     }/>
                     <Route path="/signup" element={
@@ -405,6 +410,7 @@ function App(callback, deps) {
                             userData={userData}
                             setUserData={setUserData}
                             errorToolTip={errorToolTip}
+                            hasError={hasError}
                         />
                     }/>
                     <Route path="*" element={<PageNotFound/>}/>
