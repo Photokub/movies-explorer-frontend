@@ -16,7 +16,7 @@ import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import * as Auth from '../../utils/Auth';
 import React, {useCallback, useContext, useEffect, useState} from "react";
 
-function App() {
+function App(callback, deps) {
 
     const [searchTerm, setSearchTerm] = useState('')
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
@@ -96,7 +96,6 @@ function App() {
             })
     }, [])
 
-
     const register = useCallback(async ({name, email, password}) => {
         try {
             const res = await Auth.register({name, email, password});
@@ -109,6 +108,8 @@ function App() {
             setIsSubmitBtnActive(false)
         }
     }, []);
+
+
 
     //todo const register = useCallback(({name, email, password}) => {
     //     Auth
@@ -168,7 +169,7 @@ function App() {
                 localStorage.removeItem('filterCheckbox')
                 navigate('/signin');
             })
-    })
+    }, [])
 
 //////////////////добавление и удалениекарточки и избранное///////////////////
     console.log(beatfilmsArr)
@@ -264,17 +265,25 @@ function App() {
 // const handleSearchChange = event => {
 //     currentSearchTerm = (event.target.value);
 //     console.log(currentSearchTerm)
-//     localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+//     localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
 //     setSearchTerm(currentSearchTerm)
 // };
 
     //const [isActive, setFilterStatus] = useState(false)
 
 
+    // const handleSearchChange = event => {
+    //     setSearchTerm(event.target.value);
+    //     console.log(searchTerm)
+    //     localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+    // };
+
     const handleSearchChange = event => {
+        let currentSearchTerm;
+        currentSearchTerm = (event.target.value);
         setSearchTerm(event.target.value);
         console.log(searchTerm)
-        localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
+        localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
     };
 
 
@@ -284,28 +293,50 @@ function App() {
         setFilterStatus(!isChecked)
         console.log(isFilterActive)
     }
-
-    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+    //localStorage.setItem('moviesList', JSON.stringify(results));
+    // const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
 
     const handleSearchValue = (e) => {
         e.preventDefault()
-
         const results =
             isFilterActive ?
                 beatfilmsArr.filter(
                     (film) =>
-                        film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm)
+                        film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
                 )
                 :
                 beatfilmsArr.filter(
                     (film) =>
-                        (film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm)) && (film.duration <= 40)
+                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
                 )
 
         setMoviesList(results)
-        localStorage.setItem('moviesList', JSON.stringify(moviesList));
+        localStorage.setItem('moviesList', JSON.stringify(results));
+        //handleMoviesList()
+        //handleMoviesList()
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
+
+    const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
+
+
+    //todo const handleMoviesList = useCallback(()=> {
+    //     setMoviesList(movieListStorage)
+    // },[])
+    //
+    // useEffect(()=>{
+    //     handleMoviesList()
+    // },[])
+
+    // useEffect(()=>{
+    //     setMoviesList(movieListStorage)
+    // },[])
+
+    const getSearchValue = useCallback((data) => setSearchTerm(data), [searchTerm]);
+
+    const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
+    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+
 
 
     return (
@@ -332,6 +363,8 @@ function App() {
                                 handleSaveMovie={handleSaveMovie}
                                 savedMovies={savedMovies}
                                 filterStorageStatus={filterStorageStatus}
+                                searchTermStorage={searchTermStorage}
+                                getSearchValue={getSearchValue}
                             />
                         }/>
                         <Route path="/saved-movies" element={

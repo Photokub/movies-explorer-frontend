@@ -1,5 +1,11 @@
-.error-tip{
+.error-tip_enabled{
     width: 100%;
+    opacity: 1;
+}
+
+.error-tip_disabled{
+    width: 100%;
+    opacity: 0;
 }
 
 .error-tip__text{

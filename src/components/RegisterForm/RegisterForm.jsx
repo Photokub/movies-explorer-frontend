@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 
 export default function RegisterForm({ onRegister, loggedIn, userData, setUserData, errorToolTip }) {
+
+    const [errorStatus, setErrorStatus]=useState(false)
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {
@@ -19,6 +21,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
 
     const handleRegisterSubmit = () => {
         onRegister({ name, email, password })
+        !loggedIn ? setErrorStatus(true) : setErrorStatus(false)
     }
 
     const handleChange = (e) => {
@@ -41,6 +44,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
             handleSubmit={handleSubmit(handleRegisterSubmit)}
             isValid={isValid}
             errorToolTip={errorToolTip}
+            errorStatus={errorStatus}
         >
             <label className='form__field'>
                 <span className='form__input__title'>Имя</span>

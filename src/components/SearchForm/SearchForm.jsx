@@ -1,8 +1,17 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import './SearchForm.css'
 
-export default function SearchForm({handleSearchChange, handleSearchValue, searchTerm, handleFilterCheckbox, handlePreloader, filterStorageStatus}) {
+export default function SearchForm({
+                                       handleSearchChange,
+                                       handleSearchValue,
+                                       searchTerm,
+                                       handleFilterCheckbox,
+                                       handlePreloader,
+                                       filterStorageStatus,
+                                       searchTermStorage,
+                                       getSearchValue
+                                   }) {
     const searchFormBorder = useRef(null)
     const searchFormInput = useRef(null)
     const borderBlur = '1.5px solid rgba(100, 100, 100, .2)'
@@ -21,22 +30,32 @@ export default function SearchForm({handleSearchChange, handleSearchValue, searc
         searchFormInput && setFormBorder({border: borderBlur});
     };
 
+    // const searchValue = searchTermStorage
+    //
+    // useEffect(() => {
+    //     getSearchValue(searchValue)
+    // }, [searchValue]);
+
     return (
         <div className='search-form-container'>
-            <form className='search-form' ref={searchFormBorder} style={formBorder} onSubmit={handleSearchValue} onLoad={handlePreloader}>
+            <form className='search-form' ref={searchFormBorder} style={formBorder} onSubmit={handleSearchValue}
+                  onLoad={handlePreloader}>
                 <input
                     required
                     className='search-form__input'
                     type='text'
                     placeholder='Фильм'
-                    value={searchTerm}
+                    //defaultValue={searchTermStorage}
+                    //value={searchValue}
+                    //value={searchTerm}
+                    value={searchTermStorage}
                     ref={searchFormInput}
                     onChange={handleSearchChange}
                     onFocus={() => handleFocus(searchFormInput.current)}
                     onBlur={handleBlur}/>
-                <button className='search-form__button' type='submit' >Поиск</button>
+                <button className='search-form__button' type='submit'>Поиск</button>
                 <FilterCheckbox
-                    handleFilterCheckbox = {handleFilterCheckbox}
+                    handleFilterCheckbox={handleFilterCheckbox}
                     filterStorageStatus={filterStorageStatus}
                 />
             </form>

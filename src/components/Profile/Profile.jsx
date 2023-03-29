@@ -52,7 +52,6 @@ export default function Profile({logOut, userData, setUserData, updateUser}) {
                                        type='text'
                                        name='name'
                                        required
-                                       //defaultValue={currentUser.name}
                                        value={name}
                                        onChange={handleChange}
                                        {...register('name', {
@@ -79,7 +78,6 @@ export default function Profile({logOut, userData, setUserData, updateUser}) {
                                        type='email'
                                        required
                                        value={email}
-                                       //defaultValue={currentUser.email}
                                        onChange={handleChange}
                                        {...register('email', {
                                            required: 'Обязательное поле',
