@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import './SearchForm.css'
 
-export default function SearchForm({handleSearchChange, handleSearchValue, searchTerm, handleFilterCheckbox, handlePreloader}) {
+export default function SearchForm({handleSearchChange, handleSearchValue, searchTerm, handleFilterCheckbox, handlePreloader, filterStorageStatus}) {
     const searchFormBorder = useRef(null)
     const searchFormInput = useRef(null)
     const borderBlur = '1.5px solid rgba(100, 100, 100, .2)'
@@ -37,6 +37,7 @@ export default function SearchForm({handleSearchChange, handleSearchValue, searc
                 <button className='search-form__button' type='submit' >Поиск</button>
                 <FilterCheckbox
                     handleFilterCheckbox = {handleFilterCheckbox}
+                    filterStorageStatus={filterStorageStatus}
                 />
             </form>
             <hr className='search-form-container__border'></hr>

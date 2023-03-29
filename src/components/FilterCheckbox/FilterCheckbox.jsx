@@ -1,13 +1,10 @@
-import React, {useState} from "react";
 import './FilterCheckbox.css'
 
-export default function FilterCheckbox({handleFilterCheckbox}) {
-
-    const [isActive, setFilterStatus] = useState(false)
+export default function FilterCheckbox({handleFilterCheckbox, filterStorageStatus}) {
 
     return (
         <label className='filter'>
-            <input className='filter__switcher' type='checkbox' onChange={handleFilterCheckbox}/>
+            <input className='filter__switcher' type='checkbox' defaultChecked={filterStorageStatus} onChange={handleFilterCheckbox}/>
             <span className='filter__switcher__point'></span>
             <p className="filter__title">Короткометражки</p>
         </label>

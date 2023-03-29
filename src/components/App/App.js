@@ -28,6 +28,7 @@ function App() {
     const [windowResizing, setWindowResizing] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
+    const [isFilterActive, setFilterStatus] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
@@ -67,7 +68,7 @@ function App() {
     //     },
     //     [loggedIn]);
 
-////////////////////////авторизация//////////////////////////////////////////
+////////////////////////аутентефикация//////////////////////////////////////////
 
     // const checkToken = useCallback(async () => {
     //     try {
@@ -267,27 +268,45 @@ function App() {
 //     setSearchTerm(currentSearchTerm)
 // };
 
+    //const [isActive, setFilterStatus] = useState(false)
+
+
     const handleSearchChange = event => {
         setSearchTerm(event.target.value);
         console.log(searchTerm)
         localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
     };
 
+
+    const handleFilterCheckbox = (e) => {
+        const isChecked = e.target.checked
+        localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
+        setFilterStatus(!isChecked)
+        console.log(isFilterActive)
+    }
+
+    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+
     const handleSearchValue = (e) => {
         e.preventDefault()
-        const results = beatfilmsArr.filter(
-            (film) =>
-                film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm)
-        )
+
+        const results =
+            isFilterActive ?
+                beatfilmsArr.filter(
+                    (film) =>
+                        film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm)
+                )
+                :
+                beatfilmsArr.filter(
+                    (film) =>
+                        (film.nameRU.toLowerCase().includes(searchTerm) || film.nameEN.toLowerCase().includes(searchTerm)) && (film.duration <= 40)
+                )
+
         setMoviesList(results)
         localStorage.setItem('moviesList', JSON.stringify(moviesList));
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
-    const handleFilterCheckbox = (e) => {
-        const isChecked = e.target.checked
-        localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
-    }
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -301,24 +320,25 @@ function App() {
                     }>
                         <Route path='/' element={<Main/>}/>
                         <Route path="/movies" element={
-                                <Movies
-                                    searchTerm={searchTerm}
-                                    handleSearchValue={handleSearchValue}
-                                    handleSearchChange={handleSearchChange}
-                                    moviesList={moviesList}
-                                    handleFilterCheckbox={handleFilterCheckbox}
-                                    isAnyMatches={isAnyMatches}
-                                    isReqFailed={isReqFailed}
-                                    windowResizing={windowResizing}
-                                    handleSaveMovie={handleSaveMovie}
-                                    savedMovies={savedMovies}
-                                />
+                            <Movies
+                                searchTerm={searchTerm}
+                                handleSearchValue={handleSearchValue}
+                                handleSearchChange={handleSearchChange}
+                                moviesList={moviesList}
+                                handleFilterCheckbox={handleFilterCheckbox}
+                                isAnyMatches={isAnyMatches}
+                                isReqFailed={isReqFailed}
+                                windowResizing={windowResizing}
+                                handleSaveMovie={handleSaveMovie}
+                                savedMovies={savedMovies}
+                                filterStorageStatus={filterStorageStatus}
+                            />
                         }/>
                         <Route path="/saved-movies" element={
-                                <SavedMovies
-                                    handleSaveMovie={handleSaveMovie}
-                                    savedMovies={savedMovies}
-                                />
+                            <SavedMovies
+                                handleSaveMovie={handleSaveMovie}
+                                savedMovies={savedMovies}
+                            />
                         }
                         />
                     </Route>
@@ -326,13 +346,13 @@ function App() {
                         <LayoutProfile/>
                     }>
                         <Route path="/profile" element={
-                                <Profile
-                                    logOut={logOut}
-                                    loggedIn={loggedIn}
-                                    userData={userData}
-                                    setUserData={setUserData}
-                                    updateUser={updateUser}
-                                />
+                            <Profile
+                                logOut={logOut}
+                                loggedIn={loggedIn}
+                                userData={userData}
+                                setUserData={setUserData}
+                                updateUser={updateUser}
+                            />
                         }
                         />
                     </Route>
