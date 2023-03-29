@@ -135,7 +135,7 @@ function App(callback, deps) {
                 console.log(data)
                 setLoggedIn(true)
                 setUserData(data)
-                //setCurrentUser(data)
+                setCurrentUser(data)
             } catch (err) {
                 setErrorToolTip({text: `${err}`})
                 setIsSubmitBtnActive(false)
