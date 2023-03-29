@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import './BurgerMenu.css'
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 
 export default function BurgerMenu() {
 
     const page = document.body
     const [isSubscribed, setIsSubscribed] = useState(false);
+    const navigate = useNavigate();
+    const profileRoute = () => navigate('/profile');
 
     const handleChange = (event) => {
         if (event.target.checked) {
@@ -22,7 +24,7 @@ export default function BurgerMenu() {
                 <input
                     className='burger__container__input'
                     type="checkbox"
-                    value={isSubscribed}
+                    defaultChecked={isSubscribed}
                     onChange={handleChange}
                 />
                 <span className='burger__container__stripe'></span>
@@ -43,7 +45,7 @@ export default function BurgerMenu() {
                             to='saved-movies'>Сохранённые фильмы</NavLink>
                     </li>
                     <div className='navigation__container_auth burger-menu__container_auth'>
-                        <button className='navigation__account-btn' type='button'>Аккаунт</button>
+                        <button className='navigation__account-btn' type='button' onClick={profileRoute}>Аккаунт</button>
                     </div>
                 </ul>
                 <span className='burger__substrate'/>

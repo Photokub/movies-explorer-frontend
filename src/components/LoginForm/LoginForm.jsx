@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 
@@ -19,8 +19,13 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
 
     const handleLoginSubmit = () => {
         login({ email, password })
-        !loggedIn ? setErrorStatus(true) : setErrorStatus(false)
+        //todo!loggedIn ? setErrorStatus(true) : setErrorStatus(false)
+        handleErr()
     }
+
+    const handleErr = useCallback(() => {
+        !loggedIn ? setErrorStatus(true) : setErrorStatus(false)
+    }, [])
 
 
 

@@ -1,13 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
-import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
 export default function Navigation() {
-
-    //todo//const currentUser = useContext(CurrentUserContext)
 
     const navigate = useNavigate();
     const signinRoute = () => navigate('/signin');
