@@ -44,7 +44,6 @@
     height: 100%;
 
     justify-self: end;
-
 }
 
 @media screen and (max-width: 984px){
@@ -62,6 +61,13 @@
 
     .about-me__text{
         margin: 0 0 87px 0;
+    }
+}
+
+@media screen and (max-width: 924px){
+
+    .about-me__photo{
+        height: 80%;
     }
 }
 
