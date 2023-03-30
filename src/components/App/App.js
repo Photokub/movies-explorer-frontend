@@ -165,6 +165,8 @@ function App() {
 
 ///////////поиск фильмов ///////////////////
 
+    const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
+
     const handleSearchChange = event => {
         let currentSearchTerm;
         currentSearchTerm = (event.target.value);
@@ -173,22 +175,20 @@ function App() {
         localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
     };
 
-    const filterStorageStatus = localStorage.getItem('filterCheckbox');
-
-
-
     const handleFilterCheckbox = (e) => {
         const isChecked = e.target.checked
         localStorage.setItem('filterCheckbox', isChecked);
-        debugger
-        setFilterStatus({filterStorageStatus})
+        setFilterStatus(JSON.parse(filterStorageStatus))
         console.log(isFilterActive)
     }
 
+    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+
     const handleSearchValue = (e) => {
         e.preventDefault()
+        debugger
         const results =
-            isFilterActive ?
+            !isFilterActive ?
                 beatfilmsArr.filter(
                     (film) =>
                         film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
@@ -198,17 +198,14 @@ function App() {
                     (film) =>
                         (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
                 )
-        setMoviesList(results)
         localStorage.setItem('moviesList', JSON.stringify(results));
+        setMoviesList(movieListStorage)
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
     const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
-    const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
-    //const filterStorageStatus = localStorage.getItem('filterCheckbox');
 
     const getSearchValue = useCallback((data) => setSearchTerm(data), [searchTerm]);
-
 
     //////////////////добавление и удалениекарточки и избранное///////////////////
     console.log(beatfilmsArr)
@@ -306,6 +303,7 @@ function App() {
                                 filterStorageStatus={filterStorageStatus}
                                 searchTermStorage={searchTermStorage}
                                 getSearchValue={getSearchValue}
+                                movieListStorage={movieListStorage}
                             />
                         }/>
                         <Route path="/saved-movies" element={

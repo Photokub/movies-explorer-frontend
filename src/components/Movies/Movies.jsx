@@ -19,7 +19,7 @@ export default function Movies({
                                    filterStorageStatus,
                                    searchTermStorage,
                                    getSearchValue,
-                                   isFilterActive
+                                   movieListStorage
                                }) {
     const [isPreloaderActive, setIsPreloaderActive] = useState(false);
     const windowInnerWidth = window.innerWidth;
@@ -80,6 +80,7 @@ export default function Movies({
                 isReqFailed={isReqFailed}
                 handleSaveMovie={handleSaveMovie}
                 savedMovies={savedMovies}
+                movieListStorage={movieListStorage}
             />}
             <Preloader isActive={isPreloaderActive}/>
             <MoreButton
