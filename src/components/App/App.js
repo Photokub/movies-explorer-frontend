@@ -139,7 +139,7 @@ function App() {
                 localStorage.removeItem('searchTerm')
                 localStorage.removeItem('moviesList')
                 localStorage.removeItem('filterCheckbox')
-                navigate('/signin');
+                navigate('/');
             })
     }, [])
 
@@ -186,7 +186,6 @@ function App() {
 
     const handleSearchValue = (e) => {
         e.preventDefault()
-        debugger
         const results =
             !isFilterActive ?
                 beatfilmsArr.filter(
@@ -206,6 +205,27 @@ function App() {
     const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
 
     const getSearchValue = useCallback((data) => setSearchTerm(data), [searchTerm]);
+
+    const handleSearchSavedMoviesValue = (e) => {
+        e.preventDefault()
+        debugger
+        const results =
+            !isFilterActive ?
+                savedMovies.filter(
+                    (film) =>
+                        film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
+                )
+                :
+                savedMovies.filter(
+                    (film) =>
+                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
+                )
+        //todo/localStorage.setItem('SavedMoviesList', JSON.stringify(results));
+        setSavedMovies(results)
+        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+    }
+
+    //todo/const savedMovieListStorage = JSON.parse(localStorage.getItem('SavedMoviesList')) || [];
 
     //////////////////добавление и удалениекарточки и избранное///////////////////
     console.log(beatfilmsArr)
@@ -269,7 +289,7 @@ function App() {
 
             timeout = setTimeout(() => {
                 setWindowResizing(false);
-            }, 1000);
+            }, 500);
         }
         window.addEventListener("resize", handleResize);
 
@@ -287,7 +307,9 @@ function App() {
                             loggedIn={loggedIn}
                         />
                     }>
-                        <Route path='/' element={<Main/>}/>
+                        <Route path='/' element={
+                            <Main/>
+                        }/>
                         <Route path="/movies" element={
                             <Movies
                                 searchTerm={searchTerm}
@@ -313,12 +335,16 @@ function App() {
                                 filterStorageStatus={filterStorageStatus}
                                 searchTermStorage={searchTermStorage}
                                 handleFilterCheckbox={handleFilterCheckbox}
+                                handleSearchChange={handleSearchChange}
+                                handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
                             />
                         }
                         />
                     </Route>
                     <Route element={
-                        <LayoutProfile/>
+                        <LayoutProfile
+                            loggedIn={loggedIn}
+                        />
                     }>
                         <Route path="/profile" element={
                             <Profile

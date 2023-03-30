@@ -4,10 +4,11 @@ import {Outlet} from "react-router-dom";
 import Footer from "../Footer/Footer";
 
 
-const Layout = ({userData}) => (
+const Layout = ({userData, loggedIn}) => (
     <>
         <Header
             userData={userData}
+            loggedIn={loggedIn}
         />
         <Outlet/>
         <Footer/>

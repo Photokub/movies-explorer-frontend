@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-export default function Navigation() {
+export default function Navigation({loggedIn}) {
 
     const navigate = useNavigate();
     const signinRoute = () => navigate('/signin');
@@ -26,7 +26,19 @@ export default function Navigation() {
                 <button className='navigation__account-btn' type='button' onClick={profileRoute}>Аккаунт</button>
             </div>
         </div>
-    const menu = location.pathname !== '/' ? navContainerAuth : navContainer
+
+    const navContainerMainAuth =
+        <div className='navigation__auth-warp'>
+            <div className='navigation__film-nav-container'>
+                <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink-main_active" : "navigation__movies-navlink-main"}`} to='movies'>Фильмы</NavLink>
+                <NavLink className={({isActive}) => `${isActive ? "navigation__movies-navlink-main_active" : "navigation__movies-navlink-main"}`} to='saved-movies'>Сохранённые фильмы</NavLink>
+            </div>
+            <div className='navigation__container_auth'>
+                <button className='navigation__account-btn_main' type='button' onClick={profileRoute}>Аккаунт</button>
+            </div>
+        </div>
+    const menu =  loggedIn && location.pathname !== '/' ? navContainerMainAuth : loggedIn  ? navContainerAuth : navContainer
+
 
     useEffect(() => {
         function handleWindowResize() {
@@ -45,10 +57,12 @@ export default function Navigation() {
 
     return (
         <nav className={location.pathname !== '/' ? 'navigation_authorized' : 'navigation'}>
+        {/*<nav className={loggedIn ? 'navigation_authorized' : 'navigation'}>*/}
             <Link className="navigation__logo-link" to="/">
                 <img className="navigation__logo" src={logo} alt="логотип movies explorer"/>
             </Link>
-            {windowSize.innerWidth <= 768 && location.pathname !== '/' ? <BurgerMenu/> : menu}
+            {windowSize.innerWidth <= 768 ? <BurgerMenu/> : menu}
+            {/*{windowSize.innerWidth <= 768 && location.pathname !== '/' ? <BurgerMenu/> : menu}*/}
         </nav>
     )
 }

@@ -4,7 +4,7 @@ import {Navigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
-export default function Profile({logOut, userData, setUserData, updateUser}) {
+export default function Profile({logOut, userData, setUserData, updateUser, loggedIn}) {
 
     const currentUser = useContext(CurrentUserContext)
 

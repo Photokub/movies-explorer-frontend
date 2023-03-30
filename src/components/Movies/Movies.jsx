@@ -71,7 +71,7 @@ export default function Movies({
                 handlePreloader={handlePreloader}
                 filterStorageStatus={filterStorageStatus}
                 searchTermStorage={searchTermStorage}
-                //todo/getSearchValue={getSearchValue}
+                getSearchValue={getSearchValue}
             />
             {!windowResizing && <MoviesCardList
                 existedCards={existedCards}

@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import './SearchForm.css'
+import {useLocation} from "react-router-dom";
 
 export default function SearchForm({
                                        handleSearchChange,
@@ -11,14 +12,20 @@ export default function SearchForm({
                                        filterStorageStatus,
                                        searchTermStorage,
                                        getSearchValue,
-                                       isFilterActive
+                                       isFilterActive,
+                                       handleSearchSavedMoviesValue
                                    }) {
+
+    const location = useLocation()
+
+    const submitState = location.pathname === '/movies' ? handleSearchValue : handleSearchSavedMoviesValue
+
+    ////////////border style//////////////
     const searchFormBorder = useRef(null)
     const searchFormInput = useRef(null)
     const borderBlur = '1.5px solid rgba(100, 100, 100, .2)'
     const borderFocus = '1.5px solid rgba(100, 100, 100, .8)'
 
-    ////////////border style//////////////
 
     const borderStyle = {border: borderBlur}
     const [formBorder, setFormBorder] = useState(borderStyle)
@@ -33,7 +40,7 @@ export default function SearchForm({
 
     return (
         <div className='search-form-container'>
-            <form className='search-form' ref={searchFormBorder} style={formBorder} onSubmit={handleSearchValue}
+            <form className='search-form' ref={searchFormBorder} style={formBorder} onSubmit={submitState}
                   onLoad={handlePreloader}>
                 <input
                     required

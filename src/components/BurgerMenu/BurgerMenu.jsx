@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import './BurgerMenu.css'
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate, useLocation} from "react-router-dom";
 
 export default function BurgerMenu() {
+
+    const location = useLocation()
 
     const page = document.body
     const [isSubscribed, setIsSubscribed] = useState(false);
@@ -18,6 +20,8 @@ export default function BurgerMenu() {
         setIsSubscribed(current => !current);
     };
 
+    const stripeClassName = location.pathname !== '/' ? 'burger__container__stripe' : 'burger__container__stripe_main'
+
     return (
         <nav className='burger' role='navigation'>
             <div className='burger__container'>
@@ -27,9 +31,9 @@ export default function BurgerMenu() {
                     defaultChecked={isSubscribed}
                     onChange={handleChange}
                 />
-                <span className='burger__container__stripe'></span>
-                <span className='burger__container__stripe'></span>
-                <span className='burger__container__stripe'></span>
+                <span className={stripeClassName}></span>
+                <span className={stripeClassName}></span>
+                <span className={stripeClassName}></span>
                 <ul className='burger-menu-list'>
                     <li className='burger-menu-list__string'>
                         <Link to='/' className='burger-menu__list-navlink'>Главная</Link>
