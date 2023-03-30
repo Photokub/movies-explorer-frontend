@@ -7,14 +7,14 @@ import Register from "../Register/Register";
 import Main from "../Main/Main";
 import './App.css';
 import PageNotFound from "../PageNotFound/PageNotFound";
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
+import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute'
 import {Layout} from "../Layout/Layout";
 import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import * as Auth from '../../utils/Auth';
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 
 function App() {
 
@@ -36,41 +36,46 @@ function App() {
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
     const navigate = useNavigate();
 
+    const loggedInRef = useRef({})
+    loggedInRef.current = loggedIn
+
+
     const history = useNavigate()
 
 ////////////////////////аутентефикация//////////////////////////////////////////
 
-    //todo const checkToken = useCallback(async () => {
-    //     try {
-    //         const user = await mainApi.getUserProfile()
-    //         if (user) {
-    //             setCurrentUser(user)
-    //         }
-    //     } catch {
-    //     }
-    // }, []);
-    //
-    // useEffect(() => {
-    //     checkToken();
-    // }, [checkToken])
-
+    const checkToken = useCallback(async () => {
+        try {
+            const user = await mainApi.getUserProfile()
+            if (user) {
+                setCurrentUser(user)
+            }
+        } catch {
+        }
+    }, []);
 
     useEffect(() => {
-        mainApi
-            .getUserProfile()
-            .then((data) => {
-                setCurrentUser(data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+        checkToken();
+    }, [checkToken])
+
+
+    // useEffect(() => {
+    //     mainApi
+    //         .getUserProfile()
+    //         .then((data) => {
+    //             setCurrentUser(data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
 
     const register = useCallback(async ({name, email, password}) => {
         try {
             setHasError(false)
             const res = await Auth.register({name, email, password});
             setLoggedIn(true)
+            //loggedInRef.current = loggedIn
             setUserData({name, email})
             setCurrentUser({name, email})
             return res;
@@ -100,13 +105,15 @@ function App() {
     const login = useCallback(async ({password, email}) => {
             try {
                 const data = await Auth.login({password, email});
-                if (!data) {
-                    setLoggedIn(false)
-                }
+                // if (!data) {
+                //     setLoggedIn(false)
+                // }
                 console.log(data)
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
+                //loggedInRef.current = loggedIn
+                // debugger
             } catch (err) {
                 setHasError(true)
                 setErrorToolTip({text: `${err}`})
@@ -118,9 +125,9 @@ function App() {
     const updateUser = useCallback(async ({name, email}) => {
             try {
                 const data = await mainApi.updateUserData({name, email});
-                if (!data) {
-                    setLoggedIn(false)
-                }
+                // if (!data) {
+                //     setLoggedIn(false)
+                // }
                 console.log(data)
                 setUserData(data)
                 setCurrentUser(data)
@@ -134,6 +141,7 @@ function App() {
         Auth.logOut()
             .then(() => {
                 setLoggedIn(false)
+                //loggedInRef.current = loggedIn
                 setUserData({});
                 setCurrentUser({})
                 localStorage.removeItem('searchTerm')
@@ -305,57 +313,65 @@ function App() {
                         <Layout
                             userData={userData}
                             loggedIn={loggedIn}
+                            loggedInRef={loggedInRef}
                         />
                     }>
                         <Route path='/' element={
                             <Main/>
                         }/>
-                        <Route path="/movies" element={
-                            <Movies
-                                searchTerm={searchTerm}
-                                handleSearchValue={handleSearchValue}
-                                handleSearchChange={handleSearchChange}
-                                moviesList={moviesList}
-                                handleFilterCheckbox={handleFilterCheckbox}
-                                isAnyMatches={isAnyMatches}
-                                isReqFailed={isReqFailed}
-                                windowResizing={windowResizing}
-                                handleSaveMovie={handleSaveMovie}
-                                savedMovies={savedMovies}
-                                filterStorageStatus={filterStorageStatus}
-                                searchTermStorage={searchTermStorage}
-                                getSearchValue={getSearchValue}
-                                movieListStorage={movieListStorage}
+                        <Route path='/movies' element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                            <Route path="/movies" element={
+                                <Movies
+                                    searchTerm={searchTerm}
+                                    handleSearchValue={handleSearchValue}
+                                    handleSearchChange={handleSearchChange}
+                                    moviesList={moviesList}
+                                    handleFilterCheckbox={handleFilterCheckbox}
+                                    isAnyMatches={isAnyMatches}
+                                    isReqFailed={isReqFailed}
+                                    windowResizing={windowResizing}
+                                    handleSaveMovie={handleSaveMovie}
+                                    savedMovies={savedMovies}
+                                    filterStorageStatus={filterStorageStatus}
+                                    searchTermStorage={searchTermStorage}
+                                    getSearchValue={getSearchValue}
+                                    movieListStorage={movieListStorage}
+                                />
+                            }/>
+                        </Route>
+                        <Route path='/saved-movies' element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                            <Route path="/saved-movies" element={
+                                <SavedMovies
+                                    handleSaveMovie={handleSaveMovie}
+                                    savedMovies={savedMovies}
+                                    filterStorageStatus={filterStorageStatus}
+                                    searchTermStorage={searchTermStorage}
+                                    handleFilterCheckbox={handleFilterCheckbox}
+                                    handleSearchChange={handleSearchChange}
+                                    handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
+                                />
+                            }
                             />
-                        }/>
-                        <Route path="/saved-movies" element={
-                            <SavedMovies
-                                handleSaveMovie={handleSaveMovie}
-                                savedMovies={savedMovies}
-                                filterStorageStatus={filterStorageStatus}
-                                searchTermStorage={searchTermStorage}
-                                handleFilterCheckbox={handleFilterCheckbox}
-                                handleSearchChange={handleSearchChange}
-                                handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
-                            />
-                        }
-                        />
+                        </Route>
                     </Route>
                     <Route element={
                         <LayoutProfile
                             loggedIn={loggedIn}
+                            loggedInRef={loggedInRef}
                         />
                     }>
-                        <Route path="/profile" element={
-                            <Profile
-                                logOut={logOut}
-                                loggedIn={loggedIn}
-                                userData={userData}
-                                setUserData={setUserData}
-                                updateUser={updateUser}
+                        <Route path='/profile' element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                            <Route path="/profile" element={
+                                <Profile
+                                    logOut={logOut}
+                                    loggedIn={loggedIn}
+                                    userData={userData}
+                                    setUserData={setUserData}
+                                    updateUser={updateUser}
+                                />
+                            }
                             />
-                        }
-                        />
+                        </Route>
                     </Route>
                     <Route path="/signin" element={
                         <Login

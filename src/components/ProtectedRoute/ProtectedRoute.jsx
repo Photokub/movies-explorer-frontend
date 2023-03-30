@@ -1,9 +1,10 @@
 import React from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRouteElement = (props) => {
+
+const ProtectedRouteElement = ({loggedIn, loggedInRef}) => {
     return (
-        props.loggedIn ? <Outlet /> : <Navigate to="/signin" replace/>
+        loggedInRef ? <Outlet/> : <Navigate to="/signin"/>
 
     )}
 

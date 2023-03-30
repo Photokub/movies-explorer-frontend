@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-export default function Navigation({loggedIn}) {
+export default function Navigation({loggedIn, loggedInRef}) {
 
     const navigate = useNavigate();
     const signinRoute = () => navigate('/signin');
@@ -37,7 +37,9 @@ export default function Navigation({loggedIn}) {
                 <button className='navigation__account-btn_main' type='button' onClick={profileRoute}>Аккаунт</button>
             </div>
         </div>
-    const menu =  loggedIn && location.pathname !== '/' ? navContainerMainAuth : loggedIn  ? navContainerAuth : navContainer
+
+    const menu =  loggedInRef && location.pathname !== '/' ? navContainerMainAuth : !loggedInRef && location.pathname === '/' ? navContainerAuth : navContainer
+    //const menu =  loggedInRef && location.pathname !== '/' ?  navContainerAuth : loggedInRef  ? navContainerMainAuth : navContainer
 
 
     useEffect(() => {
@@ -57,12 +59,10 @@ export default function Navigation({loggedIn}) {
 
     return (
         <nav className={location.pathname !== '/' ? 'navigation_authorized' : 'navigation'}>
-        {/*<nav className={loggedIn ? 'navigation_authorized' : 'navigation'}>*/}
             <Link className="navigation__logo-link" to="/">
                 <img className="navigation__logo" src={logo} alt="логотип movies explorer"/>
             </Link>
             {windowSize.innerWidth <= 768 ? <BurgerMenu/> : menu}
-            {/*{windowSize.innerWidth <= 768 && location.pathname !== '/' ? <BurgerMenu/> : menu}*/}
         </nav>
     )
 }

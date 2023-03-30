@@ -5,7 +5,6 @@ import {useForm} from "react-hook-form";
 export default function LoginForm({login, loggedIn, userData, setUserData, errorToolTip, hasError}){
 
     const [errorStatus, setErrorStatus] = useState(false)
-    const [loginStatus, setLoginStatus] = useState(false)
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {
@@ -18,17 +17,12 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
     const email = watch('email')
     const password = watch('password')
 
+
     const handleLoginSubmit = () => {
         login({ email, password })
+        navigate('/movies');
         hasError ? setErrorStatus(true) : setErrorStatus(false)
-       // handleErr()
     }
-
-    // const handleErr = useCallback(() => {
-    //     !loggedIn ? setErrorStatus(true) : setErrorStatus(false)
-    // }, [loggedIn])
-
-
 
     const handleChange = (e) => {
         const {name, value} = e.target;
