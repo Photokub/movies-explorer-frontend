@@ -10,7 +10,8 @@ export default function SearchForm({
                                        handlePreloader,
                                        filterStorageStatus,
                                        searchTermStorage,
-                                       getSearchValue
+                                       getSearchValue,
+                                       isFilterActive
                                    }) {
     const searchFormBorder = useRef(null)
     const searchFormInput = useRef(null)
@@ -30,12 +31,6 @@ export default function SearchForm({
         searchFormInput && setFormBorder({border: borderBlur});
     };
 
-    // const searchValue = searchTermStorage
-    //
-    // useEffect(() => {
-    //     getSearchValue(searchValue)
-    // }, [searchValue]);
-
     return (
         <div className='search-form-container'>
             <form className='search-form' ref={searchFormBorder} style={formBorder} onSubmit={handleSearchValue}
@@ -45,9 +40,6 @@ export default function SearchForm({
                     className='search-form__input'
                     type='text'
                     placeholder='Фильм'
-                    //defaultValue={searchTermStorage}
-                    //value={searchValue}
-                    //value={searchTerm}
                     value={searchTermStorage}
                     ref={searchFormInput}
                     onChange={handleSearchChange}

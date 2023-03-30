@@ -18,7 +18,8 @@ export default function Movies({
                                    savedMovies,
                                    filterStorageStatus,
                                    searchTermStorage,
-                                   getSearchValue
+                                   getSearchValue,
+                                   isFilterActive
                                }) {
     const [isPreloaderActive, setIsPreloaderActive] = useState(false);
     const windowInnerWidth = window.innerWidth;

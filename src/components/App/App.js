@@ -16,7 +16,7 @@ import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import * as Auth from '../../utils/Auth';
 import React, {useCallback, useContext, useEffect, useState} from "react";
 
-function App(callback, deps) {
+function App() {
 
     const [searchTerm, setSearchTerm] = useState('')
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
@@ -30,6 +30,7 @@ function App(callback, deps) {
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
     const [isFilterActive, setFilterStatus] = useState(false)
     const [hasError, setHasError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
@@ -37,41 +38,9 @@ function App(callback, deps) {
 
     const history = useNavigate()
 
-    //////////////////получение фильмов с BeatFilms//////////////////////////////
-
-    useEffect(() => {
-            Promise.all([moviesApi.getMovies()])
-                .then(([data]) => {
-                    setBeatfilmsArr(data)
-                    console.log(beatfilmsArr)
-                    setReqFailed(false)
-                })
-                .catch((err) => {
-                    console.log(`Ошибка ${err}`)
-                    setReqFailed(true)
-                })
-        },
-        []);
-
-    //todo useEffect(() => {
-    //         if (loggedIn) {
-    //             Promise.all([moviesApi.getMovies()])
-    //                 .then(([data]) => {
-    //                     setBeatfilmsArr(data)
-    //                     console.log(beatfilmsArr)
-    //                     setReqFailed(false)
-    //                 })
-    //                 .catch((err) => {
-    //                     console.log(`Ошибка ${err}`)
-    //                     setReqFailed(true)
-    //                 })
-    //         }
-    //     },
-    //     [loggedIn]);
-
 ////////////////////////аутентефикация//////////////////////////////////////////
 
-    // const checkToken = useCallback(async () => {
+    //todo const checkToken = useCallback(async () => {
     //     try {
     //         const user = await mainApi.getUserProfile()
     //         if (user) {
@@ -111,7 +80,6 @@ function App(callback, deps) {
             setIsSubmitBtnActive(false)
         }
     }, []);
-
 
 
     //todo const register = useCallback(({name, email, password}) => {
@@ -175,7 +143,74 @@ function App(callback, deps) {
             })
     }, [])
 
-//////////////////добавление и удалениекарточки и избранное///////////////////
+    //////////////////получение фильмов с BeatFilms//////////////////////////////
+
+    const getBeatfilmMovies = () => {
+        setIsLoading(true)
+        moviesApi.getMovies()
+            .then((data) => {
+                setBeatfilmsArr(data);
+            }).catch((err) => {
+            console.log(`Ошибка ${err}`)
+            setReqFailed(true)
+        }).finally(() => {
+            setIsLoading(true)
+        })
+    }
+
+    useEffect(() => {
+        getBeatfilmMovies()
+    }, [])
+
+
+///////////поиск фильмов ///////////////////
+
+    const handleSearchChange = event => {
+        let currentSearchTerm;
+        currentSearchTerm = (event.target.value);
+        setSearchTerm(event.target.value);
+        console.log(searchTerm)
+        localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
+    };
+
+    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+
+
+
+    const handleFilterCheckbox = (e) => {
+        const isChecked = e.target.checked
+        localStorage.setItem('filterCheckbox', isChecked);
+        debugger
+        setFilterStatus({filterStorageStatus})
+        console.log(isFilterActive)
+    }
+
+    const handleSearchValue = (e) => {
+        e.preventDefault()
+        const results =
+            isFilterActive ?
+                beatfilmsArr.filter(
+                    (film) =>
+                        film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
+                )
+                :
+                beatfilmsArr.filter(
+                    (film) =>
+                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
+                )
+        setMoviesList(results)
+        localStorage.setItem('moviesList', JSON.stringify(results));
+        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+    }
+
+    const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
+    const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
+    //const filterStorageStatus = localStorage.getItem('filterCheckbox');
+
+    const getSearchValue = useCallback((data) => setSearchTerm(data), [searchTerm]);
+
+
+    //////////////////добавление и удалениекарточки и избранное///////////////////
     console.log(beatfilmsArr)
     console.log(moviesList)
 
@@ -226,7 +261,7 @@ function App(callback, deps) {
     }, [getSavedMovies])
 
 
-/////////////////////таймаут на ресайз экрана/////////////////////////
+    /////////////////////таймаут на ресайз экрана/////////////////////////
 
     useEffect(() => {
         let timeout;
@@ -243,104 +278,6 @@ function App(callback, deps) {
 
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-
-///////////поиск фильмов ///////////////////
-
-// const getBeatfilmMovies = () => {
-//     moviesApi.getMovies()
-//         .then(data => {
-//             setBeatfilmsArr(data)
-//         }).catch((err) => {
-//         console.log(`Ошибка ${err}`)
-//     })
-// }
-//
-//todo useEffect(() => {
-//     moviesApi.getMovies()
-//         .then(data => {
-//             setBeatfilmsArr(data)
-//         }).catch((err) => {
-//         console.log(`Ошибка ${err}`)
-//     })
-// })
-
-// let currentSearchTerm;
-// const handleSearchChange = event => {
-//     currentSearchTerm = (event.target.value);
-//     console.log(currentSearchTerm)
-//     localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
-//     setSearchTerm(currentSearchTerm)
-// };
-
-    //const [isActive, setFilterStatus] = useState(false)
-
-
-    // const handleSearchChange = event => {
-    //     setSearchTerm(event.target.value);
-    //     console.log(searchTerm)
-    //     localStorage.setItem('searchTerm', JSON.stringify(searchTerm))
-    // };
-
-    const handleSearchChange = event => {
-        let currentSearchTerm;
-        currentSearchTerm = (event.target.value);
-        setSearchTerm(event.target.value);
-        console.log(searchTerm)
-        localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
-    };
-
-
-    const handleFilterCheckbox = (e) => {
-        const isChecked = e.target.checked
-        localStorage.setItem('filterCheckbox', JSON.stringify(isChecked));
-        setFilterStatus(!isChecked)
-        console.log(isFilterActive)
-    }
-    //localStorage.setItem('moviesList', JSON.stringify(results));
-    // const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
-
-    const handleSearchValue = (e) => {
-        e.preventDefault()
-        const results =
-            isFilterActive ?
-                beatfilmsArr.filter(
-                    (film) =>
-                        film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
-                )
-                :
-                beatfilmsArr.filter(
-                    (film) =>
-                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
-                )
-
-        setMoviesList(results)
-        localStorage.setItem('moviesList', JSON.stringify(results));
-        //handleMoviesList()
-        //handleMoviesList()
-        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
-    }
-
-    const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
-
-
-    //todo const handleMoviesList = useCallback(()=> {
-    //     setMoviesList(movieListStorage)
-    // },[])
-    //
-    // useEffect(()=>{
-    //     handleMoviesList()
-    // },[])
-
-    // useEffect(()=>{
-    //     setMoviesList(movieListStorage)
-    // },[])
-
-    const getSearchValue = useCallback((data) => setSearchTerm(data), [searchTerm]);
-
-    const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
-    const filterStorageStatus = localStorage.getItem('filterCheckbox');
-
 
 
     return (
