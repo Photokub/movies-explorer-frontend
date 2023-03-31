@@ -28,7 +28,7 @@ function App() {
     const [windowResizing, setWindowResizing] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
-    const [isFilterActive, setFilterStatus] = useState(false)
+    //const [isFilterActive, setFilterStatus] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
@@ -37,50 +37,52 @@ function App() {
     const navigate = useNavigate();
 
     const loggedInRef = useRef({})
-    loggedInRef.current = loggedIn
+    //loggedInRef.current = loggedIn
 
 
     const history = useNavigate()
 
 ////////////////////////аутентефикация//////////////////////////////////////////
 
-
-    // const checkToken = useCallback(async () => {
-    //     try {
-    //         const user = await mainApi.getUserProfile()
-    //         if (!user) {
-    //             setLoggedIn(true)
-    //         }
-    //         setLoggedIn(true)
-    //         setCurrentUser(user)
-    //     } catch {
-    //     }
-    // }, []);
-    //
-    // useEffect(() => {
-    //     checkToken();
-    // }, [checkToken])
-
+    const checkToken = useCallback(async () => {
+        //debugger
+        try {
+            const user = await mainApi.checkToken()
+            if (!user) {
+                throw new Error('Invalid user')
+            }
+            setLoggedIn(true)
+            getBeatfilmMovies()
+            setUserData(user)
+            setCurrentUser(user)
+        } catch {
+        }
+    }, []);
 
     useEffect(() => {
-        mainApi
-            .getUserProfile()
-            .then((data) => {
-                setLoggedIn(true)
-                //loggedInRef.current = loggedIn
-                setCurrentUser(data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+        checkToken();
+    }, [checkToken, history])
+
+
+    // useEffect(() => {
+    //     mainApi
+    //         .getUserProfile()
+    //         .then((data) => {
+    //             setLoggedIn(true)
+    //             //loggedInRef.current = loggedIn
+    //             setCurrentUser(data)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
 
     const register = useCallback(async ({name, email, password}) => {
         try {
             setHasError(false)
             const res = await Auth.register({name, email, password});
             setLoggedIn(true)
-            //loggedInRef.current = loggedIn
+            getBeatfilmMovies()
             setUserData({name, email})
             setCurrentUser({name, email})
             return res;
@@ -117,8 +119,7 @@ function App() {
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
-                //loggedInRef.current = loggedIn
-                // debugger
+                getBeatfilmMovies()
             } catch (err) {
                 setHasError(true)
                 setErrorToolTip({text: `${err}`})
@@ -153,13 +154,15 @@ function App() {
                 localStorage.removeItem('searchTerm')
                 localStorage.removeItem('moviesList')
                 localStorage.removeItem('filterCheckbox')
+                localStorage.removeItem('SavedMoviesList')
                 navigate('/');
             })
     }, [])
 
+
     //////////////////получение фильмов с BeatFilms//////////////////////////////
 
-    const getBeatfilmMovies = () => {
+    const getBeatfilmMovies = useCallback(() => {
         setIsLoading(true)
         moviesApi.getMovies()
             .then((data) => {
@@ -168,16 +171,12 @@ function App() {
             console.log(`Ошибка ${err}`)
             setReqFailed(true)
         }).finally(() => {
-            setIsLoading(true)
+            setIsLoading(false)
         })
-    }
-
-    useEffect(() => {
-        getBeatfilmMovies()
     }, [])
 
-
 ///////////поиск фильмов ///////////////////
+
 
     const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
 
@@ -189,19 +188,80 @@ function App() {
         localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
     };
 
+    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+    const filterStorageStatusParsed = JSON.parse(filterStorageStatus)
+    // useEffect(() => {
+    //     (filterStorageStatusParsed === null) ? setFilterStatus(filterStorageStatusParsed) : setFilterStatus(false)
+    // }, [])
+
+    const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
+
     const handleFilterCheckbox = (e) => {
         const isChecked = e.target.checked
+        debugger
         localStorage.setItem('filterCheckbox', isChecked);
-        setFilterStatus(JSON.parse(filterStorageStatus))
+        //const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
+        //(filterStorageStatusParsed === null) ? setFilterStatus(filterStorageStatusParsed) : setFilterStatus(false)
+        //setFilterStatus(filterStorageStatusParsed)
+        isChecked === undefined ?
+            setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
+            :
+            setFilterStatus(isChecked);
+        //setFilterStatus(JSON.parse(filterStorageStatus))
         console.log(isFilterActive)
     }
 
-    const filterStorageStatus = localStorage.getItem('filterCheckbox');
+
+    // const results = useCallback(() => {
+    //     !isFilterActive ?
+    //         beatfilmsArr.filter(
+    //             (film) =>
+    //                 film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
+    //         )
+    //         :
+    //         beatfilmsArr.filter(
+    //             (film) =>
+    //                 (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
+    //         )
+    // },[])
+
+    // const handleSearchValue = async (e) => {
+    //     e.preventDefault()
+    //     //isFilterActive === undefined && setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
+    //     const filterStorageStatusParsed = await (JSON.parse(localStorage.getItem('filterCheckbox')));
+    //     (filterStorageStatusParsed !== undefined || null) && setFilterStatus(filterStorageStatusParsed)
+    //     debugger
+    //     const results = await (
+    //         !isFilterActive ?
+    //             beatfilmsArr.filter(
+    //                 (film) =>
+    //                     film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
+    //             )
+    //             :
+    //             beatfilmsArr.filter(
+    //                 (film) =>
+    //                     (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
+    //             ))
+    //     localStorage.setItem('moviesList', JSON.stringify(results));
+    //     setMoviesList(results)
+    //     //todo/setMoviesList(movieListStorage)
+    //     results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+    // }
+
+    const handleStorageFilter = () => {
+        const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
+        debugger
+        (filterStorageStatusParsed !==  undefined||null) && setFilterStatus(filterStorageStatusParsed)
+        isFilterActive === undefined && setFilterStatus(filterStorageStatusParsed)
+    }
 
     const handleSearchValue = (e) => {
         e.preventDefault()
+        //isFilterActive === undefined && setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
+        handleStorageFilter()
+        debugger
         const results =
-            isFilterActive ?
+            !isFilterActive ?
                 beatfilmsArr.filter(
                     (film) =>
                         film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
@@ -212,7 +272,8 @@ function App() {
                         (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
                 )
         localStorage.setItem('moviesList', JSON.stringify(results));
-        setMoviesList(movieListStorage)
+        setMoviesList(results)
+        //todo/setMoviesList(movieListStorage)
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
@@ -224,7 +285,7 @@ function App() {
         e.preventDefault()
         debugger
         const results =
-            isFilterActive ?
+            !isFilterActive ?
                 savedMovies.filter(
                     (film) =>
                         film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
@@ -325,7 +386,8 @@ function App() {
                         <Route path='/' element={
                             <Main/>
                         }/>
-                        <Route path='/movies' element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                        <Route path='/movies'
+                               element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
                             <Route path="/movies" element={
                                 <Movies
                                     searchTerm={searchTerm}
@@ -342,10 +404,12 @@ function App() {
                                     searchTermStorage={searchTermStorage}
                                     getSearchValue={getSearchValue}
                                     movieListStorage={movieListStorage}
+                                    isLoading={isLoading}
                                 />
                             }/>
                         </Route>
-                        <Route path='/saved-movies' element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                        <Route path='/saved-movies'
+                               element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
                             <Route path="/saved-movies" element={
                                 <SavedMovies
                                     handleSaveMovie={handleSaveMovie}
@@ -366,7 +430,8 @@ function App() {
                             loggedInRef={loggedInRef}
                         />
                     }>
-                        <Route path='/profile' element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                        <Route path='/profile'
+                               element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
                             <Route path="/profile" element={
                                 <Profile
                                     logOut={logOut}

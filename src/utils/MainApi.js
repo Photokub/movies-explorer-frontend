@@ -25,6 +25,14 @@ class MainApi {
         })
     }
 
+    checkToken() {
+        return this._request(`${this._adress}/users/me`, {
+            method: "GET",
+            credentials: 'include',
+            headers: this._headers,
+        })
+    }
+
     updateUserData({name, email}) {
         return this._request(`${this._adress}/users/me`, {
             method: 'PATCH',

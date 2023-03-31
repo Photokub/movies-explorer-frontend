@@ -19,9 +19,9 @@ export default function Movies({
                                    filterStorageStatus,
                                    searchTermStorage,
                                    getSearchValue,
-                                   movieListStorage
+                                   movieListStorage,
+                                   isLoading
                                }) {
-    const [isPreloaderActive, setIsPreloaderActive] = useState(false);
     const windowInnerWidth = window.innerWidth;
     const windowWidth = useMemo(() => windowInnerWidth, [windowInnerWidth]);
 
@@ -58,7 +58,6 @@ export default function Movies({
 
     const handlePreloader = (evt) => {
         evt.preventDefault();
-        setIsPreloaderActive(true);
     }
 
     return (
@@ -73,16 +72,21 @@ export default function Movies({
                 searchTermStorage={searchTermStorage}
                 getSearchValue={getSearchValue}
             />
-            {!windowResizing && <MoviesCardList
-                existedCards={existedCards}
-                moviesList={moviesList}
-                isAnyMatches={isAnyMatches}
-                isReqFailed={isReqFailed}
-                handleSaveMovie={handleSaveMovie}
-                savedMovies={savedMovies}
-                movieListStorage={movieListStorage}
-            />}
-            <Preloader isActive={isPreloaderActive}/>
+            {isLoading ?
+                <Preloader/>
+                :
+                !windowResizing && <MoviesCardList
+                    existedCards={existedCards}
+                    moviesList={moviesList}
+                    isAnyMatches={isAnyMatches}
+                    isReqFailed={isReqFailed}
+                    handleSaveMovie={handleSaveMovie}
+                    savedMovies={savedMovies}
+                    movieListStorage={movieListStorage}
+                />
+            }
+
+
             <MoreButton
                 existedCards={existedCards}
                 moviesList={moviesList}
