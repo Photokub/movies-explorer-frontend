@@ -44,31 +44,36 @@ function App() {
 
 ////////////////////////аутентефикация//////////////////////////////////////////
 
-    const checkToken = useCallback(async () => {
-        try {
-            const user = await mainApi.getUserProfile()
-            if (user) {
-                setCurrentUser(user)
-            }
-        } catch {
-        }
-    }, []);
+
+    // const checkToken = useCallback(async () => {
+    //     try {
+    //         const user = await mainApi.getUserProfile()
+    //         if (!user) {
+    //             setLoggedIn(true)
+    //         }
+    //         setLoggedIn(true)
+    //         setCurrentUser(user)
+    //     } catch {
+    //     }
+    // }, []);
+    //
+    // useEffect(() => {
+    //     checkToken();
+    // }, [checkToken])
+
 
     useEffect(() => {
-        checkToken();
-    }, [checkToken])
-
-
-    // useEffect(() => {
-    //     mainApi
-    //         .getUserProfile()
-    //         .then((data) => {
-    //             setCurrentUser(data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         })
-    // }, [])
+        mainApi
+            .getUserProfile()
+            .then((data) => {
+                setLoggedIn(true)
+                //loggedInRef.current = loggedIn
+                setCurrentUser(data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
     const register = useCallback(async ({name, email, password}) => {
         try {
@@ -105,9 +110,9 @@ function App() {
     const login = useCallback(async ({password, email}) => {
             try {
                 const data = await Auth.login({password, email});
-                // if (!data) {
-                //     setLoggedIn(false)
-                // }
+                if (!data) {
+                    setLoggedIn(false)
+                }
                 console.log(data)
                 setLoggedIn(true)
                 setUserData(data)
@@ -125,10 +130,11 @@ function App() {
     const updateUser = useCallback(async ({name, email}) => {
             try {
                 const data = await mainApi.updateUserData({name, email});
-                // if (!data) {
-                //     setLoggedIn(false)
-                // }
+                if (!data) {
+                    setLoggedIn(false)
+                }
                 console.log(data)
+                setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
             } catch {
@@ -195,7 +201,7 @@ function App() {
     const handleSearchValue = (e) => {
         e.preventDefault()
         const results =
-            !isFilterActive ?
+            isFilterActive ?
                 beatfilmsArr.filter(
                     (film) =>
                         film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
@@ -218,7 +224,7 @@ function App() {
         e.preventDefault()
         debugger
         const results =
-            !isFilterActive ?
+            isFilterActive ?
                 savedMovies.filter(
                     (film) =>
                         film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
@@ -228,7 +234,7 @@ function App() {
                     (film) =>
                         (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
                 )
-        //todo/localStorage.setItem('SavedMoviesList', JSON.stringify(results));
+        localStorage.setItem('SavedMoviesList', JSON.stringify(results));
         setSavedMovies(results)
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }

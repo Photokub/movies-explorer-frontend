@@ -20,7 +20,6 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
 
     const handleLoginSubmit = () => {
         login({ email, password })
-        navigate('/movies');
         hasError ? setErrorStatus(true) : setErrorStatus(false)
     }
 

@@ -11,6 +11,7 @@ export default function Navigation({loggedIn, loggedInRef}) {
     const profileRoute = () => navigate('/profile');
     const location = useLocation()
     const [windowSize, setWindowSize] = useState(getWindowSize());
+
     const navContainer =
         <div className='navigation__container'>
             <Link className="navigation__link" to="/signup">Регистрация</Link>
@@ -38,8 +39,10 @@ export default function Navigation({loggedIn, loggedInRef}) {
             </div>
         </div>
 
-    const menu =  loggedInRef && location.pathname !== '/' ? navContainerMainAuth : !loggedInRef && location.pathname === '/' ? navContainerAuth : navContainer
-    //const menu =  loggedInRef && location.pathname !== '/' ?  navContainerAuth : loggedInRef  ? navContainerMainAuth : navContainer
+    const menu =  loggedIn  && location.pathname !== '/' ? navContainerMainAuth : loggedIn  && location.pathname === '/' ? navContainerAuth : navContainer
+    //const menu =  loggedInRef  && location.pathname !== '/' ? navContainerMainAuth : loggedIn  && location.pathname === '/' ? navContainerAuth : navContainer
+    //const menu =  !loggedIn  && navContainer
+    //const menu =  loggedInRef && location.pathname !== '/' ?  navContainerAuth : loggedInRef && location.pathname === '/' ? navContainerMainAuth : navContainer
 
 
     useEffect(() => {
