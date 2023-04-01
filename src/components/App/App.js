@@ -14,7 +14,7 @@ import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import * as Auth from '../../utils/Auth';
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 function App() {
 
@@ -25,7 +25,6 @@ function App() {
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
     const [windowResizing, setWindowResizing] = useState(false);
-    const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
@@ -36,7 +35,6 @@ function App() {
     const authStorageData = localStorage.getItem('loggedInStatus')
     const isLoggedInStorage = JSON.parse(authStorageData)
     const [loggedIn, setLoggedIn] = useState(isLoggedInStorage);
-    const history = useNavigate()
 
 ////////////////////////аутентефикация//////////////////////////////////////////
 
@@ -75,7 +73,6 @@ function App() {
         } catch (err) {
             setHasError(true)
             setErrorToolTip({text: `${err}`})
-            setIsSubmitBtnActive(false)
         }
     }, []);
 
@@ -95,7 +92,6 @@ function App() {
             } catch (err) {
                 setHasError(true)
                 setErrorToolTip({text: `${err}`})
-                setIsSubmitBtnActive(false)
             }
         }, []
     )
@@ -111,9 +107,7 @@ function App() {
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
-            } catch {
-                setIsSubmitBtnActive(false)
-            }
+            } catch { }
         }, []
     )
 

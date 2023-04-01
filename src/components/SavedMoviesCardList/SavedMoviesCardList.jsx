@@ -15,7 +15,7 @@ export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqFa
                     :
                     !isAnyMatches ? savedMovies?.slice(0, existedCards)?.map((film) =>
                      <MoviesCard
-                            key={film.id}
+                            key={film.movieId}
                             film={film}
                             handleSaveMovie={handleSaveMovie}
                             savedMovies={savedMovies}
