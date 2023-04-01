@@ -50,6 +50,7 @@ function App() {
             getBeatfilmMovies()
             setUserData(user)
             setCurrentUser(user)
+
         } catch {
         }
     }, []);
@@ -70,6 +71,7 @@ function App() {
             getBeatfilmMovies()
             setUserData({name, email})
             setCurrentUser({name, email})
+            debugger
             return res;
         } catch (err) {
             setHasError(true)
@@ -85,12 +87,12 @@ function App() {
                     setLoggedIn(false)
                 }
                 console.log(data)
-                //setLoggedIn(true)
                 localStorage.setItem('loggedInStatus', 'true')
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
                 getBeatfilmMovies()
+                await getSavedMovies()
             } catch (err) {
                 setHasError(true)
                 setErrorToolTip({text: `${err}`})
@@ -106,8 +108,8 @@ function App() {
                     setLoggedIn(false)
                 }
                 console.log(data)
-                //setLoggedIn(true)
                 localStorage.setItem('loggedInStatus', 'true')
+                setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
             } catch {
@@ -260,13 +262,7 @@ function App() {
         }
     }, [])
 
-
     console.log(savedMovies)
-
-    useEffect(() => {
-        getSavedMovies()
-    }, [getSavedMovies])
-
 
     /////////////////////таймаут на ресайз экрана/////////////////////////
 
