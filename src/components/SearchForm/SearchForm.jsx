@@ -10,7 +10,7 @@ export default function SearchForm({
                                        handlePreloader,
                                        filterStorageStatus,
                                        searchTermStorage,
-                                       handleSearchSavedMoviesValue
+                                       handleSearchSavedMoviesValue,
                                    }) {
 
     const location = useLocation()

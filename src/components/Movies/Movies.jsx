@@ -81,7 +81,6 @@ export default function Movies({
                 />
             }
 
-
             <MoreButton
                 existedCards={existedCards}
                 moviesList={moviesList}

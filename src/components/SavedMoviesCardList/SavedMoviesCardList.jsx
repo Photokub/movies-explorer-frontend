@@ -4,8 +4,7 @@ import './SavedMoviesCardList.css'
 import {REQUEST_ERR} from '../../utils/constants'
 
 
-export default function MoviesCardList({existedCards, isAnyMatches, isReqFailed, handleSaveMovie, savedMovies }) {
-
+export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqFailed, handleSaveMovie, savedMovies }) {
 
     return (
         <section className='saved-movies-card-list'>

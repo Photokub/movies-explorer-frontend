@@ -9,7 +9,9 @@ export default function SavedMovies({
                                         searchTermStorage,
                                         handleFilterCheckbox,
                                         handleSearchChange,
-                                        handleSearchSavedMoviesValue
+                                        handleSearchSavedMoviesValue,
+                                        isReqFailed,
+                                        isAnyMatches
                                     }) {
     return (
         <section className='saved-movies movies'>
@@ -23,6 +25,8 @@ export default function SavedMovies({
             <SavedMoviesCardList
                 handleSaveMovie={handleSaveMovie}
                 savedMovies={savedMovies}
+                isReqFailed={isReqFailed}
+                isAnyMatches={isAnyMatches}
             />
         </section>
     )

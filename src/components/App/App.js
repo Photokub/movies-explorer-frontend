@@ -50,7 +50,7 @@ function App() {
             getBeatfilmMovies()
             setUserData(user)
             setCurrentUser(user)
-
+            await getSavedMovies()
         } catch {
         }
     }, []);
@@ -71,7 +71,6 @@ function App() {
             getBeatfilmMovies()
             setUserData({name, email})
             setCurrentUser({name, email})
-            debugger
             return res;
         } catch (err) {
             setHasError(true)
@@ -124,6 +123,7 @@ function App() {
                 setLoggedIn(false)
                 setUserData({});
                 setCurrentUser({})
+                setIsAnyMatches(false)
                 localStorage.removeItem('searchTerm')
                 localStorage.removeItem('moviesList')
                 localStorage.removeItem('filterCheckbox')
@@ -327,6 +327,8 @@ function App() {
                                     handleFilterCheckbox={handleFilterCheckbox}
                                     handleSearchChange={handleSearchChange}
                                     handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
+                                    isReqFailed={isReqFailed}
+                                    isAnyMatches={isAnyMatches}
                                 />
                             }
                             />
