@@ -18,7 +18,8 @@ export default function WelcomeScreen({
                                           loggedIn,
                                           login,
                                           errorToolTip,
-                                          hasError
+                                          hasError,
+                                          setHasError
                                       }) {
     const location = useLocation()
 
@@ -31,6 +32,7 @@ export default function WelcomeScreen({
             loggedIn={loggedIn}
             errorToolTip={errorToolTip}
             hasError={hasError}
+            setHasError={setHasError}
         />
     } else if (location.pathname === '/signin') {
         component = <LoginForm
@@ -40,6 +42,7 @@ export default function WelcomeScreen({
             loggedIn={loggedIn}
             errorToolTip={errorToolTip}
             hasError={hasError}
+            setHasError={setHasError}
         />
     }
 

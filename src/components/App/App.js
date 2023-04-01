@@ -362,6 +362,7 @@ function App() {
                             setUserData={setUserData}
                             errorToolTip={errorToolTip}
                             hasError={hasError}
+                            setHasError={setHasError}
                         />
                     }/>
                     <Route path="/signup" element={
@@ -372,6 +373,7 @@ function App() {
                             setUserData={setUserData}
                             errorToolTip={errorToolTip}
                             hasError={hasError}
+                            setHasError={ setHasError}
                         />
                     }/>
                     <Route path="*" element={<PageNotFound/>}/>

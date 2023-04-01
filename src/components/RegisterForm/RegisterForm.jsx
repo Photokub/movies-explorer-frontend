@@ -1,10 +1,20 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 
-export default function RegisterForm({ onRegister, loggedIn, userData, setUserData, errorToolTip,hasError }) {
+export default function RegisterForm({
+                                         onRegister,
+                                         loggedIn,
+                                         userData,
+                                         setUserData,
+                                         errorToolTip,
+                                         hasError,
+                                         setHasError
+                                     }) {
 
-    const [errorStatus, setErrorStatus]=useState(false)
+    useEffect(() => {
+        setHasError(false)
+    }, [])
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {
@@ -20,8 +30,8 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
     const password = watch('password')
 
     const handleRegisterSubmit = () => {
-        onRegister({ name, email, password })
-        hasError ? setErrorStatus(true) : setErrorStatus(false)
+        onRegister({name, email, password})
+        hasError ? setHasError(true) : setHasError(false)
     }
 
     const handleChange = (e) => {
@@ -44,7 +54,7 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
             handleSubmit={handleSubmit(handleRegisterSubmit)}
             isValid={isValid}
             errorToolTip={errorToolTip}
-            errorStatus={errorStatus}
+            hasError={hasError}
         >
             <label className='form__field'>
                 <span className='form__input__title'>Имя</span>
@@ -108,7 +118,8 @@ export default function RegisterForm({ onRegister, loggedIn, userData, setUserDa
                            },
                        })}
                 />
-                {errors.password && <span className='form__input__err' id='name_field-err'>{errors?.password?.message}</span>}
+                {errors.password &&
+                    <span className='form__input__err' id='name_field-err'>{errors?.password?.message}</span>}
             </label>
         </Form>
     )
