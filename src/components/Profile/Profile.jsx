@@ -1,20 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import './Profile.css'
-import {Navigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
-export default function Profile({logOut, userData, setUserData, updateUser, loggedIn}) {
+export default function Profile({logOut, userData, setUserData, updateUser}) {
 
     const currentUser = useContext(CurrentUserContext)
-
-    //todo const [userName, setUserName] = useState("")
-    // const [userEmail, setUserEmail] = useState("")
-    //
-    // useEffect(() => {
-    //     setUserName(currentUser.name);
-    //     setUserEmail(currentUser.email);
-    // }, [currentUser]);
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {

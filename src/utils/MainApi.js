@@ -1,5 +1,3 @@
-import {BASE_URL} from "./Auth";
-
 class MainApi {
     constructor(setting) {
         this._adress = setting.baseUrl;
@@ -18,14 +16,6 @@ class MainApi {
     }
 
     getUserProfile() {
-        return this._request(`${this._adress}/users/me`, {
-            method: "GET",
-            credentials: 'include',
-            headers: this._headers,
-        })
-    }
-
-    checkToken() {
         return this._request(`${this._adress}/users/me`, {
             method: "GET",
             credentials: 'include',
@@ -87,7 +77,6 @@ class MainApi {
 export const mainApi = new MainApi({
     credentials: 'include',
     baseUrl: 'https://api.photokub.nomoredomains.work',
-    //baseUrl: 'http://localhost:3001',
     headers: {
         "content-type": "application/json",
         'Accept': 'application/json',

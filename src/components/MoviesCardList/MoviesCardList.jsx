@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css'
 import {REQUEST_ERR} from '../../utils/constants'
 
-export default function MoviesCardList({moviesList, existedCards, isAnyMatches, isReqFailed, handleSaveMovie, savedMovies, movieListStorage}) {
+export default function MoviesCardList({ existedCards, isAnyMatches, isReqFailed, handleSaveMovie, savedMovies, movieListStorage}) {
 
     return (
         <section className='movies-card-list'>

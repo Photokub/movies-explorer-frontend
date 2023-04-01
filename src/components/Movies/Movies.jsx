@@ -8,7 +8,6 @@ import Preloader from "../Preloader/Preloader";
 export default function Movies({
                                    handleSearchChange,
                                    handleSearchValue,
-                                   searchTerm,
                                    moviesList,
                                    handleFilterCheckbox,
                                    isAnyMatches,
@@ -18,7 +17,6 @@ export default function Movies({
                                    savedMovies,
                                    filterStorageStatus,
                                    searchTermStorage,
-                                   getSearchValue,
                                    movieListStorage,
                                    isLoading
                                }) {
@@ -63,21 +61,18 @@ export default function Movies({
     return (
         <section className='movies'>
             <SearchForm
-                searchTerm={searchTerm}
                 handleSearchChange={handleSearchChange}
                 handleSearchValue={handleSearchValue}
                 handleFilterCheckbox={handleFilterCheckbox}
                 handlePreloader={handlePreloader}
                 filterStorageStatus={filterStorageStatus}
                 searchTermStorage={searchTermStorage}
-                getSearchValue={getSearchValue}
             />
             {isLoading ?
                 <Preloader/>
                 :
                 !windowResizing && <MoviesCardList
                     existedCards={existedCards}
-                    moviesList={moviesList}
                     isAnyMatches={isAnyMatches}
                     isReqFailed={isReqFailed}
                     handleSaveMovie={handleSaveMovie}

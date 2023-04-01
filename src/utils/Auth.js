@@ -1,5 +1,4 @@
 export const BASE_URL = 'https://api.photokub.nomoredomains.work';
-//export const BASE_URL = 'http://localhost:3001';
 
 export const register = ({name, email, password}) => {
     return fetch(`${BASE_URL}/signup`, {
@@ -32,8 +31,6 @@ export const login = ({password, email}) => {
 export const logOut = () => {
     return fetch(`${BASE_URL}/signout`, {
         method: 'POST',
-        //credentials: 'same-origin',
-       // credentials: "omit",
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
-export default function Navigation({loggedIn, loggedInRef}) {
+export default function Navigation({loggedIn}) {
 
     const navigate = useNavigate();
     const signinRoute = () => navigate('/signin');
@@ -40,10 +40,6 @@ export default function Navigation({loggedIn, loggedInRef}) {
         </div>
 
     const menu =  loggedIn  && location.pathname !== '/' ? navContainerMainAuth : loggedIn  && location.pathname === '/' ? navContainerAuth : navContainer
-    //const menu =  loggedInRef  && location.pathname !== '/' ? navContainerMainAuth : loggedIn  && location.pathname === '/' ? navContainerAuth : navContainer
-    //const menu =  !loggedIn  && navContainer
-    //const menu =  loggedInRef && location.pathname !== '/' ?  navContainerAuth : loggedInRef && location.pathname === '/' ? navContainerMainAuth : navContainer
-
 
     useEffect(() => {
         function handleWindowResize() {

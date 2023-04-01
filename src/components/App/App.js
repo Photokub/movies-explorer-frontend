@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
@@ -14,7 +14,7 @@ import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import * as Auth from '../../utils/Auth';
-import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 
 function App() {
 
@@ -24,12 +24,8 @@ function App() {
     const [savedMovies, setSavedMovies] = useState([])
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
-    const location = useLocation()
     const [windowResizing, setWindowResizing] = useState(false);
-
-    //const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
-    //const [isFilterActive, setFilterStatus] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
@@ -37,26 +33,16 @@ function App() {
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
     const navigate = useNavigate();
-
-    const loggedInRef = useRef({})
-    //loggedInRef.current = loggedIn
-
-    //localStorage.setItem('loggedInStatus', 'false')
-
     const authStorageData = localStorage.getItem('loggedInStatus')
-
     const isLoggedInStorage = JSON.parse(authStorageData)
-
     const [loggedIn, setLoggedIn] = useState(isLoggedInStorage);
-
-
     const history = useNavigate()
 
 ////////////////////////аутентефикация//////////////////////////////////////////
 
     const checkToken = useCallback(async () => {
         try {
-            const user = await mainApi.checkToken()
+            const user = await mainApi.getUserProfile()
             if (!user) {
                 throw new Error('Invalid user')
             }
@@ -71,20 +57,6 @@ function App() {
     useEffect(() => {
         checkToken();
     }, [checkToken])
-
-
-    // useEffect(() => {
-    //     mainApi
-    //         .getUserProfile()
-    //         .then((data) => {
-    //             setLoggedIn(true)
-    //             //loggedInRef.current = loggedIn
-    //             setCurrentUser(data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         })
-    // }, [])
 
     const register = useCallback(async ({name, email, password}) => {
         try {
@@ -106,22 +78,6 @@ function App() {
         }
     }, []);
 
-
-    //todo const register = useCallback(({name, email, password}) => {
-    //     Auth
-    //         .register({name, email, password})
-    //         .then(({name, email}) => {
-    //             setLoggedIn(true)
-    //             setUserData({name, email})
-    //             setCurrentUser({name, email})
-    //         })
-    //         .catch((err)=> err.json())
-    //         .then(errJson=>{
-    //             // handle error message here
-    //             console.log(errJson) });
-    // },[])
-
-
     const login = useCallback(async ({password, email}) => {
             try {
                 const data = await Auth.login({password, email});
@@ -131,6 +87,7 @@ function App() {
                 console.log(data)
                 //setLoggedIn(true)
                 localStorage.setItem('loggedInStatus', 'true')
+                setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
                 getBeatfilmMovies()
@@ -174,7 +131,6 @@ function App() {
             })
     }, [])
 
-
     //////////////////получение фильмов с BeatFilms//////////////////////////////
 
     const getBeatfilmMovies = useCallback(() => {
@@ -192,7 +148,6 @@ function App() {
 
 ///////////поиск фильмов ///////////////////
 
-
     const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
 
     const handleSearchChange = event => {
@@ -204,40 +159,26 @@ function App() {
     };
 
     const filterStorageStatus = localStorage.getItem('filterCheckbox');
-    const filterStorageStatusParsed = JSON.parse(filterStorageStatus)
-    // useEffect(() => {
-    //     (filterStorageStatusParsed === null) ? setFilterStatus(filterStorageStatusParsed) : setFilterStatus(false)
-    // }, [])
-
-
 
     const handleFilterCheckbox = (e) => {
         const isChecked = e.target.checked
-        debugger
         localStorage.setItem('filterCheckbox', isChecked);
-        //const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
-        //(filterStorageStatusParsed === null) ? setFilterStatus(filterStorageStatusParsed) : setFilterStatus(false)
-        //setFilterStatus(filterStorageStatusParsed)
         isChecked === undefined ?
             setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
             :
             setFilterStatus(isChecked);
-        //setFilterStatus(JSON.parse(filterStorageStatus))
         console.log(isFilterActive)
     }
 
     const handleStorageFilter = () => {
         const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
-        debugger
         (filterStorageStatusParsed !==  undefined||null) && setFilterStatus(filterStorageStatusParsed)
         isFilterActive === undefined && setFilterStatus(filterStorageStatusParsed)
     }
 
     const handleSearchValue = (e) => {
         e.preventDefault()
-        //isFilterActive === undefined && setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
         handleStorageFilter()
-        debugger
         const results =
             !isFilterActive ?
                 beatfilmsArr.filter(
@@ -251,17 +192,14 @@ function App() {
                 )
         localStorage.setItem('moviesList', JSON.stringify(results));
         setMoviesList(results)
-        //todo/setMoviesList(movieListStorage)
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
     const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
 
-    const getSearchValue = useCallback((data) => setSearchTerm(data), [searchTerm]);
-
     const handleSearchSavedMoviesValue = (e) => {
         e.preventDefault()
-        debugger
+        handleStorageFilter()
         const results =
             !isFilterActive ?
                 savedMovies.filter(
@@ -278,9 +216,8 @@ function App() {
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
-    //todo/const savedMovieListStorage = JSON.parse(localStorage.getItem('SavedMoviesList')) || [];
-
     //////////////////добавление и удалениекарточки и избранное///////////////////
+
     console.log(beatfilmsArr)
     console.log(moviesList)
 
@@ -358,17 +295,15 @@ function App() {
                         <Layout
                             userData={userData}
                             loggedIn={loggedIn}
-                            loggedInRef={loggedInRef}
                         />
                     }>
                         <Route path='/' element={
                             <Main/>
                         }/>
                         <Route path='/movies'
-                               element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                               element={<ProtectedRouteElement loggedIn={loggedIn}/>}>
                             <Route path="/movies" element={
                                 <Movies
-                                    searchTerm={searchTerm}
                                     handleSearchValue={handleSearchValue}
                                     handleSearchChange={handleSearchChange}
                                     moviesList={moviesList}
@@ -380,14 +315,13 @@ function App() {
                                     savedMovies={savedMovies}
                                     filterStorageStatus={filterStorageStatus}
                                     searchTermStorage={searchTermStorage}
-                                    getSearchValue={getSearchValue}
                                     movieListStorage={movieListStorage}
                                     isLoading={isLoading}
                                 />
                             }/>
                         </Route>
                         <Route path='/saved-movies'
-                               element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                               element={<ProtectedRouteElement loggedIn={loggedIn}/>}>
                             <Route path="/saved-movies" element={
                                 <SavedMovies
                                     handleSaveMovie={handleSaveMovie}
@@ -405,15 +339,13 @@ function App() {
                     <Route element={
                         <LayoutProfile
                             loggedIn={loggedIn}
-                            loggedInRef={loggedInRef}
                         />
                     }>
                         <Route path='/profile'
-                               element={<ProtectedRouteElement loggedIn={loggedIn} loggedInRef={loggedInRef}/>}>
+                               element={<ProtectedRouteElement loggedIn={loggedIn}/>}>
                             <Route path="/profile" element={
                                 <Profile
                                     logOut={logOut}
-                                    loggedIn={loggedIn}
                                     userData={userData}
                                     setUserData={setUserData}
                                     updateUser={updateUser}
