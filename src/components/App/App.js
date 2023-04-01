@@ -19,24 +19,24 @@ import React, {useCallback, useEffect, useState} from "react";
 function App() {
 
     const [searchTerm, setSearchTerm] = useState('')
+    const [errorToolTip, setErrorToolTip] = useState({text: ''})
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
     const [savedMovies, setSavedMovies] = useState([])
+    const [currentUser, setCurrentUser] = useState({})
+    const [userData, setUserData] = useState({})
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
     const [windowResizing, setWindowResizing] = useState(false);
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
-    const [currentUser, setCurrentUser] = useState({})
-    const [userData, setUserData] = useState({})
-    const [errorToolTip, setErrorToolTip] = useState({text: ''})
-    const navigate = useNavigate();
     const authStorageData = localStorage.getItem('loggedInStatus')
     const isLoggedInStorage = JSON.parse(authStorageData)
     const [loggedIn, setLoggedIn] = useState(isLoggedInStorage);
+    const navigate = useNavigate();
 
-////////////////////////аутентефикация//////////////////////////////////////////
+////////////////////////аутентефикация////////////////////////
 
     const checkToken = useCallback(async () => {
         try {
@@ -61,7 +61,7 @@ function App() {
         try {
             setHasError(false)
             const res = await Auth.register({name, email, password});
-            if(!res){
+            if (!res) {
                 localStorage.setItem('loggedInStatus', 'false')
             }
             localStorage.setItem('loggedInStatus', 'true')
@@ -107,7 +107,8 @@ function App() {
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
-            } catch { }
+            } catch {
+            }
         }, []
     )
 
@@ -127,7 +128,7 @@ function App() {
             })
     }, [])
 
-    //////////////////получение фильмов с BeatFilms//////////////////////////////
+////////////////////////получение фильмов с BeatFilms////////////////////////
 
     const getBeatfilmMovies = useCallback(() => {
         setIsLoading(true)
@@ -142,7 +143,7 @@ function App() {
         })
     }, [])
 
-///////////поиск фильмов ///////////////////
+////////////////////////поиск фильмов////////////////////////
 
     const searchTermStorage = JSON.parse(localStorage.getItem('searchTerm')) || [];
 
@@ -168,7 +169,7 @@ function App() {
 
     const handleStorageFilter = () => {
         const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
-        (filterStorageStatusParsed !==  undefined||null) && setFilterStatus(filterStorageStatusParsed)
+        (filterStorageStatusParsed !== undefined || null) && setFilterStatus(filterStorageStatusParsed)
         isFilterActive === undefined && setFilterStatus(filterStorageStatusParsed)
     }
 
@@ -212,7 +213,7 @@ function App() {
         results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
-    //////////////////добавление и удалениекарточки и избранное///////////////////
+////////////////////////добавление и удалениекарточки и избранное////////////////////////
 
     console.log(beatfilmsArr)
     console.log(moviesList)
@@ -258,7 +259,7 @@ function App() {
 
     console.log(savedMovies)
 
-    /////////////////////таймаут на ресайз экрана/////////////////////////
+////////////////////////таймаут на ресайз экрана////////////////////////
 
     useEffect(() => {
         let timeout;
@@ -365,7 +366,7 @@ function App() {
                             setUserData={setUserData}
                             errorToolTip={errorToolTip}
                             hasError={hasError}
-                            setHasError={ setHasError}
+                            setHasError={setHasError}
                         />
                     }/>
                     <Route path="*" element={<PageNotFound/>}/>
