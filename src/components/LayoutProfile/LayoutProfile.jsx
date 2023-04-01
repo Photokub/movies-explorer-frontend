@@ -2,9 +2,11 @@ import React from "react";
 import Header from "../Header/Header";
 import {Outlet} from "react-router-dom";
 
-const LayoutProfile = () => (
+const LayoutProfile = ({loggedIn}) => (
     <>
-        <Header/>
+        <Header
+            loggedIn={loggedIn}
+        />
         <Outlet/>
     </>
 );

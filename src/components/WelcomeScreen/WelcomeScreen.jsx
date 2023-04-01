@@ -7,14 +7,43 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import LoginForm from "../LoginForm/LoginForm";
 
 
-export default function WelcomeScreen({title, subtitle, sublink, to}) {
+export default function WelcomeScreen({
+                                          title,
+                                          subtitle,
+                                          sublink,
+                                          to,
+                                          onRegister,
+                                          userData,
+                                          setUserData,
+                                          loggedIn,
+                                          login,
+                                          errorToolTip,
+                                          hasError,
+                                          setHasError
+                                      }) {
     const location = useLocation()
 
     let component
     if (location.pathname === '/signup') {
-        component = <RegisterForm/>
+        component = <RegisterForm
+            onRegister={onRegister}
+            userData={userData}
+            setUserData={setUserData}
+            loggedIn={loggedIn}
+            errorToolTip={errorToolTip}
+            hasError={hasError}
+            setHasError={setHasError}
+        />
     } else if (location.pathname === '/signin') {
-        component = <LoginForm/>
+        component = <LoginForm
+            login={login}
+            userData={userData}
+            setUserData={setUserData}
+            loggedIn={loggedIn}
+            errorToolTip={errorToolTip}
+            hasError={hasError}
+            setHasError={setHasError}
+        />
     }
 
     return (
@@ -23,7 +52,8 @@ export default function WelcomeScreen({title, subtitle, sublink, to}) {
                 <img className='welcome__logo' src={logo} alt='логотип'/>
                 <p className='welcome__title'>{title}</p>
                 {component}
-                <p className='welcome__subtitle'>{subtitle}<Link className='welcome__sublink' to={to}>{sublink}</Link></p>
+                <p className='welcome__subtitle'>{subtitle}<Link className='welcome__sublink' to={to}>{sublink}</Link>
+                </p>
             </section>
         </div>
     )

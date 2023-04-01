@@ -15,7 +15,7 @@
 }
 
 .welcome__title {
-    margin: 4px 0 33px 0;
+    margin: 2px 0 40px 0;
 
     font-weight: 500;
     font-size: 24px;
@@ -24,7 +24,7 @@
 }
 
 .welcome__subtitle {
-    margin: 16px 0 0 0;
+    margin: 12px 0 0 0;
     align-self: center;
 
     font-weight: 400;

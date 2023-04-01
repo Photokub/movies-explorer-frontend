@@ -9,6 +9,15 @@
     width: 410px;
 }
 
+.profile-form__field {
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    grid-template-rows: 33px 10px;
+    align-items: center;
+    border-bottom: 1px solid #E8E8E8;
+    box-sizing: border-box;
+}
+
 .profile__title {
     margin: 0;
     font-weight: 500;
@@ -24,23 +33,49 @@
     width: 100%;
 }
 
-.profile-form__fields {
+.profile-form__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     list-style-type: none;
     padding: 0;
-    margin: 110px 0 0 0;
+    margin: 113px 0 0 0;
 }
 
-.profile-form__fields__line {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-bottom: 1px solid #E8E8E8;
-    box-sizing: border-box;
-    padding: 16px 0;
-}
-
-.profile-form__fields__line:last-child {
+.profile-form__input {
+    position: relative;
     border: none;
+    text-align: end;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+}
+
+.profile-form__input, :active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+.profile-form__input__title {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.profile-form__input__err {
+    grid-row:2/3;
+    grid-column: 1/3;
+    justify-self: end;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #FF3055;
+    margin-bottom: 6px;
+}
+
+.profile-form__container .profile-form__field:last-of-type {
+    border: none;
+    margin-top: 4px;
 }
 
 .profile-form__fields__line__text {
@@ -52,7 +87,7 @@
     color: #000000;
 }
 
-.profile-form__btn {
+.profile-form__btn_enabled {
     padding: 0;
     margin: 205px 0 16px 0;
     background-color: rgba(0, 0, 0, 0);
@@ -63,6 +98,19 @@
     font-size: 13px;
     line-height: 16px;
     color: #000000;
+}
+
+.profile-form__btn_disabled {
+    padding: 0;
+    margin: 205px 0 16px 0;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: default;
+
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #A0A0A0;
 }
 
 .profile__logout-btn {
@@ -83,7 +131,7 @@
         padding: 236px 0 0 0;
     }
 
-    .profile-form__fields {
+    .profile-form__container {
         margin: 80px 0 0 0;
     }
 
@@ -101,7 +149,7 @@
         width: 260px;
     }
 
-    .profile-form__fields {
+    .profile-form__container {
         margin: 66px 0 0 0;
     }
 

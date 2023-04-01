@@ -1,12 +1,33 @@
 import React from "react";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import SavedMoviesCardList from '../SavedMoviesCardList/SavedMoviesCardList'
 import SearchForm from "../SearchForm/SearchForm";
 
-export default function SavedMovies() {
+export default function SavedMovies({
+                                        savedMovies,
+                                        handleSaveMovie,
+                                        filterStorageStatus,
+                                        searchTermStorage,
+                                        handleFilterCheckbox,
+                                        handleSearchChange,
+                                        handleSearchSavedMoviesValue,
+                                        isReqFailed,
+                                        isAnyMatches
+                                    }) {
     return (
-      <section className='saved-movies movies'>
-          <SearchForm/>
-          <MoviesCardList/>
-      </section>
+        <section className='saved-movies movies'>
+            <SearchForm
+                filterStorageStatus={filterStorageStatus}
+                searchTermStorage={searchTermStorage}
+                handleFilterCheckbox={handleFilterCheckbox}
+                handleSearchChange={handleSearchChange}
+                handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
+            />
+            <SavedMoviesCardList
+                handleSaveMovie={handleSaveMovie}
+                savedMovies={savedMovies}
+                isReqFailed={isReqFailed}
+                isAnyMatches={isAnyMatches}
+            />
+        </section>
     )
 }

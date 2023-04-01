@@ -71,7 +71,7 @@
     align-items: center;
 }
 
-.navigation__movies-navlink{
+.navigation__movies-navlink-main{
     margin: 0 16px 0 0;
     text-decoration: none;
 
@@ -82,7 +82,7 @@
     color: #000;
 }
 
-.navigation__movies-navlink_active{
+.navigation__movies-navlink-main_active{
     margin: 0 16px 0 0;
     text-decoration: none;
 
@@ -93,13 +93,52 @@
     color: #000;
 }
 
+.navigation__movies-navlink{
+    margin: 0 16px 0 0;
+    text-decoration: none;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #FFF;
+}
+
+.navigation__movies-navlink_active{
+    margin: 0 16px 0 0;
+    text-decoration: none;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    color: #FFF;
+}
+
 .navigation__account-btn{
     height: 32px;
-    width: 100px;
+    width: 100%;
+    border: solid 1px #FFF;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+    padding: 0 15px;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFF;
+}
+
+.navigation__account-btn_main{
+    height: 32px;
+    width: 100%;
     border-radius: 20px;
     border: none;
     background-color: #F9F9F9;
     cursor: pointer;
+    padding: 0 15px;
 
     font-style: normal;
     font-weight: 500;
@@ -114,6 +153,14 @@
 
     .navigation_authorized {
         padding: 18px 30px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .navigation__account-btn{
+        border: none;
+        background-color: #F9F9F9;
+        color: #000;
     }
 }
 

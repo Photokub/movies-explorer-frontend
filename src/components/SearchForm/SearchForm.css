@@ -16,7 +16,7 @@
     padding: 10px 10px 10px 25px;
 }
 
-.search-form:focus{
+.search-form:focus {
     border: 3px solid rgba(100, 100, 100, .2);
 }
 
@@ -53,7 +53,7 @@
     color: #FFFFFF;
 }
 
-.search-form__button:hover{
+.search-form__button:hover {
     opacity: 0.8;
 }
 
@@ -64,6 +64,14 @@
     border: none;
     height: 1px;
     z-index: -1;
+}
+
+.search-form__err {
+    background-color: #FFF;
+    box-shadow: 0 0 5px red;
+    position: absolute;
+    padding: 10px;
+    top: 160px
 }
 
 @media screen and (max-width: 984px) {
