@@ -87,7 +87,7 @@ class MainApi {
 export const mainApi = new MainApi({
     credentials: 'include',
     baseUrl: 'https://api.photokub.nomoredomains.work',
-    //todo/baseUrl: 'http://localhost:3001',
+    //baseUrl: 'http://localhost:3001',
     headers: {
         "content-type": "application/json",
         'Accept': 'application/json',

@@ -26,11 +26,13 @@ function App() {
     const [isReqFailed, setReqFailed] = useState(false);
     const location = useLocation()
     const [windowResizing, setWindowResizing] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
+
+    //const [loggedIn, setLoggedIn] = useState(false);
     const [isSubmitBtnActive, setIsSubmitBtnActive] = useState(false)
     //const [isFilterActive, setFilterStatus] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
     const [currentUser, setCurrentUser] = useState({})
     const [userData, setUserData] = useState({})
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
@@ -39,19 +41,26 @@ function App() {
     const loggedInRef = useRef({})
     //loggedInRef.current = loggedIn
 
+    //localStorage.setItem('loggedInStatus', 'false')
+
+    const authStorageData = localStorage.getItem('loggedInStatus')
+
+    const isLoggedInStorage = JSON.parse(authStorageData)
+
+    const [loggedIn, setLoggedIn] = useState(isLoggedInStorage);
+
 
     const history = useNavigate()
 
 ////////////////////////аутентефикация//////////////////////////////////////////
 
     const checkToken = useCallback(async () => {
-        //debugger
         try {
             const user = await mainApi.checkToken()
             if (!user) {
                 throw new Error('Invalid user')
             }
-            setLoggedIn(true)
+            localStorage.setItem('loggedInStatus', 'true')
             getBeatfilmMovies()
             setUserData(user)
             setCurrentUser(user)
@@ -61,7 +70,7 @@ function App() {
 
     useEffect(() => {
         checkToken();
-    }, [checkToken, history])
+    }, [checkToken])
 
 
     // useEffect(() => {
@@ -81,6 +90,10 @@ function App() {
         try {
             setHasError(false)
             const res = await Auth.register({name, email, password});
+            if(!res){
+                localStorage.setItem('loggedInStatus', 'false')
+            }
+            localStorage.setItem('loggedInStatus', 'true')
             setLoggedIn(true)
             getBeatfilmMovies()
             setUserData({name, email})
@@ -116,7 +129,8 @@ function App() {
                     setLoggedIn(false)
                 }
                 console.log(data)
-                setLoggedIn(true)
+                //setLoggedIn(true)
+                localStorage.setItem('loggedInStatus', 'true')
                 setUserData(data)
                 setCurrentUser(data)
                 getBeatfilmMovies()
@@ -135,7 +149,8 @@ function App() {
                     setLoggedIn(false)
                 }
                 console.log(data)
-                setLoggedIn(true)
+                //setLoggedIn(true)
+                localStorage.setItem('loggedInStatus', 'true')
                 setUserData(data)
                 setCurrentUser(data)
             } catch {
@@ -148,13 +163,13 @@ function App() {
         Auth.logOut()
             .then(() => {
                 setLoggedIn(false)
-                //loggedInRef.current = loggedIn
                 setUserData({});
                 setCurrentUser({})
                 localStorage.removeItem('searchTerm')
                 localStorage.removeItem('moviesList')
                 localStorage.removeItem('filterCheckbox')
                 localStorage.removeItem('SavedMoviesList')
+                localStorage.removeItem('loggedInStatus')
                 navigate('/');
             })
     }, [])
@@ -194,7 +209,7 @@ function App() {
     //     (filterStorageStatusParsed === null) ? setFilterStatus(filterStorageStatusParsed) : setFilterStatus(false)
     // }, [])
 
-    const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
+
 
     const handleFilterCheckbox = (e) => {
         const isChecked = e.target.checked
@@ -210,43 +225,6 @@ function App() {
         //setFilterStatus(JSON.parse(filterStorageStatus))
         console.log(isFilterActive)
     }
-
-
-    // const results = useCallback(() => {
-    //     !isFilterActive ?
-    //         beatfilmsArr.filter(
-    //             (film) =>
-    //                 film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
-    //         )
-    //         :
-    //         beatfilmsArr.filter(
-    //             (film) =>
-    //                 (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
-    //         )
-    // },[])
-
-    // const handleSearchValue = async (e) => {
-    //     e.preventDefault()
-    //     //isFilterActive === undefined && setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
-    //     const filterStorageStatusParsed = await (JSON.parse(localStorage.getItem('filterCheckbox')));
-    //     (filterStorageStatusParsed !== undefined || null) && setFilterStatus(filterStorageStatusParsed)
-    //     debugger
-    //     const results = await (
-    //         !isFilterActive ?
-    //             beatfilmsArr.filter(
-    //                 (film) =>
-    //                     film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
-    //             )
-    //             :
-    //             beatfilmsArr.filter(
-    //                 (film) =>
-    //                     (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
-    //             ))
-    //     localStorage.setItem('moviesList', JSON.stringify(results));
-    //     setMoviesList(results)
-    //     //todo/setMoviesList(movieListStorage)
-    //     results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
-    // }
 
     const handleStorageFilter = () => {
         const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
