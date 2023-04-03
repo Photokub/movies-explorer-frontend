@@ -49,7 +49,9 @@ export default function WelcomeScreen({
     return (
         <div className='welcome__warp'>
             <section className='welcome'>
-                <img className='welcome__logo' src={logo} alt='логотип'/>
+                <Link className='welcome__link' to='/'>
+                    <img className='welcome__logo' src={logo} alt='логотип'/>
+                </Link>
                 <p className='welcome__title'>{title}</p>
                 {component}
                 <p className='welcome__subtitle'>{subtitle}<Link className='welcome__sublink' to={to}>{sublink}</Link>
