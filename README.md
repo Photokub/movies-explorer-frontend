@@ -1,7 +1,7 @@
 # movies-explorer-frontend
 
 ### Ссылка на сайт:
-http://photokub.nomoredomains.monster/
+https://photokub.nomoredomains.monster
 
 #### Макет:
 https://disk.yandex.ru/d/4WqXXremX0qq7Q
