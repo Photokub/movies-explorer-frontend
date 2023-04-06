@@ -3,6 +3,7 @@ export const BASE_URL = 'https://api.photokub.nomoredomains.work';
 export const register = ({name, email, password}) => {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
+        credentials: 'include',
         mode: "cors",
         headers: {
             'Accept': 'application/json',
