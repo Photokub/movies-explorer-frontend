@@ -66,9 +66,9 @@ function App() {
             }
             localStorage.setItem('loggedInStatus', 'true')
             setLoggedIn(true)
-            getBeatfilmMovies()
             setUserData({name, email})
             setCurrentUser({name, email})
+            await getBeatfilmMovies()
             return res;
         } catch (err) {
             setHasError(true)
@@ -87,7 +87,6 @@ function App() {
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
-                getBeatfilmMovies()
                 await getSavedMovies()
             } catch (err) {
                 setHasError(true)
