@@ -82,7 +82,6 @@ function App() {
                 if (!data) {
                     setLoggedIn(false)
                 }
-                console.log(data)
                 localStorage.setItem('loggedInStatus', 'true')
                 setLoggedIn(true)
                 setUserData(data)
@@ -101,7 +100,6 @@ function App() {
                 if (!data) {
                     setLoggedIn(false)
                 }
-                console.log(data)
                 localStorage.setItem('loggedInStatus', 'true')
                 setLoggedIn(true)
                 setUserData(data)
@@ -135,7 +133,6 @@ function App() {
             .then((data) => {
                 setBeatfilmsArr(data);
             }).catch((err) => {
-            console.log(`Ошибка ${err}`)
             setReqFailed(true)
         }).finally(() => {
             setIsLoading(false)
@@ -150,7 +147,6 @@ function App() {
         let currentSearchTerm;
         currentSearchTerm = (event.target.value);
         setSearchTerm(event.target.value);
-        console.log(searchTerm)
         localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
     };
 
@@ -163,7 +159,6 @@ function App() {
             setFilterStatus(JSON.parse(localStorage.getItem('filterCheckbox')))
             :
             setFilterStatus(isChecked);
-        console.log(isFilterActive)
     }
 
     const handleStorageFilter = () => {
@@ -214,12 +209,7 @@ function App() {
 
 ////////////////////////добавление и удалениекарточки и избранное////////////////////////
 
-    console.log(beatfilmsArr)
-    console.log(moviesList)
-
-    const handleSaveMovie = (movieCard) => {
-        console.log(movieCard)
-        console.log(savedMovies)
+        const handleSaveMovie = (movieCard) => {
         const id = movieCard.id
         const movieId = movieCard.movieId
         const isSaved = savedMovies.some((movie) => (movie.movieId === id || movieId) || (movie.id === id || movieId))
@@ -232,7 +222,6 @@ function App() {
                 .then((newMovie) =>
                     setSavedMovies([newMovie, ...savedMovies])
                 ).catch((err) => {
-                console.log(`Ошибка ${err}`)
             })
             :
             mainApi
@@ -255,8 +244,6 @@ function App() {
         } catch {
         }
     }, [])
-
-    console.log(savedMovies)
 
 ////////////////////////таймаут на ресайз экрана////////////////////////
 

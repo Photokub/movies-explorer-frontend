@@ -28,7 +28,6 @@ export default function Profile({logOut, userData, setUserData, updateUser}) {
             ...userData,
             [name]: value
         });
-        console.log(userData)
     }
 
     return (

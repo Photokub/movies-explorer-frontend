@@ -31,7 +31,6 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
             ...userData,
             [name]: value
         });
-        console.log(userData)
     }
 
     return(

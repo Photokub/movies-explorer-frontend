@@ -40,7 +40,6 @@ export default function RegisterForm({
             ...userData,
             [name]: value
         });
-        console.log(userData)
     }
 
     return (
