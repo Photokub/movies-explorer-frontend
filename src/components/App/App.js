@@ -276,6 +276,21 @@ function App() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    ////////////////////////событие на закрытие окна////////////////////////
+
+
+    useEffect(() => {
+        window.addEventListener("onunload", handleUnload);
+        return () => {
+            window.removeEventListener("onunload", handleUnload);
+        }
+    },[]);
+
+    const handleUnload = () => {
+        localStorage.removeItem('loggedInStatus')
+    };
+
+
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
