@@ -44,7 +44,6 @@ function App() {
             if (!user) {
                 throw new Error('Invalid user')
             }
-            localStorage.setItem('loggedInStatus', 'true')
             getBeatfilmMovies()
             setUserData(user)
             setCurrentUser(user)

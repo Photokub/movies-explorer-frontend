@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import './Profile.css'
 import {useForm} from "react-hook-form";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
@@ -9,8 +9,8 @@ export default function Profile({logOut, userData, setUserData, updateUser}) {
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
         defaultValues: {
-            name: '',
-            email: '',
+            name: currentUser.name,
+            email: currentUser.email,
         },
         mode: 'onChange'
     });
@@ -40,9 +40,9 @@ export default function Profile({logOut, userData, setUserData, updateUser}) {
                                 <span className='profile-form__input__title'>Имя</span>
                                 <input className='profile-form__input'
                                        type='text'
-                                       name='name'
+                                       name='name_field'
                                        required
-                                       value={name}
+                                       defaultValue={currentUser.name}
                                        onChange={handleChange}
                                        {...register('name', {
                                            required: 'Обязательное поле',
@@ -66,8 +66,9 @@ export default function Profile({logOut, userData, setUserData, updateUser}) {
                                 <span className='profile-form__input__title'>E-mail</span>
                                 <input className='profile-form__input'
                                        type='email'
+                                       name='email_field'
                                        required
-                                       value={email}
+                                       defaultValue={currentUser.email}
                                        onChange={handleChange}
                                        {...register('email', {
                                            required: 'Обязательное поле',
