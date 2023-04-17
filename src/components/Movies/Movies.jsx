@@ -18,7 +18,8 @@ export default function Movies({
                                    filterStorageStatus,
                                    searchTermStorage,
                                    movieListStorage,
-                                   isLoading
+                                   isLoading,
+                                   getSavedMovies
                                }) {
     const windowInnerWidth = window.innerWidth;
     const windowWidth = useMemo(() => windowInnerWidth, [windowInnerWidth]);
@@ -67,6 +68,7 @@ export default function Movies({
                 handlePreloader={handlePreloader}
                 filterStorageStatus={filterStorageStatus}
                 searchTermStorage={searchTermStorage}
+                getSavedMovies={getSavedMovies}
             />
             {isLoading ?
                 <Preloader/>

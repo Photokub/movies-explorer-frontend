@@ -1,6 +1,7 @@
 import React from "react";
 import SavedMoviesCardList from '../SavedMoviesCardList/SavedMoviesCardList'
 import SearchForm from "../SearchForm/SearchForm";
+import Preloader from "../Preloader/Preloader";
 
 export default function SavedMovies({
                                         savedMovies,
@@ -8,10 +9,13 @@ export default function SavedMovies({
                                         filterStorageStatus,
                                         searchTermStorage,
                                         handleFilterCheckbox,
-                                        handleSearchChange,
+                                        handleSavedMoviesSearchChange,
                                         handleSearchSavedMoviesValue,
                                         isReqFailed,
-                                        isAnyMatches
+                                        isAnyMatches,
+                                        getSavedMovies,
+                                        handleSavedMoviesFilterCheckbox,
+                                        isLoading
                                     }) {
     return (
         <section className='saved-movies movies'>
@@ -19,15 +23,21 @@ export default function SavedMovies({
                 filterStorageStatus={filterStorageStatus}
                 searchTermStorage={searchTermStorage}
                 handleFilterCheckbox={handleFilterCheckbox}
-                handleSearchChange={handleSearchChange}
+                handleSavedMoviesSearchChange={handleSavedMoviesSearchChange}
                 handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
+                getSavedMovies={getSavedMovies}
+                handleSavedMoviesFilterCheckbox={handleSavedMoviesFilterCheckbox}
             />
-            <SavedMoviesCardList
-                handleSaveMovie={handleSaveMovie}
-                savedMovies={savedMovies}
-                isReqFailed={isReqFailed}
-                isAnyMatches={isAnyMatches}
-            />
+            {isLoading ?
+                <Preloader/>
+                :
+                <SavedMoviesCardList
+                    handleSaveMovie={handleSaveMovie}
+                    savedMovies={savedMovies}
+                    isReqFailed={isReqFailed}
+                    isAnyMatches={isAnyMatches}
+                />
+            }
         </section>
     )
 }

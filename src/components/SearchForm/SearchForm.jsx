@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import './SearchForm.css'
 import {useLocation} from "react-router-dom";
@@ -11,11 +11,15 @@ export default function SearchForm({
                                        filterStorageStatus,
                                        searchTermStorage,
                                        handleSearchSavedMoviesValue,
+                                       handleSavedMoviesSearchChange,
+                                       getSavedMovies,
+                                       handleSavedMoviesFilterCheckbox
                                    }) {
 
     const location = useLocation()
+    const moviesOnLocation = location.pathname === '/movies'
 
-    const submitState = location.pathname === '/movies' ? handleSearchValue : handleSearchSavedMoviesValue
+    const submitState = moviesOnLocation ? handleSearchValue : handleSearchSavedMoviesValue
 
     ////////////border style//////////////
     const searchFormBorder = useRef(null)
@@ -34,24 +38,30 @@ export default function SearchForm({
         searchFormInput && setFormBorder({border: borderBlur});
     };
 
+    useEffect(()=>{
+        searchFormInput.value === undefined && getSavedMovies()
+    },[])
+
     return (
         <div className='search-form-container'>
             <form className='search-form' ref={searchFormBorder} style={formBorder} onSubmit={submitState}
                   onLoad={handlePreloader}>
                 <input
                     required
+                    name='search_field'
                     className='search-form__input'
                     type='text'
                     placeholder='Фильм'
-                    value={searchTermStorage}
                     ref={searchFormInput}
-                    onChange={handleSearchChange}
+                    value={moviesOnLocation ? searchTermStorage : undefined}
+                    onChange={moviesOnLocation ? handleSearchChange : handleSavedMoviesSearchChange}
                     onFocus={() => handleFocus(searchFormInput.current)}
                     onBlur={handleBlur}/>
                 <button className='search-form__button' type='submit'>Поиск</button>
                 <FilterCheckbox
                     handleFilterCheckbox={handleFilterCheckbox}
                     filterStorageStatus={filterStorageStatus}
+                    handleSavedMoviesFilterCheckbox={handleSavedMoviesFilterCheckbox}
                 />
             </form>
             <hr className='search-form-container__border'></hr>

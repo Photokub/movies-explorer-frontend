@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import './Profile.css'
 import {useForm} from "react-hook-form";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";

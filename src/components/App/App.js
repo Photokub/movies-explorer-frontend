@@ -19,6 +19,7 @@ import React, {useCallback, useEffect, useState} from "react";
 function App() {
 
     const [searchTerm, setSearchTerm] = useState('')
+    const [searchSavedMoviesTerm, setSearchSavedMoviesTerm] = useState('')
     const [errorToolTip, setErrorToolTip] = useState({text: ''})
     const [beatfilmsArr, setBeatfilmsArr] = useState([])
     const [moviesList, setMoviesList] = useState([])
@@ -31,6 +32,7 @@ function App() {
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
+    const [isSavedMoviesFilterActive, setSavedMoviesFilterStatus] = useState(false)
     const authStorageData = localStorage.getItem('loggedInStatus')
     const isLoggedInStorage = JSON.parse(authStorageData)
     const [loggedIn, setLoggedIn] = useState(isLoggedInStorage);
@@ -68,6 +70,7 @@ function App() {
             setUserData({name, email})
             setCurrentUser({name, email})
             await getBeatfilmMovies()
+            getBeatfilmMovies()
             return res;
         } catch (err) {
             setHasError(true)
@@ -149,6 +152,10 @@ function App() {
         localStorage.setItem('searchTerm', JSON.stringify(currentSearchTerm))
     };
 
+    const handleSavedMoviesSearchChange = event => {
+        setSearchSavedMoviesTerm(event.target.value);
+    };
+
     const filterStorageStatus = localStorage.getItem('filterCheckbox');
 
     const handleFilterCheckbox = (e) => {
@@ -164,6 +171,11 @@ function App() {
         const filterStorageStatusParsed = JSON.parse(localStorage.getItem('filterCheckbox'));
         (filterStorageStatusParsed !== undefined || null) && setFilterStatus(filterStorageStatusParsed)
         isFilterActive === undefined && setFilterStatus(filterStorageStatusParsed)
+    }
+
+    const handleSavedMoviesFilterCheckbox = (e) => {
+        const isChecked = e.target.checked
+        setSavedMoviesFilterStatus(isChecked)
     }
 
     const handleSearchValue = (e) => {
@@ -187,28 +199,60 @@ function App() {
 
     const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
 
-    const handleSearchSavedMoviesValue = (e) => {
-        e.preventDefault()
-        handleStorageFilter()
-        const results =
-            !isFilterActive ?
-                savedMovies.filter(
-                    (film) =>
-                        film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)
-                )
-                :
-                savedMovies.filter(
-                    (film) =>
-                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
-                )
-        localStorage.setItem('SavedMoviesList', JSON.stringify(results));
-        setSavedMovies(results)
-        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+    //todo const handleSearchSavedMoviesValue = (e) => {
+    //     e.preventDefault()
+    //     const basicSavedMoviesList = getSavedMovies()
+    //     setSavedMovies(basicSavedMoviesList)
+    //     const results =
+    //         !isSavedMoviesFilterActive ?
+    //             savedMovies.filter(
+    //                 (film) =>
+    //                     film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)
+    //             )
+    //             :
+    //             savedMovies.filter(
+    //                 (film) =>
+    //                     (film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)) && (film.duration <= 40)
+    //             )
+    //     setSavedMovies(results)
+    //     results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+    // }
+
+    const handleSearchSavedMoviesValue = async (e) => {
+        try {
+            setIsLoading(true)
+            e.preventDefault()
+            const basicSavedMoviesList = await mainApi.getMovies()
+            setSavedMovies(basicSavedMoviesList)
+            const results =
+                !isSavedMoviesFilterActive ?
+                    basicSavedMoviesList.filter(
+                        (film) =>
+                            film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)
+                    )
+                    :
+                    basicSavedMoviesList.filter(
+                        (film) =>
+                            (film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)) && (film.duration <= 40)
+                    )
+            setSavedMovies(results)
+            results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setIsLoading(false)
+        }
+
     }
+
+    console.log(savedMovies)
+    console.log(searchSavedMoviesTerm)
+    console.log(isFilterActive)
+    console.log(isSavedMoviesFilterActive)
 
 ////////////////////////добавление и удалениекарточки и избранное////////////////////////
 
-        const handleSaveMovie = (movieCard) => {
+    const handleSaveMovie = (movieCard) => {
         const id = movieCard.id
         const movieId = movieCard.movieId
         const isSaved = savedMovies.some((movie) => (movie.movieId === id || movieId) || (movie.id === id || movieId))
@@ -233,16 +277,47 @@ function App() {
             })
     }
 
-    const getSavedMovies = useCallback(async () => {
-        try {
-            mainApi
-                .getMovies()
-                .then((data) =>
-                    setSavedMovies(data)
-                )
-        } catch {
-        }
+    const getSavedMovies = useCallback(() => {
+        setIsLoading(true)
+        mainApi
+            .getMovies()
+            .then((data) => {
+                setSavedMovies(data)
+            })
+            .catch((err) =>
+
+                console.error(err))
+
+            .finally(() => {
+                setIsLoading(false)
+            })
     }, [])
+
+    // const getSavedMovies = useCallback(async () => {
+    //     setIsLoading(true)
+    //     try {
+    //         mainApi
+    //             .getMovies()
+    //             .then((data) =>
+    //                 setSavedMovies(data)
+    //             )
+    //     } catch {
+    //     }finally {
+    //         setIsLoading(false)
+    //     }
+    // }, [])
+
+    // const getBeatfilmMovies = useCallback(() => {
+    //     setIsLoading(true)
+    //     moviesApi.getMovies()
+    //         .then((data) => {
+    //             setBeatfilmsArr(data);
+    //         }).catch((err) => {
+    //         setReqFailed(true)
+    //     }).finally(() => {
+    //         setIsLoading(false)
+    //     })
+    // }, [])
 
 ////////////////////////таймаут на ресайз экрана////////////////////////
 
@@ -270,13 +345,11 @@ function App() {
         return () => {
             window.removeEventListener("onunload", handleUnload);
         }
-    },[]);
+    }, []);
 
     const handleUnload = () => {
         localStorage.removeItem('loggedInStatus')
     };
-
-
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -308,6 +381,7 @@ function App() {
                                     searchTermStorage={searchTermStorage}
                                     movieListStorage={movieListStorage}
                                     isLoading={isLoading}
+                                    getSavedMovies={getSavedMovies}
                                 />
                             }/>
                         </Route>
@@ -320,10 +394,13 @@ function App() {
                                     filterStorageStatus={filterStorageStatus}
                                     searchTermStorage={searchTermStorage}
                                     handleFilterCheckbox={handleFilterCheckbox}
-                                    handleSearchChange={handleSearchChange}
+                                    handleSavedMoviesSearchChange={handleSavedMoviesSearchChange}
                                     handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
                                     isReqFailed={isReqFailed}
                                     isAnyMatches={isAnyMatches}
+                                    getSavedMovies={getSavedMovies}
+                                    handleSavedMoviesFilterCheckbox={handleSavedMoviesFilterCheckbox}
+                                    isLoading={isLoading}
                                 />
                             }
                             />
