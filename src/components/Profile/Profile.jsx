@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {InfoToolTip} from "../InfoToolTip/InfoToolTip";
 
-export default function Profile({logOut, userData, setUserData, updateUser, isInfoToolTipPopupOpen}) {
+export default function Profile({logOut, userData, setUserData, updateUser, isInfoToolTipPopupOpen, isReqChangingUserData}) {
 
     const currentUser = useContext(CurrentUserContext)
 
@@ -89,6 +89,7 @@ export default function Profile({logOut, userData, setUserData, updateUser, isIn
                         </label>
                         <InfoToolTip
                             isInfoTooltipPopupOpen={isInfoToolTipPopupOpen}
+                            isReqChangingUserData={isReqChangingUserData}
                         />
                         <button className={invalidData ? 'profile-form__btn_disabled' : 'profile-form__btn_enabled'}
                                 type='submit' disabled={invalidData}>Редактировать

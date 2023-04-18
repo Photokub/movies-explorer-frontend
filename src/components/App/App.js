@@ -29,6 +29,7 @@ function App() {
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
     const [isReqSavedMoviesFailed, setReqSavedMoviesFailed] = useState(false);
+    const [isReqChangingUserData, setIsReqChangingUserData] = useState(false);
     const [windowResizing, setWindowResizing] = useState(false);
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -105,8 +106,10 @@ function App() {
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
+                setIsReqChangingUserData(false)
                 setIsInfoToolTipPopupOpen(true)
             } catch {
+                setIsReqChangingUserData(true)
             }
         }, []
     )
@@ -427,6 +430,7 @@ function App() {
                                     setUserData={setUserData}
                                     updateUser={updateUser}
                                     isInfoToolTipPopupOpen={isInfoToolTipPopupOpen}
+                                    isReqChangingUserData={isReqChangingUserData}
                                 />
                             }
                             />
