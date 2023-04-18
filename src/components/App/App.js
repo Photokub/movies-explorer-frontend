@@ -31,8 +31,9 @@ function App() {
     const [windowResizing, setWindowResizing] = useState(false);
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
     const [isSavedMoviesFilterActive, setSavedMoviesFilterStatus] = useState(false)
+    const [isInfoToolTipPopupOpen, setIsInfoToolTipPopupOpen] = useState(false)
+    const [isFilterActive, setFilterStatus] = useState(JSON.parse(localStorage.getItem('filterCheckbox')))
     const authStorageData = localStorage.getItem('loggedInStatus')
     const isLoggedInStorage = JSON.parse(authStorageData)
     const [loggedIn, setLoggedIn] = useState(isLoggedInStorage);
@@ -106,10 +107,16 @@ function App() {
                 setLoggedIn(true)
                 setUserData(data)
                 setCurrentUser(data)
+                setIsInfoToolTipPopupOpen(true)
             } catch {
             }
         }, []
     )
+
+    useEffect(() => {
+        const timeout = setTimeout(() => setIsInfoToolTipPopupOpen(false), 7000);
+        return () => clearTimeout(timeout);
+    });
 
     const logOut = useCallback(() => {
         Auth.logOut()
@@ -293,7 +300,7 @@ function App() {
             })
     }, [])
 
-    // const getSavedMovies = useCallback(async () => {
+    //todo const getSavedMovies = useCallback(async () => {
     //     setIsLoading(true)
     //     try {
     //         mainApi
@@ -307,7 +314,7 @@ function App() {
     //     }
     // }, [])
 
-    // const getBeatfilmMovies = useCallback(() => {
+    // todo const getBeatfilmMovies = useCallback(() => {
     //     setIsLoading(true)
     //     moviesApi.getMovies()
     //         .then((data) => {
@@ -419,6 +426,7 @@ function App() {
                                     userData={userData}
                                     setUserData={setUserData}
                                     updateUser={updateUser}
+                                    isInfoToolTipPopupOpen={isInfoToolTipPopupOpen}
                                 />
                             }
                             />
