@@ -47,7 +47,6 @@ function App() {
             if (!user) {
                 throw new Error('Invalid user')
             }
-            getBeatfilmMovies()
             setUserData(user)
             setCurrentUser(user)
             await getSavedMovies()
@@ -70,8 +69,6 @@ function App() {
             setLoggedIn(true)
             setUserData({name, email})
             setCurrentUser({name, email})
-            await getBeatfilmMovies()
-            getBeatfilmMovies()
             return res;
         } catch (err) {
             setHasError(true)
@@ -188,6 +185,7 @@ function App() {
     const handleSearchValue = (e) => {
         e.preventDefault()
         handleStorageFilter()
+        getBeatfilmMovies()
         const results =
             !isFilterActive ?
                 beatfilmsArr.filter(
