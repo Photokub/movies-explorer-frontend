@@ -4,12 +4,12 @@ import './SavedMoviesCardList.css'
 import {REQUEST_ERR} from '../../utils/constants'
 
 
-export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqFailed, handleSaveMovie, savedMovies }) {
+export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqSavedMoviesFailed, handleSaveMovie, savedMovies }) {
 
     return (
         <section className='saved-movies-card-list'>
             {
-                isReqFailed
+                isReqSavedMoviesFailed
                     ?
                     <p className='saved-movies-card-list__err-message'>{REQUEST_ERR}</p>
                     :

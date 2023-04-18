@@ -28,6 +28,7 @@ function App() {
     const [userData, setUserData] = useState({})
     const [isAnyMatches, setIsAnyMatches] = useState(false)
     const [isReqFailed, setReqFailed] = useState(false);
+    const [isReqSavedMoviesFailed, setReqSavedMoviesFailed] = useState(false);
     const [windowResizing, setWindowResizing] = useState(false);
     const [hasError, setHasError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -289,14 +290,14 @@ function App() {
             .then((data) => {
                 setSavedMovies(data)
             })
-            .catch((err) =>
-
-                console.error(err))
-
+            .catch(() =>
+                setReqSavedMoviesFailed(true)
+            )
             .finally(() => {
                 setIsLoading(false)
             })
     }, [])
+
 
     //todo const getSavedMovies = useCallback(async () => {
     //     setIsLoading(true)
@@ -401,7 +402,7 @@ function App() {
                                     handleFilterCheckbox={handleFilterCheckbox}
                                     handleSavedMoviesSearchChange={handleSavedMoviesSearchChange}
                                     handleSearchSavedMoviesValue={handleSearchSavedMoviesValue}
-                                    isReqFailed={isReqFailed}
+                                    isReqSavedMoviesFailed={isReqSavedMoviesFailed}
                                     isAnyMatches={isAnyMatches}
                                     getSavedMovies={getSavedMovies}
                                     handleSavedMoviesFilterCheckbox={handleSavedMoviesFilterCheckbox}

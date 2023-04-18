@@ -11,7 +11,7 @@ export default function SavedMovies({
                                         handleFilterCheckbox,
                                         handleSavedMoviesSearchChange,
                                         handleSearchSavedMoviesValue,
-                                        isReqFailed,
+                                        isReqSavedMoviesFailed,
                                         isAnyMatches,
                                         getSavedMovies,
                                         handleSavedMoviesFilterCheckbox,
@@ -34,7 +34,7 @@ export default function SavedMovies({
                 <SavedMoviesCardList
                     handleSaveMovie={handleSaveMovie}
                     savedMovies={savedMovies}
-                    isReqFailed={isReqFailed}
+                    isReqSavedMoviesFailed={isReqSavedMoviesFailed}
                     isAnyMatches={isAnyMatches}
                 />
             }
