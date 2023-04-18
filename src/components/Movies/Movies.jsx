@@ -82,12 +82,13 @@ export default function Movies({
                     movieListStorage={movieListStorage}
                 />
             }
-
-            <MoreButton
-                existedCards={existedCards}
-                moviesList={moviesList}
-                handleShowMore={handleShowMore}
-            />
+            {!isLoading &&
+                <MoreButton
+                    existedCards={existedCards}
+                    moviesList={moviesList}
+                    handleShowMore={handleShowMore}
+                />
+            }
         </section>
     )
 }
