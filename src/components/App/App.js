@@ -270,7 +270,8 @@ function App() {
                 .saveMovie(movieCard)
                 .then((newMovie) =>
                     setSavedMovies([newMovie, ...savedMovies])
-                ).catch((err) => {
+                ).catch(() => {
+                setReqFailed(true)
             })
             :
             mainApi
@@ -278,8 +279,8 @@ function App() {
                 .then(() => {
                         setSavedMovies(movies => movies.filter((m) => m._id !== movieInArray._id))
                     }
-                ).catch((err) => {
-                console.log(`Ошибка ${err}`)
+                ).catch(() => {
+                setReqFailed(true)
             })
     }
 
