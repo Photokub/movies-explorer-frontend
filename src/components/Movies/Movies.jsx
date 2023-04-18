@@ -4,6 +4,12 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoreButton from "../MoreButton/MoreButton";
 import './Movies.css'
 import Preloader from "../Preloader/Preloader";
+import {
+    LARGE_SCREEN_EXISTED,
+    LARGE_SCREEN_EXPECTED,
+    LARGE_SCREEN_WIDTH, MEDIUM_SCREEN_EXISTED, MEDIUM_SCREEN_EXPECTED,
+    MEDIUM_SCREEN_WIDTH, SMALL_SCREEN_EXISTED, SMALL_SCREEN_EXPECTED
+} from "../../utils/constants";
 
 export default function Movies({
                                    handleSearchChange,
@@ -25,24 +31,24 @@ export default function Movies({
     const windowWidth = useMemo(() => windowInnerWidth, [windowInnerWidth]);
 
     const cardsQt = useMemo(() => {
-        if (windowWidth > 984) {
+        if (windowWidth > LARGE_SCREEN_WIDTH) {
             return {
-                existed: 12,
-                expected: 3
+                existed: LARGE_SCREEN_EXISTED,
+                expected: LARGE_SCREEN_EXPECTED
             }
         }
 
-        if (windowWidth > 568 && windowWidth <= 984) {
+        if (windowWidth > MEDIUM_SCREEN_WIDTH && windowWidth <= LARGE_SCREEN_WIDTH) {
             return {
-                existed: 8,
-                expected: 2
+                existed: MEDIUM_SCREEN_EXISTED,
+                expected: MEDIUM_SCREEN_EXPECTED
             }
         }
 
-        if (windowWidth < 568) {
+        if (windowWidth < MEDIUM_SCREEN_WIDTH) {
             return {
-                existed: 5,
-                expected: 1
+                existed: SMALL_SCREEN_EXISTED,
+                expected: SMALL_SCREEN_EXPECTED
             }
         }
     }, [windowWidth])

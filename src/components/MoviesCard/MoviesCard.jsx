@@ -2,14 +2,15 @@ import React from "react";
 import './MoviesCard.css'
 import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
 import {Link, useLocation} from "react-router-dom";
+import {HOUR} from "../../utils/constants";
 
 export default function MoviesCard({film, handleSaveMovie, savedMovies}) {
     const location = useLocation()
     const timeFull = film.duration
 
     function getTimeFromMins(mins) {
-        let hours = Math.trunc(mins / 60);
-        let minutes = mins % 60;
+        let hours = Math.trunc(mins / HOUR);
+        let minutes = mins % HOUR;
         return hours + 'ч ' + minutes + 'м';
     }
 

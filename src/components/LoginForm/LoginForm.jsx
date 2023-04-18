@@ -1,12 +1,20 @@
-import React, {useEffect } from "react";
+import React, {useEffect} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
+import {
+    EMAIL_REG_EXP,
+    INCORRECT_EMAIL,
+    MAX_LENGTH_PASSWORD, MAX_LENGTH_PASSWORD_MESSAGE,
+    MIN_LENGTH_PASSWORD,
+    MIN_LENGTH_PASSWORD_MESSAGE,
+    REQUIRED_FIELD
+} from "../../utils/constants";
 
-export default function LoginForm({login, loggedIn, userData, setUserData, errorToolTip, hasError, setHasError}){
+export default function LoginForm({login, loggedIn, userData, setUserData, errorToolTip, hasError, setHasError}) {
 
-    useEffect(()=>{
+    useEffect(() => {
         setHasError(false)
-    },[])
+    }, [])
 
 
     const {register, handleSubmit, watch, formState: {errors, isValid}} = useForm({
@@ -21,7 +29,8 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
     const password = watch('password')
 
 
-    const handleLoginSubmit = () => {        login({ email, password })
+    const handleLoginSubmit = () => {
+        login({email, password})
         hasError ? setHasError(true) : setHasError(false)
     }
 
@@ -33,7 +42,7 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
         });
     }
 
-    return(
+    return (
         <Form
             name='register'
             method='post'
@@ -54,10 +63,10 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
                        value={email}
                        onChange={handleChange}
                        {...register('email', {
-                           required: 'Обязательное поле',
+                           required: REQUIRED_FIELD,
                            pattern: {
-                               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                               message: 'Некорректный емайл'
+                               value: EMAIL_REG_EXP,
+                               message: INCORRECT_EMAIL
                            }
                        })}
                 />
@@ -71,18 +80,19 @@ export default function LoginForm({login, loggedIn, userData, setUserData, error
                        value={password}
                        onChange={handleChange}
                        {...register('password', {
-                           required: 'Обязательное поле',
+                           required: REQUIRED_FIELD,
                            minLength: {
-                               value: 6,
-                               message: 'Введите минимум 6 символа'
+                               value: MIN_LENGTH_PASSWORD,
+                               message: MIN_LENGTH_PASSWORD_MESSAGE
                            },
                            maxLength: {
-                               value: 20,
-                               message: 'Допустимо максимум 20 символов'
+                               value: MAX_LENGTH_PASSWORD,
+                               message: MAX_LENGTH_PASSWORD_MESSAGE
                            },
                        })}
                 />
-                {errors.password && <span className='form__input__err' id='name_field-err'>{errors?.password?.message}</span>}
+                {errors.password &&
+                    <span className='form__input__err' id='name_field-err'>{errors?.password?.message}</span>}
             </label>
         </Form>
     )

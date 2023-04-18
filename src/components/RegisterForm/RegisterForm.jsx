@@ -1,6 +1,15 @@
 import React, {useEffect, useState} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
+import {
+    EMAIL_REG_EXP,
+    INCORRECT_EMAIL,
+    MAX_LENGTH_NAME, MAX_LENGTH_NAME_MESSAGE,
+    MAX_LENGTH_PASSWORD, MAX_LENGTH_PASSWORD_MESSAGE,
+    MIN_LENGTH_NAME, MIN_LENGTH_NAME_MESSAGE,
+    MIN_LENGTH_PASSWORD, MIN_LENGTH_PASSWORD_MESSAGE, NAME_REG_EXP,
+    REQUIRED_FIELD
+} from "../../utils/constants";
 
 export default function RegisterForm({
                                          onRegister,
@@ -64,17 +73,17 @@ export default function RegisterForm({
                        value={name}
                        onChange={handleChange}
                        {...register('name', {
-                           required: 'Обязательное поле',
+                           required: REQUIRED_FIELD,
                            minLength: {
-                               value: 2,
-                               message: 'Введите минимум 2 символа'
+                               value: MIN_LENGTH_NAME,
+                               message: MIN_LENGTH_NAME_MESSAGE
                            },
                            maxLength: {
-                               value: 20,
-                               message: 'Допустимо максимум 20 символов'
+                               value: MAX_LENGTH_NAME,
+                               message: MAX_LENGTH_NAME_MESSAGE
                            },
                            pattern: {
-                               value: /^[A-Za-zА-Яа-яЁё /h -]+$/,
+                               value: NAME_REG_EXP,
                                message: 'Вы должны использовать только латиницу, кириллицу, пробел или дефис'
                            }
                        })}
@@ -89,10 +98,10 @@ export default function RegisterForm({
                        value={email}
                        onChange={handleChange}
                        {...register('email', {
-                           required: 'Обязательное поле',
+                           required: REQUIRED_FIELD,
                            pattern: {
-                               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                               message: 'Некорректный емайл'
+                               value: EMAIL_REG_EXP,
+                               message: INCORRECT_EMAIL
                            }
                        })}
                 />
@@ -106,14 +115,14 @@ export default function RegisterForm({
                        value={password}
                        onChange={handleChange}
                        {...register('password', {
-                           required: 'Обязательное поле',
+                           required: REQUIRED_FIELD,
                            minLength: {
-                               value: 6,
-                               message: 'Введите минимум 6 символа'
+                               value: MIN_LENGTH_PASSWORD,
+                               message: MIN_LENGTH_PASSWORD_MESSAGE
                            },
                            maxLength: {
-                               value: 20,
-                               message: 'Допустимо максимум 20 символов'
+                               value: MAX_LENGTH_PASSWORD,
+                               message: MAX_LENGTH_PASSWORD_MESSAGE
                            },
                        })}
                 />

@@ -13,6 +13,7 @@ import {LayoutProfile} from "../LayoutProfile/LayoutProfile";
 import {moviesApi} from "../../utils/MoviesApi";
 import {mainApi} from "../../utils/MainApi";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
+import {PROFILE_MESSAGE_TIMEOUT, EMPTY_ARRAY, SHORT_FILM_DURATION, WINDOW_RESIZE_TIMEOUT} from "../../utils/constants";
 import * as Auth from '../../utils/Auth';
 import React, {useCallback, useEffect, useState} from "react";
 
@@ -115,7 +116,7 @@ function App() {
     )
 
     useEffect(() => {
-        const timeout = setTimeout(() => setIsInfoToolTipPopupOpen(false), 7000);
+        const timeout = setTimeout(() => setIsInfoToolTipPopupOpen(false), PROFILE_MESSAGE_TIMEOUT);
         return () => clearTimeout(timeout);
     });
 
@@ -199,11 +200,11 @@ function App() {
                 :
                 beatfilmsArr.filter(
                     (film) =>
-                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= 40)
+                        (film.nameRU.toLowerCase().includes(searchTermStorage) || film.nameEN.toLowerCase().includes(searchTermStorage)) && (film.duration <= SHORT_FILM_DURATION)
                 )
         localStorage.setItem('moviesList', JSON.stringify(results));
         setMoviesList(results)
-        results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+        results.length === EMPTY_ARRAY ? setIsAnyMatches(true) : setIsAnyMatches(false)
     }
 
     const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
@@ -242,16 +243,15 @@ function App() {
                     :
                     basicSavedMoviesList.filter(
                         (film) =>
-                            (film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)) && (film.duration <= 40)
+                            (film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)) && (film.duration <= SHORT_FILM_DURATION)
                     )
             setSavedMovies(results)
-            results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
+            results.length === EMPTY_ARRAY ? setIsAnyMatches(true) : setIsAnyMatches(false)
         } catch (err) {
             console.error(err)
         } finally {
             setIsLoading(false)
         }
-
     }
 
     console.log(savedMovies)
@@ -340,7 +340,7 @@ function App() {
 
             timeout = setTimeout(() => {
                 setWindowResizing(false);
-            }, 500);
+            }, WINDOW_RESIZE_TIMEOUT);
         }
         window.addEventListener("resize", handleResize);
 

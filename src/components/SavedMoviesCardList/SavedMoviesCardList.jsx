@@ -1,7 +1,7 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './SavedMoviesCardList.css'
-import {REQUEST_ERR} from '../../utils/constants'
+import {REQUEST_ERR, NO_RESULTS} from '../../utils/constants'
 
 
 export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqSavedMoviesFailed, handleSaveMovie, savedMovies }) {
@@ -20,7 +20,7 @@ export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqSa
                             handleSaveMovie={handleSaveMovie}
                             savedMovies={savedMovies}
                         />
-                    ) : <p className='saved-movies-card-list__message'>Ничего не найдено</p>
+                    ) : <p className='saved-movies-card-list__message'>{NO_RESULTS}</p>
             }
         </section>
     )

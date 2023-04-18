@@ -3,6 +3,7 @@ import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Navigation.css'
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import {BURGER_MENU_THRESHOLD} from "../../utils/constants";
 
 export default function Navigation({loggedIn}) {
 
@@ -61,7 +62,7 @@ export default function Navigation({loggedIn}) {
             <Link className="navigation__logo-link" to="/">
                 <img className="navigation__logo" src={logo} alt="логотип movies explorer"/>
             </Link>
-            {windowSize.innerWidth <= 768 ? <BurgerMenu/> : menu}
+            {windowSize.innerWidth <= BURGER_MENU_THRESHOLD ? <BurgerMenu/> : menu}
         </nav>
     )
 }

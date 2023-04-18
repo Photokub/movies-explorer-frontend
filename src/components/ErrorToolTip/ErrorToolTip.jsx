@@ -1,5 +1,6 @@
 import React from 'react'
 import './ErrorToolTip.css'
+import {ERR_TEXT} from "../../utils/constants";
 
 export default function ErrorToolTip({
                                          errorToolTip,
@@ -7,11 +8,9 @@ export default function ErrorToolTip({
 }) {
 
     const errorClassName = hasError ? 'error-tip_enabled' : 'error-tip_disabled'
-    const errText = 'Что-то пошло не так:'
-
     return (
         <section className={errorClassName}>
-            <p className='error-tip__text'>{errText}<br/>{errorToolTip.text}</p>
+            <p className='error-tip__text'>{ERR_TEXT}<br/>{errorToolTip.text}</p>
         </section>
     )
 }
