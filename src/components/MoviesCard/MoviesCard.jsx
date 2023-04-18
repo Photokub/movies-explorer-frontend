@@ -1,14 +1,14 @@
 import React from "react";
 import './MoviesCard.css'
 import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 export default function MoviesCard({film, handleSaveMovie, savedMovies}) {
     const location = useLocation()
-    const timeFull  = film.duration
+    const timeFull = film.duration
 
     function getTimeFromMins(mins) {
-        let hours = Math.trunc(mins/60);
+        let hours = Math.trunc(mins / 60);
         let minutes = mins % 60;
         return hours + 'ч ' + minutes + 'м';
     }
@@ -24,7 +24,11 @@ export default function MoviesCard({film, handleSaveMovie, savedMovies}) {
                     savedMovies={savedMovies}
                 />
             </div>
-            <img className='movies-card-element__image' src={location.pathname !== '/saved-movies' ? `https://api.nomoreparties.co/${film.image.url}` : film.image} alt={`Афиша ${film.nameRU}`}/>
+            <Link to={film.trailerLink} target={"_blank"}>
+                <img className='movies-card-element__image'
+                     src={location.pathname !== '/saved-movies' ? `https://api.nomoreparties.co/${film.image.url}` : film.image}
+                     alt={`Афиша ${film.nameRU}`}/>
+            </Link>
         </section>
     )
 }
