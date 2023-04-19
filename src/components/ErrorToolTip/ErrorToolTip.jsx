@@ -5,7 +5,7 @@ import {ERR_TEXT} from "../../utils/constants";
 export default function ErrorToolTip({
                                          errorToolTip,
                                          hasError
-}) {
+                                     }) {
 
     const errorClassName = hasError ? 'error-tip_enabled' : 'error-tip_disabled'
     return (

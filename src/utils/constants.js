@@ -8,6 +8,7 @@ export const MIN_LENGTH_NAME_MESSAGE = 'Введите минимум 2 симв
 export const MAX_LENGTH_NAME_MESSAGE = 'Допустимо максимум 20 символов';
 export const MIN_LENGTH_PASSWORD_MESSAGE = 'Введите минимум 6 символа';
 export const MAX_LENGTH_PASSWORD_MESSAGE = 'Допустимо максимум 20 символов';
+export const RESTRICTION_NAME_MESSAGE = 'Вы должны использовать только латиницу, кириллицу, пробел или дефис';
 export const NAME_REG_EXP = /^[A-Za-zА-Яа-яЁё /h -]+$/;
 export const EMAIL_REG_EXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const PROFILE_MESSAGE_TIMEOUT = 7000;

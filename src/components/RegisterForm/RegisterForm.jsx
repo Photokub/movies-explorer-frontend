@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Form from "../Form/Form";
 import {useForm} from "react-hook-form";
 import {
@@ -8,7 +8,7 @@ import {
     MAX_LENGTH_PASSWORD, MAX_LENGTH_PASSWORD_MESSAGE,
     MIN_LENGTH_NAME, MIN_LENGTH_NAME_MESSAGE,
     MIN_LENGTH_PASSWORD, MIN_LENGTH_PASSWORD_MESSAGE, NAME_REG_EXP,
-    REQUIRED_FIELD
+    REQUIRED_FIELD, RESTRICTION_NAME_MESSAGE
 } from "../../utils/constants";
 
 export default function RegisterForm({
@@ -84,7 +84,7 @@ export default function RegisterForm({
                            },
                            pattern: {
                                value: NAME_REG_EXP,
-                               message: 'Вы должны использовать только латиницу, кириллицу, пробел или дефис'
+                               message: RESTRICTION_NAME_MESSAGE
                            }
                        })}
                 />

@@ -209,25 +209,6 @@ function App() {
 
     const movieListStorage = JSON.parse(localStorage.getItem('moviesList')) || [];
 
-    //todo const handleSearchSavedMoviesValue = (e) => {
-    //     e.preventDefault()
-    //     const basicSavedMoviesList = getSavedMovies()
-    //     setSavedMovies(basicSavedMoviesList)
-    //     const results =
-    //         !isSavedMoviesFilterActive ?
-    //             savedMovies.filter(
-    //                 (film) =>
-    //                     film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)
-    //             )
-    //             :
-    //             savedMovies.filter(
-    //                 (film) =>
-    //                     (film.nameRU.toLowerCase().includes(searchSavedMoviesTerm) || film.nameEN.toLowerCase().includes(searchSavedMoviesTerm)) && (film.duration <= 40)
-    //             )
-    //     setSavedMovies(results)
-    //     results.length === 0 ? setIsAnyMatches(true) : setIsAnyMatches(false)
-    // }
-
     const handleSearchSavedMoviesValue = async (e) => {
         try {
             setIsLoading(true)
@@ -301,33 +282,6 @@ function App() {
                 setIsLoading(false)
             })
     }, [])
-
-
-    //todo const getSavedMovies = useCallback(async () => {
-    //     setIsLoading(true)
-    //     try {
-    //         mainApi
-    //             .getMovies()
-    //             .then((data) =>
-    //                 setSavedMovies(data)
-    //             )
-    //     } catch {
-    //     }finally {
-    //         setIsLoading(false)
-    //     }
-    // }, [])
-
-    // todo const getBeatfilmMovies = useCallback(() => {
-    //     setIsLoading(true)
-    //     moviesApi.getMovies()
-    //         .then((data) => {
-    //             setBeatfilmsArr(data);
-    //         }).catch((err) => {
-    //         setReqFailed(true)
-    //     }).finally(() => {
-    //         setIsLoading(false)
-    //     })
-    // }, [])
 
 ////////////////////////таймаут на ресайз экрана////////////////////////
 

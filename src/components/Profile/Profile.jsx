@@ -3,8 +3,23 @@ import './Profile.css'
 import {useForm} from "react-hook-form";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {InfoToolTip} from "../InfoToolTip/InfoToolTip";
+import {
+    EMAIL_REG_EXP, INCORRECT_EMAIL,
+    MAX_LENGTH_NAME,
+    MAX_LENGTH_NAME_MESSAGE,
+    MIN_LENGTH_NAME,
+    MIN_LENGTH_NAME_MESSAGE, NAME_REG_EXP,
+    REQUIRED_FIELD, RESTRICTION_NAME_MESSAGE
+} from "../../utils/constants";
 
-export default function Profile({logOut, userData, setUserData, updateUser, isInfoToolTipPopupOpen, isReqChangingUserData}) {
+export default function Profile({
+                                    logOut,
+                                    userData,
+                                    setUserData,
+                                    updateUser,
+                                    isInfoToolTipPopupOpen,
+                                    isReqChangingUserData
+                                }) {
 
     const currentUser = useContext(CurrentUserContext)
 
@@ -50,18 +65,18 @@ export default function Profile({logOut, userData, setUserData, updateUser, isIn
                                    defaultValue={currentUser.name}
                                    onChange={handleChange}
                                    {...register('name', {
-                                       required: 'Обязательное поле',
+                                       required: REQUIRED_FIELD,
                                        minLength: {
-                                           value: 2,
-                                           message: 'Введите минимум 2 символа'
+                                           value: MIN_LENGTH_NAME,
+                                           message: MIN_LENGTH_NAME_MESSAGE
                                        },
                                        maxLength: {
-                                           value: 20,
-                                           message: 'Допустимо максимум 20 символов'
+                                           value: MAX_LENGTH_NAME,
+                                           message: MAX_LENGTH_NAME_MESSAGE
                                        },
                                        pattern: {
-                                           value: /^[A-Za-zА-Яа-яЁё /h -]+$/,
-                                           message: 'Вы должны использовать только латиницу, кириллицу, пробел или дефис'
+                                           value: NAME_REG_EXP,
+                                           message: RESTRICTION_NAME_MESSAGE
                                        }
                                    })}
                             />
@@ -77,10 +92,10 @@ export default function Profile({logOut, userData, setUserData, updateUser, isIn
                                    defaultValue={currentUser.email}
                                    onChange={handleChange}
                                    {...register('email', {
-                                       required: 'Обязательное поле',
+                                       required: REQUIRED_FIELD,
                                        pattern: {
-                                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                           message: 'Некорректный емайл'
+                                           value: EMAIL_REG_EXP,
+                                           message: INCORRECT_EMAIL
                                        }
                                    })}
                             />

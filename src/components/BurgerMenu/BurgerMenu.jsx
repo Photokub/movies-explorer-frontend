@@ -31,7 +31,7 @@ export default function BurgerMenu({loggedIn}) {
         </li>
     </ul>
 
-    const authMenu =  <ul className='burger-menu-list'>
+    const authMenu = <ul className='burger-menu-list'>
         <li className='burger-menu-list__string'>
             <Link to='/' className='burger-menu__list-navlink'>Главная</Link>
         </li>

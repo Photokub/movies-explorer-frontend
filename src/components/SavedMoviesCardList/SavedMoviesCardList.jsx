@@ -4,7 +4,13 @@ import './SavedMoviesCardList.css'
 import {REQUEST_ERR, NO_RESULTS} from '../../utils/constants'
 
 
-export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqSavedMoviesFailed, handleSaveMovie, savedMovies }) {
+export default function SavedMoviesCardList({
+                                                existedCards,
+                                                isAnyMatches,
+                                                isReqSavedMoviesFailed,
+                                                handleSaveMovie,
+                                                savedMovies
+                                            }) {
 
     return (
         <section className='saved-movies-card-list'>
@@ -14,7 +20,7 @@ export default function SavedMoviesCardList({existedCards, isAnyMatches, isReqSa
                     <p className='saved-movies-card-list__err-message'>{REQUEST_ERR}</p>
                     :
                     !isAnyMatches ? savedMovies?.slice(0, existedCards)?.map((film) =>
-                     <MoviesCard
+                        <MoviesCard
                             key={film.movieId}
                             film={film}
                             handleSaveMovie={handleSaveMovie}
