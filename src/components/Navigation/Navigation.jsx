@@ -62,7 +62,7 @@ export default function Navigation({loggedIn}) {
             <Link className="navigation__logo-link" to="/">
                 <img className="navigation__logo" src={logo} alt="логотип movies explorer"/>
             </Link>
-            {windowSize.innerWidth <= BURGER_MENU_THRESHOLD ? <BurgerMenu/> : menu}
+            {windowSize.innerWidth <= BURGER_MENU_THRESHOLD ? <BurgerMenu loggedIn={loggedIn}/> : menu}
         </nav>
     )
 }
