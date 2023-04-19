@@ -235,11 +235,6 @@ function App() {
         }
     }
 
-    console.log(savedMovies)
-    console.log(searchSavedMoviesTerm)
-    console.log(isFilterActive)
-    console.log(isSavedMoviesFilterActive)
-
 ////////////////////////добавление и удалениекарточки и избранное////////////////////////
 
     const handleSaveMovie = (movieCard) => {
